@@ -8,7 +8,7 @@
 			<th><?php echo $this->Paginator->sort('stock_id'); ?></th>
 			<th><?php echo $this->Paginator->sort('quantity'); ?></th>
 			<th><?php echo $this->Paginator->sort('cost'); ?></th>
-			<th><?php echo $this->Paginator->sort('purchase_date'); ?></th>
+			<th><?php echo $this->Paginator->sort('purchase'); ?></th>
 			<th class="actions"><?php echo __('Actions'); ?></th>
 	</tr>
 	</thead>
@@ -24,7 +24,7 @@
 		</td>
 		<td><?php echo h($clientStock['ClientStock']['quantity']); ?>&nbsp;</td>
 		<td><?php echo h($clientStock['ClientStock']['cost']); ?>&nbsp;</td>
-		<td><?php echo h($clientStock['ClientStock']['purchase_date']); ?>&nbsp;</td>
+		<td><?php echo h($clientStock['ClientStock']['purchase']); ?>&nbsp;</td>
 		<td class="actions">
 			<?php echo $this->Html->link(__('View'), array('action' => 'view', $clientStock['ClientStock']['id'])); ?>
 			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $clientStock['ClientStock']['id'])); ?>

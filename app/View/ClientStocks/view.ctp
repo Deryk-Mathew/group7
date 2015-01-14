@@ -28,7 +28,7 @@
 		</dd>
 		<dt><?php echo __('Purchase Date'); ?></dt>
 		<dd>
-			<?php echo h($clientStock['ClientStock']['purchase_date']); ?>
+			<?php echo h($clientStock['ClientStock']['purchase']); ?>
 			&nbsp;
 		</dd>
 	</dl>

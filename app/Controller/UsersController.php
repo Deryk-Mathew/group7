@@ -120,9 +120,15 @@ class UsersController extends AppController {
     }
 
 	public function logout() {
+		$this->Session->destroy();
 	    $this->Session->setFlash('Good-Bye');
 		$this->redirect($this->Auth->logout());
 	}
+
+public function beforeFilter() {
+    parent::beforeFilter();
+    $this->Auth->allow('initDB'); // We can remove this line after we're finished
+}
 
 	public function initDB() {
 	    $group = $this->User->Group;
@@ -136,7 +142,8 @@ class UsersController extends AppController {
 	    $this->Acl->allow($group, 'controllers/Clients');
 	    $this->Acl->allow($group, 'controllers/Notes');
 	    $this->Acl->allow($group, 'controllers/Balance');
-	    $this->Acl->allow($group, 'controllers/Stocks');
+	    $this->Acl->allow($group, 'controllers/Stocks/index');
+	    $this->Acl->allow($group, 'controllers/Stocks/view');
 	    $this->Acl->allow($group, 'controllers/ClientStocks');
 
 	    // allow basic users to log out

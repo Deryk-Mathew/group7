@@ -1,16 +1,6 @@
 <div class="notes view">
 <h2><?php echo __('Note'); ?></h2>
 	<dl>
-		<dt><?php echo __('Id'); ?></dt>
-		<dd>
-			<?php echo h($note['Note']['id']); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('Client'); ?></dt>
-		<dd>
-			<?php echo $this->Html->link($note['Client']['id'], array('controller' => 'clients', 'action' => 'view', $note['Client']['id'])); ?>
-			&nbsp;
-		</dd>
 		<dt><?php echo __('Body'); ?></dt>
 		<dd>
 			<?php echo h($note['Note']['body']); ?>

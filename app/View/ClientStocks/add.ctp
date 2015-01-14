@@ -3,7 +3,7 @@
 	<fieldset>
 		<legend><?php echo __('Add Client Stock'); ?></legend>
 	<?php
-		echo $this->Form->input('stock_id');
+		//echo $this->Form->input('stock_id');
 		echo $this->Form->input('quantity');
 		echo $this->Form->input('cost');
 	?>

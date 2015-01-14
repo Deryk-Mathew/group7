@@ -9,13 +9,6 @@ App::uses('AppModel', 'Model');
 class ClientStock extends AppModel {
 
 /**
- * Display field
- *
- * @var string
- */
-	public $displayField = 'id';
-
-/**
  * Validation rules
  *
  * @var array

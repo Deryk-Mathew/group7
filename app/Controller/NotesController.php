@@ -45,13 +45,14 @@ class NotesController extends AppController {
  *
  * @return void
  */
-	public function add($id) {
+	public function add() {
+		$var = $this->Session->read('current_client');
 		if ($this->request->is('post')) {
 			$this->Note->create();
-			$this->request->data['Note']['client_id'] = $id;
+			$this->request->data['Note']['client_id'] = $var;
 			if ($this->Note->save($this->request->data)) {
 				$this->Session->setFlash(__('The note has been saved.'));
-				return $this->redirect(array( 'controller' => 'clients', 'action' => 'view', $id));
+				return $this->redirect(array( 'controller' => 'clients', 'action' => 'view', $var));
 			} else {
 				$this->Session->setFlash(__('The note could not be saved. Please, try again.'));
 			}

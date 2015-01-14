@@ -13,7 +13,7 @@ class ClientsController extends AppController {
  *
  * @var array
  */
-	public $components = array('Paginator');
+	public $components = array('Paginator', 'Session');
 
 /**
  * index method
@@ -33,6 +33,8 @@ class ClientsController extends AppController {
  * @return void
  */
 	public function view($id = null) {
+		$this->Session->write('current_client', $id);
+
 		if (!$this->Client->exists($id)) {
 			throw new NotFoundException(__('Invalid client'));
 		}

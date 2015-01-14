@@ -45,19 +45,16 @@ class ClientStocksController extends AppController {
  *
  * @return void
  */
-	public function add($id) {
+	public function add() {
 		if ($this->request->is('post')) {
 			$this->ClientStock->create();
-			$this->request->data['ClientStock']['client_id'] = $id;		
 			if ($this->ClientStock->save($this->request->data)) {
 				$this->Session->setFlash(__('The client stock has been saved.'));
-				return $this->redirect(array('controller' => 'clients', 'action' => 'view', $id));
+				return $this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(__('The client stock could not be saved. Please, try again.'));
 			}
 		}
-		$stocks = $this->ClientStock->Stock->find('list');
-		$this->set(compact('stocks'));
 	}
 
 /**
@@ -106,5 +103,21 @@ class ClientStocksController extends AppController {
 			$this->Session->setFlash(__('The client stock could not be deleted. Please, try again.'));
 		}
 		return $this->redirect(array('action' => 'index'));
+	}
+
+
+	public function buyStock($id) {
+		$var = $this->Session->read('current_client');
+		if ($this->request->is('post')) {
+			$this->ClientStock->create();
+			$this->request->data['ClientStock']['client_id'] = $var;	
+			$this->request->data['ClientStock']['stock_id'] = $id;	
+			if ($this->ClientStock->save($this->request->data)) {
+				$this->Session->setFlash(__('The client stock has been saved.'));
+				return $this->redirect(array('controller' => 'clients', 'action' => 'view', $var));
+			} else {
+				$this->Session->setFlash(__('The client stock could not be saved. Please, try again.'));
+			}
+		}
 	}
 }
