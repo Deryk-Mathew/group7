@@ -66,10 +66,6 @@
 			<?php echo $this->Html->link($stock['StockExchange']['name'], array('controller' => 'stock_exchanges', 'action' => 'view', $stock['StockExchange']['id'])); ?>
 			&nbsp;
 		</dd>
-		<dt><?php echo __('Buy Stock'); ?></dt>
-		<div class="actions">
-		<dd><?php echo $this->Html->link(__('Buy Stock'), array('controller' => 'client_stocks', 'action' => 'buyStock', $stock['Stock']['id'], $stock['Stock']['daysLow'])); ?>&nbsp;</dd>
-		</div>
 	</dl>
 </div>
 <div class="actions">

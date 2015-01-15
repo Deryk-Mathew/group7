@@ -31,10 +31,6 @@
 			<?php echo h($clientStock['ClientStock']['purchase']); ?>
 			&nbsp;
 		</dd>
-		<dt><?php echo __('Buy Stock'); ?></dt>
-		<div class="actions">
-		<dd><?php echo $this->Html->link(__('Buy Stock'), array('controller' => 'client_stocks', 'action' => 'buyStock', $clientStock['Stock']['id'], $clientStock['ClientStock']['cost'])); ?>&nbsp;</dd>
-		</div>
 	</dl>
 </div>
 <div class="actions">
