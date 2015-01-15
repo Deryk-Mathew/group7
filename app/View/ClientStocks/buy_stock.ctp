@@ -5,7 +5,8 @@
 	<?php
 		//echo $this->Form->input('stock_id');
 		echo $this->Form->input('quantity');
-		echo $this->Form->input('cost');
+		//echo $this->Form->input('cost');
+		echo $this->Form->input('purchase');
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Submit')); ?>
