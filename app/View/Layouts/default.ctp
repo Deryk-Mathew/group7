@@ -37,8 +37,22 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 </head>
 <body>
 	<div id="container">
+		<div class="headerFull">
+		
 		<div id="header">
-			<h1><?php echo $this->Html->link($cakeDescription, 'http://cakephp.org'); ?></h1>
+			<?php echo $this->Html->image('website-logo.png', array('alt' => 'Edit', 'border' => '0', 'height' => '95%'));
+			
+			//if (AuthComponent::User('group_id') == 1){
+			echo '<div id="loginInfo"><p><b>Logged In: </b>';
+			echo 'first name code here';
+			echo ' ';
+			echo 'second name code here</p><br/>';
+			echo $this->Html->link(__('Logout'), array('controller' => 'users', 'action' => 'logout'));
+			echo '</div>';
+			//}
+			 ?>
+
+		</div>
 		</div>
 		<div id="content">
 
@@ -46,18 +60,13 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 
 			<?php echo $this->fetch('content'); ?>
 		</div>
+		<div class="footerFull">
 		<div id="footer">
-			<?php echo $this->Html->link(
-					$this->Html->image('cake.power.gif', array('alt' => $cakeDescription, 'border' => '0')),
-					'http://www.cakephp.org/',
-					array('target' => '_blank', 'escape' => false, 'id' => 'cake-powered')
-				);
-			?>
-			<p>
-				<?php echo $cakeVersion; ?>
-			</p>
+			<h6>Developed By Group 7</h6>
 		</div>
 	</div>
-	<?php echo $this->element('sql_dump'); ?>
+			
+		</div>
+	</div>
 </body>
 </html>
