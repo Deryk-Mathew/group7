@@ -38,7 +38,7 @@
 		</td>
 		<td class="actions">
 			<?php echo $this->Html->link(__('View'), array('action' => 'view', $stock['Stock']['id'])); ?>
-			<?php echo $this->Html->link(__('Buy Stock'), array('controller' => 'client_stocks', 'action' => 'buyStock', $stock['Stock']['id'])); ?>
+			<?php echo $this->Html->link(__('Buy Stock'), array('controller' => 'client_stocks', 'action' => 'buyStock', $stock['Stock']['id'], $stock['Stock']['daysLow'])); ?>
 
 			<!-- Only show if admin logged in -->
 			<?php if (AuthComponent::User('group_id') == 1): ?>
