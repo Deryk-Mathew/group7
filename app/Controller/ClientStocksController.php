@@ -106,12 +106,13 @@ class ClientStocksController extends AppController {
 	}
 
 
-	public function buyStock($id) {
+	public function buyStock($id, $daysLow) {
 		$var = $this->Session->read('current_client');
 		if ($this->request->is('post')) {
 			$this->ClientStock->create();
 			$this->request->data['ClientStock']['client_id'] = $var;	
-			$this->request->data['ClientStock']['stock_id'] = $id;	
+			$this->request->data['ClientStock']['stock_id'] = $id;
+			$this->request->data['ClientStock']['cost'] = $daysLow;
 			if ($this->ClientStock->save($this->request->data)) {
 				$this->Session->setFlash(__('The client stock has been saved.'));
 				return $this->redirect(array('controller' => 'clients', 'action' => 'view', $var));
