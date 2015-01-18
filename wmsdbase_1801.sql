@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 13, 2015 at 10:11 PM
+-- Generation Time: Jan 18, 2015 at 07:59 PM
 -- Server version: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -37,7 +37,77 @@ CREATE TABLE IF NOT EXISTS `acos` (
   PRIMARY KEY (`id`),
   KEY `idx_acos_lft_rght` (`lft`,`rght`),
   KEY `idx_acos_alias` (`alias`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=61 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=71 ;
+
+--
+-- Dumping data for table `acos`
+--
+
+INSERT INTO `acos` (`id`, `parent_id`, `model`, `foreign_key`, `alias`, `lft`, `rght`) VALUES
+(1, NULL, NULL, NULL, 'controllers', 1, 128),
+(2, 1, NULL, NULL, 'Clients', 2, 15),
+(3, 2, NULL, NULL, 'index', 3, 4),
+(4, 2, NULL, NULL, 'view', 5, 6),
+(5, 2, NULL, NULL, 'add', 7, 8),
+(6, 2, NULL, NULL, 'edit', 9, 10),
+(7, 2, NULL, NULL, 'delete', 11, 12),
+(8, 1, NULL, NULL, 'Groups', 16, 27),
+(9, 8, NULL, NULL, 'index', 17, 18),
+(10, 8, NULL, NULL, 'view', 19, 20),
+(11, 8, NULL, NULL, 'add', 21, 22),
+(12, 8, NULL, NULL, 'edit', 23, 24),
+(13, 8, NULL, NULL, 'delete', 25, 26),
+(14, 1, NULL, NULL, 'Notes', 28, 39),
+(15, 14, NULL, NULL, 'index', 29, 30),
+(16, 14, NULL, NULL, 'view', 31, 32),
+(17, 14, NULL, NULL, 'add', 33, 34),
+(18, 14, NULL, NULL, 'edit', 35, 36),
+(19, 14, NULL, NULL, 'delete', 37, 38),
+(20, 1, NULL, NULL, 'Pages', 40, 43),
+(21, 20, NULL, NULL, 'display', 41, 42),
+(22, 1, NULL, NULL, 'Users', 44, 61),
+(23, 22, NULL, NULL, 'index', 45, 46),
+(24, 22, NULL, NULL, 'view', 47, 48),
+(25, 22, NULL, NULL, 'add', 49, 50),
+(26, 22, NULL, NULL, 'edit', 51, 52),
+(27, 22, NULL, NULL, 'delete', 53, 54),
+(28, 22, NULL, NULL, 'login', 55, 56),
+(29, 22, NULL, NULL, 'logout', 57, 58),
+(30, 1, NULL, NULL, 'AclExtras', 62, 63),
+(31, 1, NULL, NULL, 'DebugKit', 64, 71),
+(32, 31, NULL, NULL, 'ToolbarAccess', 65, 70),
+(33, 32, NULL, NULL, 'history_state', 66, 67),
+(34, 32, NULL, NULL, 'sql_explain', 68, 69),
+(35, 1, NULL, NULL, 'Phpunit', 72, 73),
+(36, 1, NULL, NULL, 'Balances', 74, 89),
+(37, 36, NULL, NULL, 'index', 75, 76),
+(38, 36, NULL, NULL, 'view', 77, 78),
+(39, 36, NULL, NULL, 'add', 79, 80),
+(40, 36, NULL, NULL, 'edit', 81, 82),
+(41, 36, NULL, NULL, 'delete', 83, 84),
+(42, 22, NULL, NULL, 'initDB', 59, 60),
+(43, 1, NULL, NULL, 'ClientStocks', 90, 103),
+(44, 43, NULL, NULL, 'index', 91, 92),
+(45, 43, NULL, NULL, 'view', 93, 94),
+(46, 43, NULL, NULL, 'add', 95, 96),
+(47, 43, NULL, NULL, 'edit', 97, 98),
+(48, 43, NULL, NULL, 'delete', 99, 100),
+(55, 1, NULL, NULL, 'Stocks', 104, 115),
+(56, 55, NULL, NULL, 'index', 105, 106),
+(57, 55, NULL, NULL, 'view', 107, 108),
+(58, 55, NULL, NULL, 'add', 109, 110),
+(59, 55, NULL, NULL, 'edit', 111, 112),
+(60, 55, NULL, NULL, 'delete', 113, 114),
+(61, 1, NULL, NULL, 'StockExchanges', 116, 127),
+(62, 61, NULL, NULL, 'index', 117, 118),
+(63, 61, NULL, NULL, 'view', 119, 120),
+(64, 61, NULL, NULL, 'add', 121, 122),
+(65, 61, NULL, NULL, 'edit', 123, 124),
+(66, 61, NULL, NULL, 'delete', 125, 126),
+(67, 43, NULL, NULL, 'buyStock', 101, 102),
+(68, 36, NULL, NULL, 'deposit', 85, 86),
+(69, 36, NULL, NULL, 'withdraw', 87, 88),
+(70, 2, NULL, NULL, 'remove', 13, 14);
 
 -- --------------------------------------------------------
 
@@ -58,6 +128,14 @@ CREATE TABLE IF NOT EXISTS `aros` (
   KEY `idx_aros_alias` (`alias`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
+--
+-- Dumping data for table `aros`
+--
+
+INSERT INTO `aros` (`id`, `parent_id`, `model`, `foreign_key`, `alias`, `lft`, `rght`) VALUES
+(1, NULL, 'Group', 1, NULL, 1, 4),
+(2, NULL, 'Group', 2, NULL, 5, 6);
+
 -- --------------------------------------------------------
 
 --
@@ -75,7 +153,21 @@ CREATE TABLE IF NOT EXISTS `aros_acos` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `ARO_ACO_KEY` (`aro_id`,`aco_id`),
   KEY `idx_aco_id` (`aco_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
+
+--
+-- Dumping data for table `aros_acos`
+--
+
+INSERT INTO `aros_acos` (`id`, `aro_id`, `aco_id`, `_create`, `_read`, `_update`, `_delete`) VALUES
+(1, 1, 1, '1', '1', '1', '1'),
+(2, 2, 1, '-1', '-1', '-1', '-1'),
+(3, 2, 2, '1', '1', '1', '1'),
+(4, 2, 14, '1', '1', '1', '1'),
+(5, 2, 29, '1', '1', '1', '1'),
+(6, 2, 56, '1', '1', '1', '1'),
+(7, 2, 57, '1', '1', '1', '1'),
+(8, 2, 43, '1', '1', '1', '1');
 
 -- --------------------------------------------------------
 
@@ -86,7 +178,7 @@ CREATE TABLE IF NOT EXISTS `aros_acos` (
 CREATE TABLE IF NOT EXISTS `balance` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `client_id` int(11) unsigned NOT NULL,
-  `cash_balance` float(10,2) NOT NULL,
+  `cash_balance` float(10,2) NOT NULL DEFAULT '0.00',
   PRIMARY KEY (`id`),
   KEY `user_id` (`client_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
@@ -99,10 +191,9 @@ CREATE TABLE IF NOT EXISTS `balance` (
 
 CREATE TABLE IF NOT EXISTS `clients` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) unsigned NOT NULL,
+  `user_id` int(11) unsigned DEFAULT NULL,
   `NINum` varchar(17) NOT NULL,
-  `forename` varchar(50) NOT NULL,
-  `surname` varchar(50) NOT NULL,
+  `name` varchar(50) NOT NULL,
   `street` varchar(50) NOT NULL,
   `town` varchar(50) NOT NULL,
   `county` varchar(50) NOT NULL,
@@ -110,8 +201,7 @@ CREATE TABLE IF NOT EXISTS `clients` (
   `registered` date NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `NINum` (`NINum`),
-  KEY `user_id` (`user_id`),
-  KEY `surname` (`surname`)
+  KEY `user_id` (`user_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -126,11 +216,12 @@ CREATE TABLE IF NOT EXISTS `client_stocks` (
   `stock_id` int(11) unsigned NOT NULL,
   `quantity` int(11) NOT NULL,
   `cost` float(10,2) NOT NULL,
-  `purchase_date` datetime DEFAULT CURRENT_TIMESTAMP,
+  `purchase` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `client_id` (`client_id`),
   KEY `stock_id` (`stock_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
 
 -- --------------------------------------------------------
 
@@ -143,6 +234,14 @@ CREATE TABLE IF NOT EXISTS `groups` (
   `name` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `groups`
+--
+
+INSERT INTO `groups` (`id`, `name`) VALUES
+(1, 'Administrator'),
+(2, 'Financial Advisor');
 
 -- --------------------------------------------------------
 
@@ -158,6 +257,7 @@ CREATE TABLE IF NOT EXISTS `notes` (
   PRIMARY KEY (`id`),
   KEY `client_id` (`client_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
 
 -- --------------------------------------------------------
 
@@ -184,6 +284,8 @@ CREATE TABLE IF NOT EXISTS `stocks` (
   KEY `stockExchange_id` (`stockExchange_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
+
+
 -- --------------------------------------------------------
 
 --
@@ -194,7 +296,14 @@ CREATE TABLE IF NOT EXISTS `stock_exchanges` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(40) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `stock_exchanges`
+--
+
+INSERT INTO `stock_exchanges` (`id`, `name`) VALUES
+(1, 'LSE');
 
 -- --------------------------------------------------------
 
@@ -214,6 +323,13 @@ CREATE TABLE IF NOT EXISTS `users` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 --
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `username`, `password`, `full_name`, `group_id`) VALUES
+(1, 'admin', '1d493e180de83af28ae84771e473b72456dd3373', 'Administrator Account', 1);
+
+--
 -- Constraints for dumped tables
 --
 
@@ -227,7 +343,7 @@ ALTER TABLE `balance`
 -- Constraints for table `clients`
 --
 ALTER TABLE `clients`
-  ADD CONSTRAINT `clients_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `clients_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `client_stocks`
@@ -253,108 +369,6 @@ ALTER TABLE `stocks`
 --
 ALTER TABLE `users`
   ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`group_id`) REFERENCES `groups` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
-
---
--- Dumping data for table `acos`
---
-
-INSERT INTO `acos` (`id`, `parent_id`, `model`, `foreign_key`, `alias`, `lft`, `rght`) VALUES
-(1, NULL, NULL, NULL, 'controllers', 1, 120),
-(2, 1, NULL, NULL, 'Clients', 2, 13),
-(3, 2, NULL, NULL, 'index', 3, 4),
-(4, 2, NULL, NULL, 'view', 5, 6),
-(5, 2, NULL, NULL, 'add', 7, 8),
-(6, 2, NULL, NULL, 'edit', 9, 10),
-(7, 2, NULL, NULL, 'delete', 11, 12),
-(8, 1, NULL, NULL, 'Groups', 14, 25),
-(9, 8, NULL, NULL, 'index', 15, 16),
-(10, 8, NULL, NULL, 'view', 17, 18),
-(11, 8, NULL, NULL, 'add', 19, 20),
-(12, 8, NULL, NULL, 'edit', 21, 22),
-(13, 8, NULL, NULL, 'delete', 23, 24),
-(14, 1, NULL, NULL, 'Notes', 26, 37),
-(15, 14, NULL, NULL, 'index', 27, 28),
-(16, 14, NULL, NULL, 'view', 29, 30),
-(17, 14, NULL, NULL, 'add', 31, 32),
-(18, 14, NULL, NULL, 'edit', 33, 34),
-(19, 14, NULL, NULL, 'delete', 35, 36),
-(20, 1, NULL, NULL, 'Pages', 38, 41),
-(21, 20, NULL, NULL, 'display', 39, 40),
-(22, 1, NULL, NULL, 'Users', 42, 59),
-(23, 22, NULL, NULL, 'index', 43, 44),
-(24, 22, NULL, NULL, 'view', 45, 46),
-(25, 22, NULL, NULL, 'add', 47, 48),
-(26, 22, NULL, NULL, 'edit', 49, 50),
-(27, 22, NULL, NULL, 'delete', 51, 52),
-(28, 22, NULL, NULL, 'login', 53, 54),
-(29, 22, NULL, NULL, 'logout', 55, 56),
-(30, 1, NULL, NULL, 'AclExtras', 60, 61),
-(31, 1, NULL, NULL, 'DebugKit', 62, 69),
-(32, 31, NULL, NULL, 'ToolbarAccess', 63, 68),
-(33, 32, NULL, NULL, 'history_state', 64, 65),
-(34, 32, NULL, NULL, 'sql_explain', 66, 67),
-(35, 1, NULL, NULL, 'Phpunit', 70, 71),
-(36, 1, NULL, NULL, 'Balances', 72, 83),
-(37, 36, NULL, NULL, 'index', 73, 74),
-(38, 36, NULL, NULL, 'view', 75, 76),
-(39, 36, NULL, NULL, 'add', 77, 78),
-(40, 36, NULL, NULL, 'edit', 79, 80),
-(41, 36, NULL, NULL, 'delete', 81, 82),
-(42, 22, NULL, NULL, 'initDB', 57, 58),
-(43, 1, NULL, NULL, 'ClientStocks', 84, 95),
-(44, 43, NULL, NULL, 'index', 85, 86),
-(45, 43, NULL, NULL, 'view', 87, 88),
-(46, 43, NULL, NULL, 'add', 89, 90),
-(47, 43, NULL, NULL, 'edit', 91, 92),
-(48, 43, NULL, NULL, 'delete', 93, 94),
-(49, 1, NULL, NULL, 'StockExhanges', 96, 107),
-(50, 49, NULL, NULL, 'index', 97, 98),
-(51, 49, NULL, NULL, 'view', 99, 100),
-(52, 49, NULL, NULL, 'add', 101, 102),
-(53, 49, NULL, NULL, 'edit', 103, 104),
-(54, 49, NULL, NULL, 'delete', 105, 106),
-(55, 1, NULL, NULL, 'Stocks', 108, 119),
-(56, 55, NULL, NULL, 'index', 109, 110),
-(57, 55, NULL, NULL, 'view', 111, 112),
-(58, 55, NULL, NULL, 'add', 113, 114),
-(59, 55, NULL, NULL, 'edit', 115, 116),
-(60, 55, NULL, NULL, 'delete', 117, 118);
-
---
--- Dumping data for table `aros`
---
-
-INSERT INTO `aros` (`id`, `parent_id`, `model`, `foreign_key`, `alias`, `lft`, `rght`) VALUES
-(1, NULL, 'Group', 1, NULL, 1, 4),
-(2, NULL, 'Group', 2, NULL, 5, 6);
-
---
--- Dumping data for table `aros_acos`
---
-
-INSERT INTO `aros_acos` (`id`, `aro_id`, `aco_id`, `_create`, `_read`, `_update`, `_delete`) VALUES
-(1, 1, 1, '1', '1', '1', '1'),
-(2, 2, 1, '-1', '-1', '-1', '-1'),
-(3, 2, 2, '1', '1', '1', '1'),
-(4, 2, 14, '1', '1', '1', '1'),
-(5, 2, 29, '1', '1', '1', '1');
-
---
--- Dumping data for table `groups`
---
-
-INSERT INTO `groups` (`id`, `name`) VALUES
-(1, 'Administrator'),
-(2, 'Financial Advisor');
-
---
--- Dumping data for table `users`
---
-
-INSERT INTO `users` (`id`, `username`, `password`, `full_name`, `group_id`) VALUES
-(1, 'admin', '1d493e180de83af28ae84771e473b72456dd3373', 'Administrator Account', 1);
-
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

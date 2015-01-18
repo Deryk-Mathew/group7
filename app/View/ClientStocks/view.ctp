@@ -32,21 +32,19 @@
 			&nbsp;
 		</dd>
 		<dt><?php echo __('Buy Stock'); ?></dt>
-		<div class="actions">
-		<dd><?php echo $this->Html->link(__('Buy Stock'), array('controller' => 'client_stocks', 'action' => 'buyStock', $clientStock['Stock']['id'], $clientStock['ClientStock']['cost'])); ?>&nbsp;</dd>
-		</div>
+		<dd><?php echo $this->Html->link(__('Buy Stock'), array('controller' => 'client_stocks', 'action' => 'buyStock', $clientStock['Stock']['id'], $clientStock['ClientStock']['cost'])); ?>&nbsp;
+		</dd>
 	</dl>
 </div>
 <div class="actions">
 	<h3><?php echo __('Actions'); ?></h3>
 	<ul>
-		<li><?php echo $this->Html->link(__('Edit Client Stock'), array('action' => 'edit', $clientStock['ClientStock']['id'])); ?> </li>
-		<li><?php echo $this->Form->postLink(__('Delete Client Stock'), array('action' => 'delete', $clientStock['ClientStock']['id']), array(), __('Are you sure you want to delete # %s?', $clientStock['ClientStock']['id'])); ?> </li>
-		<li><?php echo $this->Html->link(__('List Client Stocks'), array('action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Client Stock'), array('action' => 'add')); ?> </li>
 		<li><?php echo $this->Html->link(__('List Clients'), array('controller' => 'clients', 'action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(__('New Client'), array('controller' => 'clients', 'action' => 'add')); ?> </li>
 		<li><?php echo $this->Html->link(__('List Stocks'), array('controller' => 'stocks', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Stock'), array('controller' => 'stocks', 'action' => 'add')); ?> </li>
+		<?php if ($this->Session->read('current_client') != null): ?>
+			<li><?php echo $this->Html->link(__('Return To Client'), array('controller' => 'clients', 'action' => 'view', $this->Session->read('current_client'))); ?> </li>
+		<?php endif; ?>
+		<li><?php echo $this->Html->link(__('Logout'), array('controller' => 'users', 'action' => 'logout')); ?></li>
 	</ul>
 </div>

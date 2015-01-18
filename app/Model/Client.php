@@ -29,27 +29,26 @@ class Client extends AppModel {
 		'NINum' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
+				//'message' => 'Please enter data.'
+				),
+			'Invalid NI' => array(
+				'rule' => array('validNi'),
+				'message' => 'Please enter a valid NI number i.e. AB123456C',
+				),
+			'unique' => array(
+                'rule' => array('isUnique'),
+				'message' => 'This client is already registered. Please contact admin to add client.',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
-		),
-		'forename' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
-		),
-		'surname' => array(
+		
+		'name' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
+				//'message' => 'Please enter data.',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -59,7 +58,7 @@ class Client extends AppModel {
 		'street' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
+				//'message' => 'Please enter data.',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -69,7 +68,7 @@ class Client extends AppModel {
 		'town' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
+				//'message' => 'Please enter data.',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -79,7 +78,7 @@ class Client extends AppModel {
 		'county' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
+				//'message' => 'Please enter data.',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -89,12 +88,16 @@ class Client extends AppModel {
 		'postcode' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
+				//'message' => 'Please enter data.',
+				),
+			/*'Invalid Postcode' => array(
+				'rule' => array('validPostcode'),
+				'message' => 'Please enter a valid postcode i.e. AB12 3CD',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
+			),*/
 		),
 		'registered' => array(
 			'date' => array(
@@ -122,7 +125,8 @@ class Client extends AppModel {
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
-		)
+		),
+
 	);
 
 /**
@@ -173,4 +177,21 @@ class Client extends AppModel {
 		)
 	);
 
+	public function validNi($check){
+		$value = array_values($check);
+		$value = $value[0];
+		return preg_match('/^[ABCEGHJ-PRSTW-Z][ABCEGHJ-NPRSTW-Z]\d{6}[A-D]$/', $value);
+	}
+
+	public function validPostcode($check){
+		$value = array_values($check);
+		$value = $value[0];
+		return preg_match('/(GIR 0AA)|((([A-Z-[QVX]][0-9][0-9]?)|(([A-Z-[QVX]][A-Z-[IJZ]][0-9][0-9]?)|(([A-Z-[QVX]][0-9][A-HJKSTUW])|([A-Z-[QVX]][A-Z-[IJZ]][0-9][ABEHMNPRVWXY])))) [0-9][A-Z-[CIKMOV]]{2})/', $value);
+	}
+
+	public function custFind(){
+		$var = $this->Auth->user('id');
+		$clients = $this->Client->findAllByUserId($var);
+	}
+	
 }

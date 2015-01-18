@@ -3,8 +3,8 @@
 	<table cellpadding="0" cellspacing="0">
 	<thead>
 	<tr>
+			<th><?php echo $this->Paginator->sort('name'); ?></th>
 			<th><?php echo $this->Paginator->sort('symbol'); ?></th>
-			<th><?php echo $this->Paginator->sort('volume'); ?></th>
 			<th><?php echo $this->Paginator->sort('averageDailyVolume'); ?></th>
 			<th><?php echo $this->Paginator->sort('change'); ?></th>
 			<th><?php echo $this->Paginator->sort('daysLow'); ?></th>
@@ -13,7 +13,7 @@
 			<th><?php echo $this->Paginator->sort('marketCapatalization'); ?></th>
 			<th><?php echo $this->Paginator->sort('lastTradePriceOnly'); ?></th>
 			<th><?php echo $this->Paginator->sort('daysRange'); ?></th>
-			<th><?php echo $this->Paginator->sort('name'); ?></th>
+			<th><?php echo $this->Paginator->sort('volume'); ?></th>
 			<th><?php echo $this->Paginator->sort('stockExchange_id'); ?></th>
 			<th class="actions"><?php echo __('Actions'); ?></th>
 	</tr>
@@ -22,7 +22,7 @@
 		<?php $client_stocks; ?>
 	<?php foreach ($stocks as $stock): ?>
 	<tr>
-		<td><?php echo h($stock['Stock']['name']); ?>&nbsp;</td>
+		<td> <?php echo h($stock['Stock']['name']);  ?></td>
 		<td><?php echo h($stock['Stock']['symbol']); ?>&nbsp;</td>
 		<td><?php echo h($stock['Stock']['averageDailyVolume']); ?>&nbsp;</td>
 		<td><?php echo h($stock['Stock']['change']); ?>&nbsp;</td>
@@ -38,8 +38,9 @@
 		</td>
 		<td class="actions">
 			<?php echo $this->Html->link(__('View'), array('action' => 'view', $stock['Stock']['id'])); ?>
-			<?php echo $this->Html->link(__('Buy Stock'), array('controller' => 'client_stocks', 'action' => 'buyStock', $stock['Stock']['id'], $stock['Stock']['daysLow'])); ?>
-
+			<?php if ($this->Session->read('current_client') != null): ?>
+			<?php echo $this->Html->link(__('Buy'), array('controller' => 'client_stocks', 'action' => 'buyStock', $stock['Stock']['id'], $stock['Stock']['daysLow'])); ?>
+			<?php endif; ?>
 			<!-- Only show if admin logged in -->
 			<?php if (AuthComponent::User('group_id') == 1): ?>
 				<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $stock['Stock']['id'])); ?>
@@ -47,7 +48,7 @@
 			<?php endif; ?>
 		</td>
 	</tr>
-<?php endforeach; ?>
+	<?php endforeach; ?>
 	</tbody>
 	</table>
 	<p>
@@ -68,8 +69,9 @@
 	<h3><?php echo __('Actions'); ?></h3>
 	<ul>
 		<li><?php echo $this->Html->link(__('List Clients'), array('controller' => 'clients','action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Stock'), array('action' => 'add')); ?></li>
-		<li><?php echo $this->Html->link(__('List Stock Exchanges'), array('controller' => 'stock_exchanges', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Stock Exchange'), array('controller' => 'stock_exchanges', 'action' => 'add')); ?> </li>
+		<?php if ($this->Session->read('current_client') != null): ?>
+			<li><?php echo $this->Html->link(__('Return To Client'), array('controller' => 'clients', 'action' => 'view', $this->Session->read('current_client'))); ?> </li>
+		<?php endif; ?>
+		<li><?php echo $this->Html->link(__('Logout'), array('controller' => 'users', 'action' => 'logout')); ?></li>
 	</ul>
 </div>

@@ -151,4 +151,20 @@ class Stock extends AppModel {
 			'order' => ''
 		)
 	);
+
+	public $hasMany = array(
+		'ClientStock' => array(
+			'className' => 'ClientStock',
+			'foreignKey' => 'stock_id',
+			'dependent' => false,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
+		)
+	);
 }

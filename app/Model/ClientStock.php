@@ -79,4 +79,5 @@ class ClientStock extends AppModel {
 			'order' => ''
 		)
 	);
+
 }

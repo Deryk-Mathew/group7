@@ -23,9 +23,11 @@
 	<ul>
 		<li><?php echo $this->Html->link(__('Edit Balance'), array('action' => 'edit', $balance['Balance']['id'])); ?> </li>
 		<li><?php echo $this->Form->postLink(__('Delete Balance'), array('action' => 'delete', $balance['Balance']['id']), array(), __('Are you sure you want to delete # %s?', $balance['Balance']['id'])); ?> </li>
-		<li><?php echo $this->Html->link(__('List Balances'), array('action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Balance'), array('action' => 'add')); ?> </li>
 		<li><?php echo $this->Html->link(__('List Clients'), array('controller' => 'clients', 'action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(__('New Client'), array('controller' => 'clients', 'action' => 'add')); ?> </li>
+		<?php if ($this->Session->read('current_client') != null): ?>
+			<li><?php echo $this->Html->link(__('Return To Client'), array('controller' => 'clients', 'action' => 'view', $this->Session->read('current_client'))); ?> </li>
+		<?php endif; ?>
+		<li><?php echo $this->Html->link(__('Logout'), array('controller' => 'users', 'action' => 'logout')); ?></li>
 	</ul>
 </div>

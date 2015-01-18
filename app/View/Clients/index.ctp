@@ -3,15 +3,8 @@
 	<table cellpadding="0" cellspacing="0">
 	<thead>
 	<tr>
-			<th><?php echo $this->Paginator->sort('id'); ?></th>
-			<th><?php echo $this->Paginator->sort('user_id'); ?></th>
 			<th><?php echo $this->Paginator->sort('NINum'); ?></th>
-			<th><?php echo $this->Paginator->sort('forename'); ?></th>
-			<th><?php echo $this->Paginator->sort('surname'); ?></th>
-			<th><?php echo $this->Paginator->sort('street'); ?></th>
-			<th><?php echo $this->Paginator->sort('town'); ?></th>
-			<th><?php echo $this->Paginator->sort('county'); ?></th>
-			<th><?php echo $this->Paginator->sort('postcode'); ?></th>
+			<th><?php echo $this->Paginator->sort('name'); ?></th>
 			<th><?php echo $this->Paginator->sort('registered'); ?></th>
 			<th class="actions"><?php echo __('Actions'); ?></th>
 	</tr>
@@ -19,18 +12,9 @@
 	<tbody>
 	<?php foreach ($clients as $client): ?>
 	<tr>
-		<td><?php echo h($client['Client']['id']); ?>&nbsp;</td>
-		<td>
-			<?php echo $this->Html->link($client['User']['id'], array('controller' => 'users', 'action' => 'view', $client['User']['id'])); ?>
-		</td>
-		<td><?php echo h($client['Client']['NINum']); ?>&nbsp;</td>
-		<td><?php echo h($client['Client']['forename']); ?>&nbsp;</td>
-		<td><?php echo h($client['Client']['surname']); ?>&nbsp;</td>
-		<td><?php echo h($client['Client']['street']); ?>&nbsp;</td>
-		<td><?php echo h($client['Client']['town']); ?>&nbsp;</td>
-		<td><?php echo h($client['Client']['county']); ?>&nbsp;</td>
-		<td><?php echo h($client['Client']['postcode']); ?>&nbsp;</td>
-		<td><?php echo h($client['Client']['registered']); ?>&nbsp;</td>
+		<td><?php echo $this->Html->link($client['Client']['NINum'], array('controller' => 'clients', 'action' => 'view', $client['Client']['id'])); ?>&nbsp;</td>
+		<td><?php echo $this->Html->link($client['Client']['name'], array('controller' => 'clients', 'action' => 'view', $client['Client']['id'])); ?>&nbsp;</td>
+		<td><?php echo $this->Html->link($client['Client']['registered'], array('controller' => 'clients', 'action' => 'view', $client['Client']['id'])); ?>&nbsp;</td>
 		<td class="actions">
 			<?php echo $this->Html->link(__('View'), array('action' => 'view', $client['Client']['id'])); ?>
 			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $client['Client']['id'])); ?>
@@ -58,8 +42,7 @@
 	<h3><?php echo __('Actions'); ?></h3>
 	<ul>
 		<li><?php echo $this->Html->link(__('New Client'), array('action' => 'add')); ?></li>
-		<li><?php echo $this->Html->link(__('List Client Stocks'), array('controller' => 'client_stocks', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Notes'), array('controller' => 'notes', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Note'), array('controller' => 'notes', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('List Stocks'), array('controller' => 'stocks', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('Logout'), array('controller' => 'users', 'action' => 'logout')); ?></li>
 	</ul>
 </div>

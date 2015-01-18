@@ -26,7 +26,9 @@
 
 		<li><?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $this->Form->value('Stock.id')), array(), __('Are you sure you want to delete # %s?', $this->Form->value('Stock.id'))); ?></li>
 		<li><?php echo $this->Html->link(__('List Stocks'), array('action' => 'index')); ?></li>
-		<li><?php echo $this->Html->link(__('List Stock Exchanges'), array('controller' => 'stock_exchanges', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Stock Exchange'), array('controller' => 'stock_exchanges', 'action' => 'add')); ?> </li>
+		<?php if ($this->Session->read('current_client') != null): ?>
+			<li><?php echo $this->Html->link(__('Return To Client'), array('controller' => 'clients', 'action' => 'view', $this->Session->read('current_client'))); ?> </li>
+		<?php endif; ?>
+		<li><?php echo $this->Html->link(__('Logout'), array('controller' => 'users', 'action' => 'logout')); ?></li>
 	</ul>
 </div>

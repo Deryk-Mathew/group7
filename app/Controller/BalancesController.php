@@ -33,11 +33,13 @@ class BalancesController extends AppController {
  * @return void
  */
 	public function view($id = null) {
+
 		if (!$this->Balance->exists($id)) {
 			throw new NotFoundException(__('Invalid balance'));
 		}
 		$options = array('conditions' => array('Balance.' . $this->Balance->primaryKey => $id));
 		$this->set('balance', $this->Balance->find('first', $options));
+
 	}
 
 /**
@@ -46,7 +48,9 @@ class BalancesController extends AppController {
  * @return void
  */
 	public function add() {
+		$var = $this->Session->read('current_client');
 		if ($this->request->is('post')) {
+			$this->request->data['Balance']['client_id'] = $var;
 			$this->Balance->create();
 			if ($this->Balance->save($this->request->data)) {
 				$this->Session->setFlash(__('The balance has been saved.'));
@@ -67,9 +71,11 @@ class BalancesController extends AppController {
  * @return void
  */
 	public function edit($id = null) {
+		$var = $this->Session->read('current_client');
 		if (!$this->Balance->exists($id)) {
 			throw new NotFoundException(__('Invalid balance'));
 		}
+		$this->request->data['Balance']['id'] = $id;
 		if ($this->request->is(array('post', 'put'))) {
 			if ($this->Balance->save($this->request->data)) {
 				$this->Session->setFlash(__('The balance has been saved.'));
@@ -104,5 +110,15 @@ class BalancesController extends AppController {
 			$this->Session->setFlash(__('The balance could not be deleted. Please, try again.'));
 		}
 		return $this->redirect(array('action' => 'index'));
+	}
+
+	/* Method to deposit cash into an account */
+	public function deposit($id){
+
+	}
+
+	/* Method to withdraw cash from an account*/
+	public function withdraw(){
+
 	}
 }

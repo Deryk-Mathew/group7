@@ -13,7 +13,8 @@ class ClientsController extends AppController {
  *
  * @var array
  */
-	public $components = array('Paginator', 'Session');
+	public $components = array('Paginator', 'Session', 'Auth');
+
 
 /**
  * index method
@@ -21,9 +22,28 @@ class ClientsController extends AppController {
  * @return void
  */
 	public function index() {
+		$this->Session->delete('current_client');
 		$this->Client->recursive = 0;
-		$this->set('clients', $this->Paginator->paginate());
+
+		if ($this->Auth->user('group_id') == 2) {
+
+			/* Display only clients user has */
+			$var = $this->Auth->user('id');#
+			debug($var);
+			$this->paginate = array(
+				'Clients' => array(
+	        	'conditions' => array('Client.user_id =' => '$var'),
+	        	'limit' => 10
+	        	)
+	    	);
+			$this->Paginator->settings = $this->paginate;
+		    $clients = $this->paginate('Client');
+		    $this->set(compact('clients'));
+		}else{
+			$this->set('clients', $this->Paginator->paginate());
+		}
 	}
+
 
 /**
  * view method
@@ -33,8 +53,8 @@ class ClientsController extends AppController {
  * @return void
  */
 	public function view($id = null) {
+		$this->Client->recursive = 2;
 		$this->Session->write('current_client', $id);
-
 		if (!$this->Client->exists($id)) {
 			throw new NotFoundException(__('Invalid client'));
 		}
@@ -48,8 +68,10 @@ class ClientsController extends AppController {
  * @return void
  */
 	public function add() {
+		$this->request->data['Client']['user_id'] = $this->Auth->user('id');
 		if ($this->request->is('post')) {
 			$this->Client->create();
+			
 			if ($this->Client->save($this->request->data)) {
 				$this->Session->setFlash(__('The client has been saved.'));
 				return $this->redirect(array('action' => 'index'));
@@ -69,6 +91,7 @@ class ClientsController extends AppController {
  * @return void
  */
 	public function edit($id = null) {
+
 		if (!$this->Client->exists($id)) {
 			throw new NotFoundException(__('Invalid client'));
 		}
@@ -107,4 +130,32 @@ class ClientsController extends AppController {
 		}
 		return $this->redirect(array('action' => 'index'));
 	}
+
+
+/**
+ * remove method
+ *
+ * @throws NotFoundException
+ * @param string $id
+ * @return void
+ */
+	public function remove($id = null) {
+		$this->Client->id = $id;
+		//$this->request->data['Client']['user_id'] = null;
+		if (!$this->Client->exists($id)) {
+			throw new NotFoundException(__('Invalid client'));
+		}
+		if ($this->request->allowMethod('post')){
+			if ($this->Client->saveField('user_id', '1')) {
+				$this->Session->setFlash(__('The client has been saved.'));
+				return $this->redirect(array('action' => 'index'));
+			} else {
+				$this->Session->setFlash(__('The client could not be saved. Please, try again.'));
+			}
+
+		}
+	}
+
 }
+
+	

@@ -33,6 +33,7 @@ class UsersController extends AppController {
  * @return void
  */
 	public function view($id = null) {
+		$this->User->recursive = 2;
 		if (!$this->User->exists($id)) {
 			throw new NotFoundException(__('Invalid user'));
 		}
@@ -106,29 +107,28 @@ class UsersController extends AppController {
 		return $this->redirect(array('action' => 'index'));
 	}
 
+	/* Method to login */
 	public function login() {
     if ($this->request->is('post')) {
     	if ($this->Session->read('Auth.User')) {
 	        $this->Session->setFlash('You are logged in!');
-	        return $this->redirect('/');
+	        return $this->redirect(array('controllers' => 'clients', 'action' => 'index'));
 	    }
         if ($this->Auth->login()) {
-            return $this->redirect($this->Auth->redirectUrl());
+            return $this->redirect($this->Auth->redirectUrl('/', array('controller' => 'clients', 'action' => 'index', 'home')));
         }
         	$this->Session->setFlash(__('Your username or password was incorrect.'));
     	}
     }
 
-	public function logout() {
-		$this->Session->destroy();
+    /* Method to logout*/
+	public function logout() { 
+		$this->Session->destroy(); // Destroys current session
 	    $this->Session->setFlash('Good-Bye');
 		$this->redirect($this->Auth->logout());
 	}
 
-public function beforeFilter() {
-    parent::beforeFilter();
-    $this->Auth->allow('initDB'); // We can remove this line after we're finished
-}
+
 
 	public function initDB() {
 	    $group = $this->User->Group;
@@ -137,6 +137,7 @@ public function beforeFilter() {
 	    $group->id = 1;
 	    $this->Acl->allow($group, 'controllers');
 
+	    // Allow FA's access to certain functions
 	    $group->id = 2;
 	    $this->Acl->deny($group, 'controllers');
 	    $this->Acl->allow($group, 'controllers/Clients');

@@ -21,7 +21,7 @@ class StocksController extends AppController {
  * @return void
  */
 	public function index() {
-		$this->Stock->recursive = 0;
+		$this->Stock->recursive = 2;
 		$this->set('stocks', $this->Paginator->paginate());
 	}
 
@@ -33,6 +33,7 @@ class StocksController extends AppController {
  * @return void
  */
 	public function view($id = null) {
+		$this->Stock->recursive = 2;
 		if (!$this->Stock->exists($id)) {
 			throw new NotFoundException(__('Invalid stock'));
 		}
