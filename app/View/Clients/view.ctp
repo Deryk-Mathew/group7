@@ -1,22 +1,23 @@
-<script type="text/javascript" src="https://www.google.com/jsapi"></script>
-    <script type="text/javascript">
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+	<script>
       google.load("visualization", "1", {packages:["corechart"]});
       google.setOnLoadCallback(drawChart);
       function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-          ['Cash', 'Stocks'],
-          ['Cash',     <?php echo $client['Balance']['cash_balance']; ?>],
-          ['Stocks',      1401.00],
-        ]);
+	        var data = google.visualization.arrayToDataTable([
+	          ['Cash', 'Stocks'],
+	          ['Cash',     <?php echo $client['Balance']['cash_balance']; ?>],
+	          ['Stocks',   1420.01],
+	        	]);
 
-        var options = {
-          title: 'Asset Balance',
-          is3D: true,
-        };
+	        var options = {
+	          title: 'Asset Balance',
+	          is3D: true,
+	        };
 
-        var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
-        chart.draw(data, options);
+	        var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
+	        chart.draw(data, options);
       }
+
     </script>
 
 <div class="clients view">
@@ -73,6 +74,7 @@
 			<?php echo $this->Form->postLink(__('Remove Client'), array('action' => 'remove', $client['Client']['id']), array(), __('Are you sure you want to remove # %s?', $client['Client']['id'])); ?> &nbsp;
 			</dd>
 	</dl>
+
 <div id="piechart_3d" style="width: 400px; height: 300px;"></div>
 
 </div>
@@ -80,33 +82,32 @@
 <div class="actions">
 	<h3><?php echo __('Actions'); ?></h3>
 	<ul>
-
 		<li><?php echo $this->Html->link(__('List Clients'), array('action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(__('New Client'), array('action' => 'add')); ?> </li>
 		<li><?php echo $this->Html->link(__('List Stocks'), array('controller' => 'stocks', 'action' => 'index', $client['Client']['id'])); ?> </li>
 		<li><?php echo $this->Html->link(__('Logout'), array('controller' => 'users', 'action' => 'logout')); ?></li>
 	</ul>
 </div>
-	
+
 	<!-- List client balance -->
 	<div class="related">
 		<h3><?php echo __('Related Balances'); ?></h3>
-	<?php if (!empty($client['Balance'])): ?>
-		<dl>
-		<dt><?php echo __('Cash Balance'); ?></dt>
-		<dd>
-		<?php echo $client['Balance']['cash_balance']; ?>
-		&nbsp;</dd>
-		<dt><?php echo __('Stock Balance'); ?></dt>
-		<dd>
-		<?php echo "Dummy"; ?>
-		&nbsp;</dd>
-		<dt><?php echo __('Total Balance'); ?></dt>
-		<dd>
-		<?php echo "Dummy"; ?>
-		&nbsp;</dd>
-		</dl>
-	<?php endif; ?>
+			<?php if (!empty($client['Balance'])): ?>
+				<dl>
+				<dt><?php echo __('Cash Balance'); ?></dt>
+				<dd>
+				<?php echo $client['Balance']['cash_balance']; ?>
+				&nbsp;</dd>
+				<dt><?php echo __('Stock Balance'); ?></dt>
+				<dd>
+				<?php echo "Dummy"; ?>
+				&nbsp;</dd>
+				<dt><?php echo __('Total Balance'); ?></dt>
+				<dd>
+				<?php echo "Dummy"; ?>
+				&nbsp;</dd>
+				</dl>
+			<?php endif; ?>
 		<div class="actions">
 			<ul>
 				<li><?php echo $this->Html->link(__('Deposit'), array('controller' => 'balances', 'action' => 'deposit', $client['Balance']['id'])); ?></li>
@@ -114,13 +115,13 @@
 			</ul>
 		</div>
 	</div>
-
+	
 	<!-- List all client stocks -->
 	<div class="related">
 	<h3><?php echo __('Related Client Stocks'); ?></h3>
 
 	<?php if (!empty($client['ClientStock'])): ?>
-		<table cellpadding = "0" cellspacing = "0">
+		<table id="stockTable" cellpadding = "0" cellspacing = "0">
 			<tr>
 				<th><?php echo __('Stock Name'); ?></th>
 				<th><?php echo __('Stock Symbol'); ?></th>
@@ -129,7 +130,6 @@
 				<th><?php echo __('Purchase Date'); ?></th>
 				<th class="actions"><?php echo __('Actions'); ?></th>
 			</tr>
-
 			<?php foreach ($client['ClientStock'] as $clientStock): ?>
 				<tr>
 					<td><?php echo $this->Html->link($clientStock['Stock']['name'], array('controller' => 'stocks', 'action' => 'view', $clientStock['Stock']['id'])); ?></td>
@@ -137,9 +137,10 @@
 					<td><?php echo $this->Html->link($clientStock['quantity'], array('controller' => 'stocks', 'action' => 'view', $clientStock['Stock']['id'])); ?></td>
 					<td><?php echo $this->Html->link($clientStock['cost'], array('controller' => 'stocks', 'action' => 'view', $clientStock['Stock']['id'])); ?></td>
 					<td><?php echo $this->Html->link($clientStock['purchase'], array('controller' => 'stocks', 'action' => 'view', $clientStock['Stock']['id'])); ?></td>
+					<td><?php $stock_value =  $clientStock['Stock']['lastTradePriceOnly'] * $clientStock['quantity']; ?></td>
 					<td class="actions">
 						<?php echo $this->Html->link(__('View'), array('controller' => 'stocks', 'action' => 'view', $clientStock['Stock']['id'])); ?>
-						<?php echo $this->Html->link(__('Buy'), array('controller' => 'clientStocks', 'action' => 'buyStock', $clientStock['Stock']['id'], $clientStock['Stock']['daysLow'])); ?>
+						<?php echo $this->Html->link(__('Buy'), array('controller' => 'clientStocks', 'action' => 'buyStock', $clientStock['Stock']['id'], $clientStock['Stock']['lastTradePriceOnly'])); ?>
 						<?php echo $this->Form->postLink(__('Sell'), array('controller' => 'clientStocks', 'action' => 'edit', $clientStock['id'])); ?>
 					</td>
 				</tr>
@@ -154,7 +155,7 @@
 		</ul>
 	</div>
 </div>
-		<p>
+
 <!-- List all client notes -->
 <div class="related">
 	<h3><?php echo __('Related Notes'); ?></h3>
@@ -183,4 +184,8 @@
 		</ul>
 	</div>
 </div>
+
+
+
+	
 

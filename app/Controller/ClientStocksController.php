@@ -108,16 +108,15 @@ public function view($id = null) {
 	}
 
 
-	public function buyStock($id, $daysLow) {
+	public function buyStock($id, $lastTradePriceOnly) {
 
 		$var = $this->Session->read('current_client');
 
-		$this->request->data['ClientStock']['client_id'] = $var;	
-		$this->request->data['ClientStock']['stock_id'] = $id;
-		$this->request->data['ClientStock']['cost'] = $daysLow;
-
 		$this->ClientStock->create();
 		if ($this->request->is(array('post', 'put'))) {
+			$this->request->data['ClientStock']['client_id'] = $var;	
+			$this->request->data['ClientStock']['stock_id'] = $id;
+			$this->request->data['ClientStock']['cost'] = $lastTradePriceOnly;
 			if ($this->ClientStock->save($this->request->data)) {
 				$this->Session->setFlash(__('The client stock has been purchased.'));
 				return $this->redirect(array('controller' => 'clients', 'action' => 'view', $var));

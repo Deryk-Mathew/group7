@@ -6,7 +6,7 @@
 			<th><?php echo $this->Paginator->sort('NINum'); ?></th>
 			<th><?php echo $this->Paginator->sort('name'); ?></th>
 			<th><?php echo $this->Paginator->sort('registered'); ?></th>
-			<th class="actions"><?php echo __('Actions'); ?></th>
+			<!--<th class="actions"><?php echo __('Actions'); ?></th> -->
 	</tr>
 	</thead>
 	<tbody>
@@ -15,11 +15,11 @@
 		<td><?php echo $this->Html->link($client['Client']['NINum'], array('controller' => 'clients', 'action' => 'view', $client['Client']['id'])); ?>&nbsp;</td>
 		<td><?php echo $this->Html->link($client['Client']['name'], array('controller' => 'clients', 'action' => 'view', $client['Client']['id'])); ?>&nbsp;</td>
 		<td><?php echo $this->Html->link($client['Client']['registered'], array('controller' => 'clients', 'action' => 'view', $client['Client']['id'])); ?>&nbsp;</td>
-		<td class="actions">
+		<!-- <td class="actions">
 			<?php echo $this->Html->link(__('View'), array('action' => 'view', $client['Client']['id'])); ?>
 			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $client['Client']['id'])); ?>
 			<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $client['Client']['id']), array(), __('Are you sure you want to delete # %s?', $client['Client']['id'])); ?>
-		</td>
+		</td> -->
 	</tr>
 <?php endforeach; ?>
 	</tbody>
@@ -44,5 +44,17 @@
 		<li><?php echo $this->Html->link(__('New Client'), array('action' => 'add')); ?></li>
 		<li><?php echo $this->Html->link(__('List Stocks'), array('controller' => 'stocks', 'action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(__('Logout'), array('controller' => 'users', 'action' => 'logout')); ?></li>
+
 	</ul>
 </div>
+
+		
+		
+<?php if (AuthComponent::User('group_id') == 1): ?>
+	<div class="actions">
+		<h3><?php echo __('Administration'); ?></h3>
+		<ul>
+			<li><?php echo $this->Html->link(__('List Users'), array('controller' => 'users', 'action' => 'index')); ?> </li>
+		</ul>
+	</div>
+<?php endif; ?>

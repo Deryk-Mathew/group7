@@ -39,7 +39,7 @@
 		<td class="actions">
 			<?php echo $this->Html->link(__('View'), array('action' => 'view', $stock['Stock']['id'])); ?>
 			<?php if ($this->Session->read('current_client') != null): ?>
-			<?php echo $this->Html->link(__('Buy'), array('controller' => 'client_stocks', 'action' => 'buyStock', $stock['Stock']['id'], $stock['Stock']['daysLow'])); ?>
+			<?php echo $this->Html->link(__('Buy'), array('controller' => 'client_stocks', 'action' => 'buyStock', $stock['Stock']['id'], $stock['Stock']['lastTradePriceOnly'])); ?>
 			<?php endif; ?>
 			<!-- Only show if admin logged in -->
 			<?php if (AuthComponent::User('group_id') == 1): ?>

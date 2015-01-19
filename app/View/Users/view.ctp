@@ -26,6 +26,10 @@
 			<?php echo $this->Html->link($user['Group']['name'], array('controller' => 'groups', 'action' => 'view', $user['Group']['id'])); ?>
 			&nbsp;
 		</dd>
+		<dt> <?php echo __('Actions'); ?> </dt>
+			<dd><?php echo $this->Html->link(__('Edit User'), array('action' => 'edit', $user['User']['id'])); ?> &nbsp;
+			<?php echo $this->Form->postLink(__('Delete Client'), array('action' => 'delete', $user['User']['id']), array(), __('Are you sure you want to delete # %s?', $user['User']['id'])); ?> &nbsp; 
+			</dd>
 	</dl>
 </div>
 
@@ -33,10 +37,9 @@
 	<h3><?php echo __('Actions'); ?></h3>
 	<?php if (AuthComponent::User('group_id') == 1): ?>
 		<ul>
-			<li><?php echo $this->Html->link(__('New Client'), array('controller' => 'clients', 'action' => 'add')); ?></li>
 			<li><?php echo $this->Html->link(__('List Clients'), array('controller' => 'clients', 'action' => 'index')); ?> </li>
 			<li><?php echo $this->Html->link(__('List Users'), array('controller' => 'users', 'action' => 'index')); ?> </li>
-			<li><?php echo $this->Html->link(__('New User'), array('controller' => 'users', 'action' => 'add')); ?> </li>
+			<li><?php echo $this->Html->link(__('List Groups'), array('controller' => 'groups', 'action' => 'index')); ?> </li>
 			<li><?php echo $this->Html->link(__('Logout'), array('controller' => 'users', 'action' => 'logout')); ?></li>
 		</ul>
 	<?php endif; ?>
@@ -47,11 +50,8 @@
 	<?php if (!empty($user['Client'])): ?>
 	<table cellpadding = "0" cellspacing = "0">
 	<tr>
-		<th><?php echo __('Id'); ?></th>
-		<th><?php echo __('User Id'); ?></th>
 		<th><?php echo __('NINum'); ?></th>
-		<th><?php echo __('Forename'); ?></th>
-		<th><?php echo __('Surname'); ?></th>
+		<th><?php echo __('Name'); ?></th>
 		<th><?php echo __('Street'); ?></th>
 		<th><?php echo __('Town'); ?></th>
 		<th><?php echo __('County'); ?></th>
@@ -61,11 +61,8 @@
 	</tr>
 	<?php foreach ($user['Client'] as $client): ?>
 		<tr>
-			<td><?php echo $client['id']; ?></td>
-			<td><?php echo $client['user_id']; ?></td>
 			<td><?php echo $client['NINum']; ?></td>
-			<td><?php echo $client['forename']; ?></td>
-			<td><?php echo $client['surname']; ?></td>
+			<td><?php echo $client['name']; ?></td>
 			<td><?php echo $client['street']; ?></td>
 			<td><?php echo $client['town']; ?></td>
 			<td><?php echo $client['county']; ?></td>

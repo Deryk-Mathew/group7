@@ -134,7 +134,7 @@
 			<?php endif; ?>
 		</dd>
 		<dt><?php echo __('Buy Stock'); ?></dt>
-		<dd><?php echo $this->Html->link(__('Buy Stock'), array('controller' => 'client_stocks', 'action' => 'buyStock', $stock['Stock']['id'], $stock['Stock']['daysLow'])); ?>&nbsp;</dd>
+		<dd><?php echo $this->Html->link(__('Buy Stock'), array('controller' => 'client_stocks', 'action' => 'buyStock', $stock['Stock']['id'], $stock['Stock']['lastTradePriceOnly'])); ?>&nbsp;</dd>
 	</dl>
 	<div id="ex2"></div>
 </div>

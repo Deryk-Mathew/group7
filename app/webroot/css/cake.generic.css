@@ -132,6 +132,7 @@ height: 10%;
 }
 .footerFull {
 /*position: fixed;*/
+display:none;
 	padding-top: .7em;
 	width:100%;
 	background-color: black;
