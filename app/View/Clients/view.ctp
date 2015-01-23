@@ -74,23 +74,11 @@
 			<?php echo $this->Form->postLink(__('Remove Client'), array('action' => 'remove', $client['Client']['id']), array(), __('Are you sure you want to remove # %s?', $client['Client']['id'])); ?> &nbsp;
 			</dd>
 	</dl>
+	
+	
 
-<div id="piechart_3d" style="width: 400px; height: 300px;"></div>
-
-</div>
-
-<div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
-	<ul>
-		<li><?php echo $this->Html->link(__('List Clients'), array('action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Client'), array('action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Stocks'), array('controller' => 'stocks', 'action' => 'index', $client['Client']['id'])); ?> </li>
-		<li><?php echo $this->Html->link(__('Logout'), array('controller' => 'users', 'action' => 'logout')); ?></li>
-	</ul>
-</div>
-
-	<!-- List client balance -->
-	<div class="related">
+<!-- List client balance -->
+	<div class="clientBalance">
 		<h3><?php echo __('Related Balances'); ?></h3>
 			<?php if (!empty($client['Balance'])): ?>
 				<dl>
@@ -112,13 +100,57 @@
 			<ul>
 				<li><?php echo $this->Html->link(__('Deposit'), array('controller' => 'balances', 'action' => 'deposit', $client['Balance']['id'])); ?></li>
 				<li><?php echo $this->Html->link(__('Withdraw'), array('controller' => 'balances', 'action' => 'withdraw', $client['Balance']['id'])); ?></li>
+				<li><?php echo $this->Html->link(__('Buy New Stock'), array('controller' => 'stocks', 'action' => 'index')); ?> </li>
 			</ul>
+
 		</div>
+		<div id="piechart_3d" style="width: 100%; height: 300px;"></div>
+		
 	</div>
+<!-- List all client notes -->
+
+	<h3 class="notes"><?php echo __('Related Notes'); ?></h3>
+	<?php if (!empty($client['Note'])): ?>
+	<table cellpadding = "0" cellspacing = "0">
+	<tr>
+		<th><?php echo __('Created'); ?></th>
+		<th class="actions"><?php echo __('Actions'); ?></th>
+	</tr>
+	<?php foreach ($client['Note'] as $note): ?>
+		<tr>
+			<td><?php echo $this->Html->link($note['created'], array('controller' => 'notes', 'action' => 'view', $note['id'])); ?></td>
+			<td class="actions">
+				<?php echo $this->Html->link(__('View'), array('controller' => 'notes', 'action' => 'view', $note['id'])); ?>
+				<?php echo $this->Html->link(__('Edit'), array('controller' => 'notes', 'action' => 'edit', $note['id'])); ?>
+				<?php echo $this->Form->postLink(__('Delete'), array('controller' => 'notes', 'action' => 'delete', $note['id']), array(), __('Are you sure you want to delete # %s?', $note['id'])); ?>
+			</td>
+		</tr>
+	<?php endforeach; ?>
+	</table>
+<?php endif; ?>
+	<!-- Add new client note -->
+	<div class="actions">
+		<ul>
+			<li><?php echo $this->Html->link(__('New Note'), array('controller' => 'notes', 'action' => 'add')); ?> </li>
+		</ul>
+	</div>
+	<!-- New Note div end -->
+</div>
+
+<div class="actions">
+	<h3><?php echo __('Actions'); ?></h3>
+	<ul>
+		<li><?php echo $this->Html->link(__('List Clients'), array('action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('New Client'), array('action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('List Stocks'), array('controller' => 'stocks', 'action' => 'index', $client['Client']['id'])); ?> </li>
+		<li><?php echo $this->Html->link(__('Logout'), array('controller' => 'users', 'action' => 'logout')); ?></li>
+	</ul>
+</div>
+
+	
 	
 	<!-- List all client stocks -->
 	<div class="related">
-	<h3><?php echo __('Related Client Stocks'); ?></h3>
 
 	<?php if (!empty($client['ClientStock'])): ?>
 		<table id="stockTable" cellpadding = "0" cellspacing = "0">
@@ -148,41 +180,10 @@
 		</table>
 	<?php endif; ?>
 
-	<!-- Add new stock to client -->
-	<div class="actions">
-		<ul>
-			<li><?php echo $this->Html->link(__('Buy New Stock'), array('controller' => 'stocks', 'action' => 'index')); ?> </li>
-		</ul>
-	</div>
+	
 </div>
 
-<!-- List all client notes -->
-<div class="related">
-	<h3><?php echo __('Related Notes'); ?></h3>
-	<?php if (!empty($client['Note'])): ?>
-	<table cellpadding = "0" cellspacing = "0">
-	<tr>
-		<th><?php echo __('Created'); ?></th>
-		<th class="actions"><?php echo __('Actions'); ?></th>
-	</tr>
-	<?php foreach ($client['Note'] as $note): ?>
-		<tr>
-			<td><?php echo $this->Html->link($note['created'], array('controller' => 'notes', 'action' => 'view', $note['id'])); ?></td>
-			<td class="actions">
-				<?php echo $this->Html->link(__('View'), array('controller' => 'notes', 'action' => 'view', $note['id'])); ?>
-				<?php echo $this->Html->link(__('Edit'), array('controller' => 'notes', 'action' => 'edit', $note['id'])); ?>
-				<?php echo $this->Form->postLink(__('Delete'), array('controller' => 'notes', 'action' => 'delete', $note['id']), array(), __('Are you sure you want to delete # %s?', $note['id'])); ?>
-			</td>
-		</tr>
-	<?php endforeach; ?>
-	</table>
-<?php endif; ?>
-	<!-- Add new client note -->
-	<div class="actions">
-		<ul>
-			<li><?php echo $this->Html->link(__('New Note'), array('controller' => 'notes', 'action' => 'add')); ?> </li>
-		</ul>
-	</div>
+
 </div>
 
 

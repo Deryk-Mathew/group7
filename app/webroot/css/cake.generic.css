@@ -16,16 +16,52 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
+/** View Client Page **/
+.clientBalance > dl {
+	width: 95%;
+}
+.clientBalance > .actions {
+	width: 95%;
+}
+
+.clientBalance > .actions ul li {
+	display: inline-block;
+	width: 30%;
+}
+
+div.clients.view > table {
+	width: 43%;
+	display: inline-block;
+}
+div.clients.view > table > tbody{
+	width: 100%;
+	display: table;
+}
+h3.notes {
+	margin-top: 2em;
+}
+/** End of View Client Page **/
+
+
+
 * {
 	margin:0;
 	padding:0;
 }
 
+div.clientDetails {
+	width: 45%;
+}
+
+div.clientOptions {
+	width: 40%;
+}
 /** General Style Info **/
 body {
 	background: white;
 	color: #fff;
 	font-family:'lucida grande',verdana,helvetica,arial,sans-serif;
+	font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif;
 	font-size:90%;
 	margin: 0;
 }
@@ -55,12 +91,10 @@ h1 {
 h2 {
 	background:#fff;
 	color: #e32;
-	font-family:'Gill Sans','lucida grande', helvetica, arial, sans-serif;
 	font-size: 190%;
 }
 h3 {
 	color: #2c6877;
-	font-family:'Gill Sans','lucida grande', helvetica, arial, sans-serif;
 	font-size: 165%;
 }
 h4 {
@@ -130,6 +164,12 @@ height: 10%;
 	padding: 10px 20px 40px 20px;
 	overflow: auto;
 }
+
+.clientBalance {
+	width: 50%;
+	float: right;
+}
+
 .footerFull {
 /*position: fixed;*/
 display:none;
@@ -169,13 +209,13 @@ div.form,
 div.index,
 div.view {
 	float:right;
-	width:76%;
+	width:80%;
 	border-left:1px solid #666;
 	padding:10px 2%;
 }
 div.actions {
 	float:left;
-	width:16%;
+	width:12%;
 	padding:10px 1.5%;
 }
 div.actions h3 {
@@ -284,11 +324,14 @@ table td.actions a {
 	color: #c73e14;
 }
 
+#piechart_3d{
+display: inline-block;
+}
 /** Scaffold View **/
 dl {
 	line-height: 2em;
-	margin: 0em 0em;
-	width: 60%;
+	width: 43%;
+	display: inline-block;
 }
 dl dd:nth-child(4n+2),
 dl dt:nth-child(4n+1) {
@@ -299,7 +342,7 @@ dt {
 	font-weight: bold;
 	padding-left: 4px;
 	vertical-align: top;
-	width: 10em;
+	width: 30%;
 }
 dd {
 	margin-left: 10em;
@@ -310,9 +353,10 @@ dd {
 /** Forms **/
 form {
 	clear: both;
-	margin-right: 20px;
+	margin-right: auto;
+	margin-left: auto;
 	padding: 0;
-	width: 95%;
+	width: 40%;
 }
 fieldset {
 	border: none;
@@ -611,7 +655,7 @@ input[type=submit]:active,
 /** Related **/
 .related {
 	clear: both;
-	display: block;
+	display: inline-block;
 }
 
 /** Debugging **/

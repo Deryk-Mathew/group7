@@ -42,16 +42,16 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 		<div id="header">
 			<?php echo $this->Html->image('website-logo.png', array('alt' => 'Edit', 'border' => '0', 'height' => '95%'));
 			
-			//if (AuthComponent::User('group_id') == 1){
+			if ((AuthComponent::User('group_id')) != null){
 			echo '<div id="loginInfo"><p><b>Logged In: </b>';
-			echo 'first name code here';
-			echo ' ';
-			echo 'second name code here</p><br/>';
+			echo $this->session->read( 'Auth.User.full_name' );
+			echo '<br/>';
 			echo $this->Html->link(__('Logout'), array('controller' => 'users', 'action' => 'logout'));
 			echo '</div>';
-			//}
+			}
 			 ?>
-
+<?php// echo h($client['Client']['NINum']); 
+?>
 		</div>
 		</div>
 		<div id="content">
