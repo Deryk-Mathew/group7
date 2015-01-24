@@ -14,7 +14,7 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
-$cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework');
+$cakeDescription = __d('cake_dev', 'Wealth Management System');
 $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 ?>
 <!DOCTYPE html>
@@ -40,7 +40,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 		<div class="headerFull">
 		
 		<div id="header">
-			<?php echo $this->Html->image('website-logo.png', array('alt' => 'Edit', 'border' => '0', 'height' => '95%'));
+			<?php echo $this->Html->image('website-logo.png', array('alt' => 'Edit', 'border' => '0', 'width' => '30%'));
 			
 			if ((AuthComponent::User('group_id')) != null){
 			echo '<div id="loginInfo"><p><b>Logged In: </b>';
