@@ -4,14 +4,12 @@
 	<fieldset>
 		<legend><?php echo __('Buy Stock'); ?></legend>
 	<?php
-		//echo $this->Form->input('stock_id',array('readonly' => 'readonly'));
-		echo $this->Form->input('cost', array('readonly' => 'readonly'));
-		echo $this->Form->input('quantity');
-		echo $this->Form->input('purchase', array('readonly' => 'readonly'));
+		echo $this->Form->input('quantity', array('value' => '0'));
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Buy')); ?>
 </div>
+
 <div class="actions">
 	<h3><?php echo __('Actions'); ?></h3>
 	<ul>

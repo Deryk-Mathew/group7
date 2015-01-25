@@ -159,22 +159,31 @@
 				<th><?php echo __('Stock Symbol'); ?></th>
 				<th><?php echo __('Quantity'); ?></th>
 				<th><?php echo __('Cost'); ?></th>
-				<th><?php echo __('Purchase Date'); ?></th>
+				<th><?php echo __('Average Estimated Stock Owned Price'); ?></th>
+				<th><?php echo __('Current Stock Price'); ?></th>
+				<th><?php echo __('Average Estimated Profit Per Stock'); ?></th>
 				<th class="actions"><?php echo __('Actions'); ?></th>
 			</tr>
 			<?php foreach ($client['ClientStock'] as $clientStock): ?>
 				<tr>
-					<td><?php echo $this->Html->link($clientStock['Stock']['name'], array('controller' => 'stocks', 'action' => 'view', $clientStock['Stock']['id'])); ?></td>
-					<td><?php echo $this->Html->link($clientStock['Stock']['symbol'], array('controller' => 'stocks', 'action' => 'view', $clientStock['Stock']['id'])); ?></td>
-					<td><?php echo $this->Html->link($clientStock['quantity'], array('controller' => 'stocks', 'action' => 'view', $clientStock['Stock']['id'])); ?></td>
-					<td><?php echo $this->Html->link($clientStock['cost'], array('controller' => 'stocks', 'action' => 'view', $clientStock['Stock']['id'])); ?></td>
-					<td><?php echo $this->Html->link($clientStock['purchase'], array('controller' => 'stocks', 'action' => 'view', $clientStock['Stock']['id'])); ?></td>
-					<td><?php $stock_value =  $clientStock['Stock']['lastTradePriceOnly'] * $clientStock['quantity']; ?></td>
-					<td class="actions">
-						<?php echo $this->Html->link(__('View'), array('controller' => 'stocks', 'action' => 'view', $clientStock['Stock']['id'])); ?>
-						<?php echo $this->Html->link(__('Buy'), array('controller' => 'clientStocks', 'action' => 'buyStock', $clientStock['Stock']['id'], $clientStock['Stock']['lastTradePriceOnly'])); ?>
-						<?php echo $this->Form->postLink(__('Sell'), array('controller' => 'clientStocks', 'action' => 'edit', $clientStock['id'])); ?>
-					</td>
+					<?php if ($clientStock['quantity'] > 0): ?>
+						<td><?php echo $this->Html->link($clientStock['Stock']['name'], array('controller' => 'stocks', 'action' => 'view', $clientStock['Stock']['id'])); ?></td>
+						<td><?php echo $this->Html->link($clientStock['Stock']['symbol'], array('controller' => 'stocks', 'action' => 'view', $clientStock['Stock']['id'])); ?></td>
+						<td><?php echo $this->Html->link($clientStock['quantity'], array('controller' => 'stocks', 'action' => 'view', $clientStock['Stock']['id'])); ?></td>
+						<td><?php echo $this->Html->link($clientStock['cost'], array('controller' => 'stocks', 'action' => 'view', $clientStock['Stock']['id'])); ?></td>
+
+						<td><?php $aveStock = $clientStock['cost']/$clientStock['quantity']; echo h(round($aveStock,2)); ?></td>
+
+						<td><?php echo $this->Html->link($clientStock['Stock']['lastTradePriceOnly'], array('controller' => 'stocks', 'action' => 'view', $clientStock['Stock']['id'])); ?></td>
+
+						<td><?php $profit = $clientStock['Stock']['lastTradePriceOnly'] - $aveStock; echo h(round($profit,2));?></td>
+
+						<td class="actions">
+							<?php echo $this->Html->link(__('View'), array('controller' => 'stocks', 'action' => 'view', $clientStock['Stock']['id'])); ?>
+							<?php echo $this->Html->link(__('Buy'), array('controller' => 'clientStocks', 'action' => 'buyStock', $clientStock['client_id'], $clientStock['Stock']['id'])); ?>
+							<?php echo $this->Html->link(__('Sell'), array('controller' => 'clientStocks', 'action' => 'sellStock', $clientStock['client_id'], $clientStock['Stock']['id'])); ?>
+						</td>
+					<?php endif; ?>
 				</tr>
 			<?php endforeach; ?>
 		</table>

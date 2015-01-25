@@ -13,7 +13,7 @@ class ClientStocksController extends AppController {
  *
  * @var array
  */
-	public $components = array('Paginator');
+	public $components = array('Paginator', 'Common');
 
 /**
  * index method
@@ -107,37 +107,102 @@ public function view($id = null) {
 		return $this->redirect(array('action' => 'index'));
 	}
 
+	/* Function to buy Stock incomplete 24/01/15 */
 
-	public function buyStock($id, $lastTradePriceOnly) {
+	public function buyStock($client_id, $id) {
 
-		$var = $this->Session->read('current_client');
+		$conditions = array('ClientStock.client_id' => $client_id, 'ClientStock.stock_id' => $id);
 
-		$this->ClientStock->create();
-		if ($this->request->is(array('post', 'put'))) {
-			$this->request->data['ClientStock']['client_id'] = $var;	
-			$this->request->data['ClientStock']['stock_id'] = $id;
-			$this->request->data['ClientStock']['cost'] = $lastTradePriceOnly;
-			if ($this->ClientStock->save($this->request->data)) {
-				$this->Session->setFlash(__('The client stock has been purchased.'));
-				return $this->redirect(array('controller' => 'clients', 'action' => 'view', $var));
+		// Check client_stock table in database to see if client holds specific stock
+		if ($this->ClientStock->hasAny($conditions)){
+
+			$specificallyThisOne = $this->ClientStock->find('first', array('conditions' => $conditions));
+
+			debug($specificallyThisOne);
+
+			if($this->request->is(array('post', 'put'))) {
+
+				$this->request->data['ClientStock']['id'] = $specificallyThisOne['ClientStock']['id'];
+				$this->request->data['ClientStock']['client_id'] = $specificallyThisOne['ClientStock']['client_id'];
+				$this->request->data['ClientStock']['stock_id'] = $specificallyThisOne['ClientStock']['stock_id'];
+
+				$temp = $this->request->data['ClientStock']['quantity'] * $specificallyThisOne['Stock']['lastTradePriceOnly'];
+
+				$var = $specificallyThisOne['ClientStock']['cost'];
+
+				$this->request->data['ClientStock']['cost'] = $this->Common->mathsAdd($var, $temp);
+
+				$this->request->data['ClientStock']['quantity'] = $this->Common->mathsAdd($specificallyThisOne['ClientStock']['quantity'], $this->request->data['ClientStock']['quantity']);
+
+				if ($this->ClientStock->save($this->request->data)) {
+					$this->Session->setFlash(__('The client stock has been purchased.'));
+					return $this->redirect(array('controller' => 'clients', 'action' => 'view', $specificallyThisOne['ClientStock']['client_id']));
+				} else {
+					$this->Session->setFlash(__('The client stock could not be purchased. Please, try again.'));
+				} 
+			}
+
+		} else{
+			$cost = $this->ClientStock->Stock->read('lastTradePriceOnly', $id);
+
+			debug($cost);
+
+			if ($this->request->is(array('post', 'put'))) {
+				$this->ClientStock->create();
+
+					$this->request->data['ClientStock']['client_id'] = $client_id;
+					$this->request->data['ClientStock']['stock_id'] = $id;
+
+					$this->request->data['ClientStock']['cost'] = $this->request->data['ClientStock']['quantity'] * $cost['Stock']['lastTradePriceOnly'];
+					
+				if ($this->ClientStock->save($this->request->data)) {
+					$this->Session->setFlash(__('The client stock has been purchased.'));
+					return $this->redirect(array('controller' => 'clients', 'action' => 'view', $client_id));
 			} else {
-				$this->Session->setFlash(__('The client stock could not be purchased. Please, try again.'));
+				$this->Session->setFlash(__('The client stock could not be saved. Please, try again.'));
+				}
 			}
 		}
 	}
-/*
-	public function view2(){
-		$db = $this->ClientStock->getDataSource();
-		$db->fetchAll(
-    	'SELECT client_stocks.quantity, client_stocks.cost, client_stocks.purchase, stocks.name, stocks.symbol 
-    	FROM `client_stocks` join `stocks` 
-    	on client_stocks.stock_id=stocks.id 
-    	where client_stocks.client_id=1 
-    	group by stocks.name');
-		
-	//	$this->Client->recursive = 0;
-		$this->set('client', $this->ClientStocks->find('first', $db),  $this->Paginator->paginate());
-		//debug($db);
-	}
-*/
+
+	/* Function to sell stock Incomplete 24/01/15 */
+
+	public function sellStock($client_id, $id){
+
+		// search conditions
+		$conditions = array('ClientStock.client_id' => $client_id, 'ClientStock.stock_id' => $id);
+
+		if ($this->ClientStock->hasAny($conditions)){
+
+			$specificallyThisOne = $this->ClientStock->find('first', array('conditions' => $conditions));		
+
+			if($this->request->is(array('post', 'put'))) {
+
+				if($this->request->data['ClientStock']['quantity'] < $specificallyThisOne['ClientStock']['quantity'] or $this->request->data['ClientStock']['quantity'] == $specificallyThisOne['ClientStock']['quantity']){
+
+					$this->request->data['ClientStock']['id'] = $specificallyThisOne['ClientStock']['id'];
+					$this->request->data['ClientStock']['client_id'] = $specificallyThisOne['ClientStock']['client_id'];
+					$this->request->data['ClientStock']['stock_id'] = $specificallyThisOne['ClientStock']['stock_id'];
+
+					$temp = $this->request->data['ClientStock']['quantity'] * $specificallyThisOne['Stock']['lastTradePriceOnly'];
+
+					$var = $specificallyThisOne['ClientStock']['cost'];
+
+					$this->request->data['ClientStock']['cost'] = $this->Common->mathsSub($var, $temp);
+					
+					$this->request->data['ClientStock']['quantity'] = $this->Common->mathsSub($specificallyThisOne['ClientStock']['quantity'], $this->request->data['ClientStock']['quantity']);
+	
+					if ($this->ClientStock->save($this->request->data)) {
+						$this->Session->setFlash(__('The client stock has been sold.'));
+						return $this->redirect(array('controller' => 'clients', 'action' => 'view', $specificallyThisOne['ClientStock']['client_id']));
+					} else {
+						$this->Session->setFlash(__('The client stock could not be sold. Please, try again.'));
+						}
+					} else {
+						$this->Session->setFlash(__('The client does not have enough stock. Please, try again.'));
+					} 
+				}
+			}
+		}
 }
+

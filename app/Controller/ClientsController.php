@@ -28,17 +28,14 @@ class ClientsController extends AppController {
 		if ($this->Auth->user('group_id') == 2) {
 
 			/* Display only clients user has */
-			$var = $this->Auth->user('id');#
+			$var = $this->Auth->user('id');
 			debug($var);
 			$this->paginate = array(
-				'Clients' => array(
-	        	'conditions' => array('Client.user_id =' => '$var'),
+	        	'conditions' => array('Client.user_id' => $var),
 	        	'limit' => 10
-	        	)
+	        	
 	    	);
-			$this->Paginator->settings = $this->paginate;
-		    $clients = $this->paginate('Client');
-		    $this->set(compact('clients'));
+		    $this->set('clients', $this->paginate($this->Client));
 		}else{
 			$this->set('clients', $this->Paginator->paginate());
 		}

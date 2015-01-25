@@ -90,6 +90,10 @@ class Client extends AppModel {
 				'rule' => array('notEmpty'),
 				//'message' => 'Please enter data.',
 				),
+			'postcode' => array(
+        		'rule' => array('postal', null, 'uk'),
+        		'message' => 'Please enter a valid postcode.'
+    		),
 			/*'Invalid Postcode' => array(
 				'rule' => array('validPostcode'),
 				'message' => 'Please enter a valid postcode i.e. AB12 3CD',
@@ -183,12 +187,7 @@ class Client extends AppModel {
 		return preg_match('/^[ABCEGHJ-PRSTW-Z][ABCEGHJ-NPRSTW-Z]\d{6}[A-D]$/', $value);
 	}
 
-	public function validPostcode($check){
-		$value = array_values($check);
-		$value = $value[0];
-		return preg_match('/(GIR 0AA)|((([A-Z-[QVX]][0-9][0-9]?)|(([A-Z-[QVX]][A-Z-[IJZ]][0-9][0-9]?)|(([A-Z-[QVX]][0-9][A-HJKSTUW])|([A-Z-[QVX]][A-Z-[IJZ]][0-9][ABEHMNPRVWXY])))) [0-9][A-Z-[CIKMOV]]{2})/', $value);
-	}
-
+	
 	public function custFind(){
 		$var = $this->Auth->user('id');
 		$clients = $this->Client->findAllByUserId($var);

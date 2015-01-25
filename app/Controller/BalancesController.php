@@ -13,7 +13,7 @@ class BalancesController extends AppController {
  *
  * @var array
  */
-	public $components = array('Paginator');
+	public $components = array('Paginator', 'Common');
 
 /**
  * index method
@@ -54,7 +54,7 @@ class BalancesController extends AppController {
 			$this->Balance->create();
 			if ($this->Balance->save($this->request->data)) {
 				$this->Session->setFlash(__('The balance has been saved.'));
-				return $this->redirect(array('action' => 'index'));
+				return $this->redirect(array('controller' => 'clients', 'action' => 'index'));
 			} else {
 				$this->Session->setFlash(__('The balance could not be saved. Please, try again.'));
 			}
@@ -112,18 +112,25 @@ class BalancesController extends AppController {
 		return $this->redirect(array('action' => 'index'));
 	}
 
+
 	/* Method to deposit cash into an account */
 	public function deposit($id = null){
 		$cc = $this->Session->read('current_client');
+
 		if (!$this->Balance->exists($id)) {
-			throw new NotFoundException(__('Invalid balance'));
+			$this->add();
+			//throw new NotFoundException(__('Invalid balance'));
 		}
 
 		if ($this->request->is(array('post', 'put'))) {
-			$tmp = $this->Balance->read('cash_balance', $id);
-			$var = $this->request->data['Balance']['cash_balance'];
 
-			$this->request->data['Balance']['cash_balance'] = $tmp['Balance']['cash_balance'] + $var;
+			$tmp = $this->Balance->read('cash_balance', $id); //read current balance
+			$var = $this->request->data['Balance']['cash_balance']; // read amount to be added to balance
+
+			// Call mathsAdd component to add the numbers together
+			$this->request->data['Balance']['cash_balance'] = $this->Common->mathsAdd($tmp['Balance']['cash_balance'], $var);
+
+			// save the data to the database
 			if ($this->Balance->save($this->request->data)) {
 				$this->Session->setFlash(__('The balance has been saved.'));
 				return $this->redirect(array('controller' => 'clients', 'action' => 'view', $cc));
@@ -135,12 +142,13 @@ class BalancesController extends AppController {
 			$this->request->data = $this->Balance->find('first', $options);
 		}
 
-		}
+	}
 	
 
 	/* Method to withdraw cash from an account*/
-	public function withdraw($id){
+	public function withdraw($id = null){
 		$cc = $this->Session->read('current_client');
+
 		if (!$this->Balance->exists($id)) {
 			throw new NotFoundException(__('Invalid balance'));
 		}
@@ -148,13 +156,19 @@ class BalancesController extends AppController {
 		if ($this->request->is(array('post', 'put'))) {
 			$tmp = $this->Balance->read('cash_balance', $id);
 			$var = $this->request->data['Balance']['cash_balance'];
+			
+			$this->request->data['Balance']['cash_balance'] = $this->Common->mathsSub($tmp['Balance']['cash_balance'], $var);
 
-			$this->request->data['Balance']['cash_balance'] = $tmp['Balance']['cash_balance'] - $var;
-			if ($this->Balance->save($this->request->data)) {
-				$this->Session->setFlash(__('The balance has been saved.'));
-				return $this->redirect(array('controller' => 'clients', 'action' => 'view', $cc));
+			// Check if account does not pass 0 
+			if ($this->request->data['Balance']['cash_balance'] >= 0){	
+				if ($this->Balance->save($this->request->data)) {
+					$this->Session->setFlash(__('The balance has been saved.'));
+					return $this->redirect(array('controller' => 'clients', 'action' => 'view', $cc));
+				} else {
+					$this->Session->setFlash(__('The balance could not be saved. Please, try again.'));
+					}
 			} else {
-				$this->Session->setFlash(__('The balance could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('Insuficient balance. Please, try again.'));
 			}
 		} else {
 			$options = array('conditions' => array('Balance.' . $this->Balance->primaryKey => $id));

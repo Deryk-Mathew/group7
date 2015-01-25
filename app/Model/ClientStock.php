@@ -36,14 +36,14 @@ class ClientStock extends AppModel {
 		),
 		'quantity' => array(
 			'numeric' => array(
-				'rule' => array('numeric'),
+				'rule' => array('naturalNumber', true),
+        		'message' => 'Please supply the number of wheels.'),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
-		),
 		'cost' => array(
 			'numeric' => array(
 				'rule' => array('numeric'),
