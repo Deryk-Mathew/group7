@@ -38,13 +38,9 @@ class Client extends AppModel {
 			'unique' => array(
                 'rule' => array('isUnique'),
 				'message' => 'This client is already registered. Please contact admin to add client.',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+				'on' => 'create' // Limit validation to 'create' or 'update' operations
+				),
 			),
-			),
-		
 		'name' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),

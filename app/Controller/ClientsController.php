@@ -89,11 +89,16 @@ class ClientsController extends AppController {
  */
 	public function edit($id = null) {
 
+		$var = $this->Auth->user('id');
+
 		if (!$this->Client->exists($id)) {
 			throw new NotFoundException(__('Invalid client'));
 		}
 		if ($this->request->is(array('post', 'put'))) {
-			if ($this->Client->save($this->request->data)) {
+			$this->request->data['Client']['id'] = $id;
+			$this->request->data['Client']['user_id'] = $var;
+			
+			if ($this->Client->saveAll($this->request->data)) {
 				$this->Session->setFlash(__('The client has been saved.'));
 				return $this->redirect(array('action' => 'index'));
 			} else {
