@@ -1,8 +1,8 @@
 <script type="text/javascript" src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization','version':'1','packages':['corechart']}]}"></script>
     
           
-          <script>
-            google.load('visualization', '1', {packages: ['corechart']});
+<script>
+    google.load('visualization', '1', {packages: ['corechart']});
     google.setOnLoadCallback(drawChart);
 
     function drawChart() {
@@ -98,8 +98,6 @@
 			<?php echo h($stock['Stock']['marketCapatalization']); ?>
 			&nbsp;
 		</dd>
-		</dl>
-		<dl class="right-dl">
 		<dt><?php echo __('LastTradePriceOnly'); ?></dt>
 		<dd>
 			<?php echo h($stock['Stock']['lastTradePriceOnly']); ?>
@@ -131,15 +129,25 @@
 				<?php echo $this->Html->link($stock['StockExchange']['name'], array('controller' => 'stock_exchanges', 'action' => 'view', $stock['StockExchange']['id'])); ?>
 				&nbsp;
 			<?php endif; ?>
+
 			<?php if (AuthComponent::User('group_id') == 2): ?>
 				<?php echo h($stock['StockExchange']['name']); ?>
 			<?php endif; ?>
 		</dd>
-		<dt><?php echo __('Buy Stock'); ?></dt>
-		<dd><?php echo $this->Html->link(__('Buy Stock'), array('controller' => 'client_stocks', 'action' => 'buyStock', $stock['Stock']['id'], $stock['Stock']['lastTradePriceOnly'])); ?>&nbsp;</dd>
+
+		<?php if (AuthComponent::User('group_id') == 2): ?>
+			<dt><?php echo __('Buy Stock'); ?></dt>
+				<dd><?php echo $this->Html->link(__('Buy Stock'), array('controller' => 'client_stocks', 'action' => 'buyStock', $this->Session->read('current_client'), $stock['Stock']['id'])); ?>&nbsp;</dd>
+		<?php endif; ?>
+
+		<?php if (AuthComponent::User('group_id') == 2 && $stock['ClientStock']['0']['stock_id'] == $stock['Stock']['id'] && $this->Session->check('current_client')): ?>
+		<dt><?php echo __('Sell Stock'); ?></dt>
+			<dd><?php echo $this->Html->link(__('Sell Stock'), array('controller' => 'client_stocks', 'action' => 'sellStock', $this->Session->read('current_client'), $stock['Stock']['id'])); ?>&nbsp;</dd>
+		<?php endif; ?>
 	</dl>
-	<div id="ex2"></div>
+	<div id="ex2"></div> <!-- Graph -->
 </div>
+
 <div class="actions">
 	<h3><?php echo __('Actions'); ?></h3>
 	<ul>
@@ -147,6 +155,7 @@
 			<li><?php echo $this->Html->link(__('Edit Stock'), array('action' => 'edit', $stock['Stock']['id'])); ?> </li>
 			<li><?php echo $this->Form->postLink(__('Delete Stock'), array('action' => 'delete', $stock['Stock']['id']), array(), __('Are you sure you want to delete # %s?', $stock['Stock']['id'])); ?> </li>
 		<?php endif; ?>
+		<li><?php echo $this->Html->link(__('List Clients'), array('controller' => 'clients','action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(__('List Stocks'), array('action' => 'index')); ?> </li>
 		<?php if ($this->Session->read('current_client') != null): ?>
 			<li><?php echo $this->Html->link(__('Return To Client'), array('controller' => 'clients', 'action' => 'view', $this->Session->read('current_client'))); ?> </li>
