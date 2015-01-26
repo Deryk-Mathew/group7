@@ -42,7 +42,13 @@ h3.notes {
 }
 /** End of View Client Page **/
 
+/** View Stocks Page **/
 
+.right-dl{
+	float: right;
+}
+
+/** End of View Stocks Page **/
 
 * {
 	margin:0;
@@ -339,10 +345,10 @@ dt {
 	font-weight: bold;
 	padding-left: 4px;
 	vertical-align: top;
-	width: 30%;
+	width: 43%;
 }
 dd {
-	margin-left: 10em;
+	margin-left: 43%;
 	margin-top: -2em;
 	vertical-align: top;
 }

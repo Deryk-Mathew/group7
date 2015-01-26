@@ -68,7 +68,7 @@
 			<?php echo h($stock['Stock']['id']); ?>
 			&nbsp;
 		</dd>
-		<dt><?php echo __('AverageDailyVolume'); ?></dt>
+		<dt><?php echo __('Average Daily Volume'); ?></dt>
 		<dd>
 			<?php echo h($stock['Stock']['averageDailyVolume']); ?>
 			&nbsp;
@@ -78,27 +78,29 @@
 			<?php echo h($stock['Stock']['change']); ?>
 			&nbsp;
 		</dd>
-		<dt><?php echo __('DaysLow'); ?></dt>
+		<dt><?php echo __('Day Low'); ?></dt>
 		<dd>
 			<?php echo h($stock['Stock']['daysLow']); ?>
 			&nbsp;
 		</dd>
-		<dt><?php echo __('DaysHigh'); ?></dt>
+		<dt><?php echo __('Day High'); ?></dt>
 		<dd>
 			<?php echo h($stock['Stock']['daysHigh']); ?>
 			&nbsp;
 		</dd>
-		<dt><?php echo __('YearsLow'); ?></dt>
+		<dt><?php echo __('Year Low'); ?></dt>
 		<dd>
 			<?php echo h($stock['Stock']['yearsLow']); ?>
 			&nbsp;
 		</dd>
-		<dt><?php echo __('MarketCapatalization'); ?></dt>
+		<dt><?php echo __('Market Capitalization'); ?></dt>
 		<dd>
 			<?php echo h($stock['Stock']['marketCapatalization']); ?>
 			&nbsp;
 		</dd>
-		<dt><?php echo __('LastTradePriceOnly'); ?></dt>
+		</dl>
+		<dl class="right-dl">
+		<dt><?php echo __('Last Trade Price Only'); ?></dt>
 		<dd>
 			<?php echo h($stock['Stock']['lastTradePriceOnly']); ?>
 			&nbsp;
