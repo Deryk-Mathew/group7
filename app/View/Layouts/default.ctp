@@ -25,48 +25,35 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 		<?php echo $cakeDescription ?>:
 		<?php echo $this->fetch('title'); ?>
 	</title>
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/metisMenu/1.1.3/metisMenu.min.css">
 	<?php
 		echo $this->Html->meta('icon');
-
+		
 		echo $this->Html->css('cake.generic');
-
+		echo $this->Html->css('bootstrap.min');	
+		echo $this->Html->css('font-awesome.min');
+		echo $this->Html->css('wealth-style');
 		echo $this->fetch('meta');
 		echo $this->fetch('css');
 		echo $this->fetch('script');
 	?>
+	
 </head>
 <body>
-	<div id="container">
-		<div class="headerFull">
-		
-		<div id="header">
-			<?php echo $this->Html->image('website-logo.png', array('alt' => 'Edit', 'border' => '0', 'width' => '30%'));
+	
 			
-			if ((AuthComponent::User('group_id')) != null){
-			echo '<div id="loginInfo"><p><b>Logged In: </b>';
-			echo $this->session->read( 'Auth.User.full_name' );
-			echo '<br/>';
-			echo $this->Html->link(__('Logout'), array('controller' => 'users', 'action' => 'logout'));
-			echo '</div>';
-			}
-			 ?>
-<?php// echo h($client['Client']['NINum']); 
-?>
-		</div>
-		</div>
-		<div id="content">
 
 			<?php echo $this->Session->flash(); ?>
 
 			<?php echo $this->fetch('content'); ?>
-		</div>
-		<div class="footerFull">
-		<div id="footer">
-			<h6>Developed By Group 7</h6>
-		</div>
-	</div>
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 			
-		</div>
-	</div>
+			<?php 
+			echo $this->Html->script('bootstrap.min');
+			echo $this->Html->script('wealth');
+?>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/metisMenu/1.1.3/metisMenu.min.js"></script>
+
 </body>
 </html>
