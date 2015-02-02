@@ -26,6 +26,8 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 		<?php echo $this->fetch('title'); ?>
 	</title>
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/metisMenu/1.1.3/metisMenu.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script type="text/javascript" src="http://cdn.datatables.net/1.10.0/js/jquery.dataTables.min.js"></script> 
 	<?php
 		echo $this->Html->meta('icon');
 		
@@ -40,13 +42,134 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 	
 </head>
 <body>
-	
+	    <div id="wrapper">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0; height: 15%;">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html"><?php echo $this->Html->image('website-logo.png', array('alt' => 'Edit', 'border' => '0', 'width' => '300px'));?></a>
+            </div>
+            <!-- /.navbar-header -->
+
+            <ul class="nav navbar-top-links navbar-right">
+                
+                
+                
+                <!-- /.dropdown -->
+                <li class="dropdown">
+                   <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo $this->session->read( 'Auth.User.full_name' ); ?><b class="caret"></b></a>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                    	<li><?php echo $this->Html->link(__('Logout'), array('controller' => 'users', 'action' => 'logout'), array('class' => 'fa fa-sign-out fa-fw')); ?></li>
+                    
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-user -->
+                </li>
+                <!-- /.dropdown -->
+            </ul>
+          
+          
+          
+          
+          
+          
+            <!-- /.navbar-top-links -->
+
+            <div class="navbar-default sidebar" role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav" id="side-menu">
+                        <li class="sidebar-search">
+                            <div class="input-group custom-search-form">
+                                <input type="text" class="form-control" placeholder="Search...">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" type="button">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </span>
+                            </div>
+                            <!-- /input-group -->
+                        </li>
+                        <li>
+                            <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Clients<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li><?php echo $this->Html->link(__('Add New Client'), array('controller' => 'clients', 'action' => 'add')); ?></li>
+                                <li><?php echo $this->Html->link(__('My Clients'), array('controller' => 'clients', 'action' => 'index')); ?></li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                         <li>
+                            <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Users<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li><?php echo $this->Html->link(__('Add New User'), array('controller' => 'users', 'action' => 'add')); ?> </li>
+                                <li><?php echo $this->Html->link(__('User List'), array('controller' => 'users', 'action' => 'index')); ?> </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Markets<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li><?php echo $this->Html->link(__('List Stocks'), array('controller' => 'stocks', 'action' => 'index')); ?></li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Meetings<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="flot.html">Add Meeting</a>
+                                </li>
+                                <li>
+                                    <a href="morris.html">View Meetings</a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                       
+                    </ul>
+                </div>
+                <!-- /.sidebar-collapse -->
+                
+                
+                
+                
+                
+                
+                
+                
+                
+            </div>
+            <!-- /.navbar-static-side -->
+        </nav>
+
+        <!-- Page Content -->
+        <div id="page-wrapper">
+        
+       
+        
 			
 
 			<?php echo $this->Session->flash(); ?>
-
+ 
 			<?php echo $this->fetch('content'); ?>
-			<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+			           </div>
+            <!-- /.container-fluid -->
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+			
+			
 			
 			<?php 
 			echo $this->Html->script('bootstrap.min');

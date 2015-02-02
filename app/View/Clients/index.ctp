@@ -1,11 +1,47 @@
-<div class="clients index">
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+	<script>
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+	        var data = google.visualization.arrayToDataTable([
+	          ['Cash', 'Stocks'],
+	          ['Cash',     <?php echo $client['Balance']['cash_balance']; ?>],
+	          ['Stocks',   1420.01],
+	        	]);
+
+	        var options = {
+	          title: 'Asset Balance',
+	          is3D: true,
+	        };
+
+	        var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
+	        chart.draw(data, options);
+      }
+
+    </script>
+  <script>
+$(document).ready(function() {
+    $('#clientList').dataTable();
+} );
+</script>
+            <div class="container-fluid">
+            
+             <!-- ENTER INDIVIDUAL PAGE CONTENT HERE!!!!! -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header"><?php echo __('Client'); ?></h1>
+                    </div>
+                    <!-- /.col-lg-12 -->
+                </div>
+                <!-- /.row -->
+  <div class="clients index">
 	<h2><?php echo __('Clients'); ?></h2>
-	<table cellpadding="0" cellspacing="0">
+	<table id="clientList" width="100%" cellpadding="0" cellspacing="0">
 	<thead>
 	<tr>
-			<th><?php echo $this->Paginator->sort('NINum'); ?></th>
-			<th><?php echo $this->Paginator->sort('name'); ?></th>
-			<th><?php echo $this->Paginator->sort('registered'); ?></th>
+			<th>NI Num</th>
+			<th>Name</th>
+			<th>Date Registered</th>
 			<!--<th class="actions"><?php echo __('Actions'); ?></th> -->
 	</tr>
 	</thead>
@@ -24,37 +60,5 @@
 <?php endforeach; ?>
 	</tbody>
 	</table>
-	<p>
-	<?php
-	echo $this->Paginator->counter(array(
-	'format' => __('Page {:page} of {:pages}, showing {:current} records out of {:count} total, starting on record {:start}, ending on {:end}')
-	));
-	?>	</p>
-	<div class="paging">
-	<?php
-		echo $this->Paginator->prev('< ' . __('previous'), array(), null, array('class' => 'prev disabled'));
-		echo $this->Paginator->numbers(array('separator' => ''));
-		echo $this->Paginator->next(__('next') . ' >', array(), null, array('class' => 'next disabled'));
-	?>
-	</div>
-</div>
-<div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
-	<ul>
-		<li><?php echo $this->Html->link(__('New Client'), array('action' => 'add')); ?></li>
-		<li><?php echo $this->Html->link(__('List Stocks'), array('controller' => 'stocks', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('Logout'), array('controller' => 'users', 'action' => 'logout')); ?></li>
-
-	</ul>
 </div>
 
-		
-		
-<?php if (AuthComponent::User('group_id') == 1): ?>
-	<div class="actions">
-		<h3><?php echo __('Administration'); ?></h3>
-		<ul>
-			<li><?php echo $this->Html->link(__('List Users'), array('controller' => 'users', 'action' => 'index')); ?> </li>
-		</ul>
-	</div>
-<?php endif; ?>
