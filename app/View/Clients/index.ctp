@@ -29,12 +29,13 @@ $(document).ready(function() {
              <!-- ENTER INDIVIDUAL PAGE CONTENT HERE!!!!! -->
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1 class="page-header">My Clients</h1>
+                        <h1 class="page-header"><?php echo __('Client'); ?></h1>
                     </div>
                     <!-- /.col-lg-12 -->
                 </div>
                 <!-- /.row -->
   <div class="clients index">
+	<h2><?php echo __('Clients'); ?></h2>
 	<table id="clientList" width="100%" cellpadding="0" cellspacing="0">
 	<thead>
 	<tr>
