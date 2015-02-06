@@ -4,7 +4,7 @@
 		<legend><?php echo __('Withdraw'); ?></legend>
 	<?php
 		//echo $this->Form->input('client_id');
-		echo $this->Form->input('cash_balance', array('label' => 'Withdraw Amount',  'value' => '0.00'));
+		echo $this->Form->input('cash_balance');
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Submit')); ?>

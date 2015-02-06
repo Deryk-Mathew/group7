@@ -3,7 +3,7 @@
 	<fieldset>
 		<legend><?php echo __('Deposit'); ?></legend>
 	<?php
-		echo $this->Form->input('cash_balance', array('label' => 'Deposit Amount', 'value' => '0.00'));
+		echo $this->Form->input('cash_balance');
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Deposit')); ?>
