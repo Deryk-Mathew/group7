@@ -1,4 +1,4 @@
-                    	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
 	<script>
       google.load("visualization", "1", {packages:["corechart"]});
       google.setOnLoadCallback(drawChart);
@@ -26,7 +26,7 @@
              <!-- ENTER INDIVIDUAL PAGE CONTENT HERE!!!!! -->
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1 class="page-header">Add New Client</h1>
+                        <h1 class="page-header">Add Client</h1>
                     </div>
                     <!-- /.col-lg-12 -->
                 </div>
@@ -35,7 +35,6 @@
    <div class="clients form">
 <?php echo $this->Form->create('Client'); ?>
 	<fieldset>
-		<legend><?php echo __('Add Client'); ?></legend>
 	<?php
 		//echo $this->Form->input('user_id');
 		echo $this->Form->input('NINum');

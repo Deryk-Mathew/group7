@@ -26,7 +26,7 @@
              <!-- ENTER INDIVIDUAL PAGE CONTENT HERE!!!!! -->
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1 class="page-header">My Client: <?php echo h($client['Client']['name']); ?></h1>
+                        <h1 class="page-header"><?php echo __('Client'); ?></h1>
                     </div>
                     <!-- /.col-lg-12 -->
                 </div>
