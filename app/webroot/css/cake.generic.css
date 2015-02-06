@@ -257,6 +257,7 @@ table tr:nth-child(even) {
 	background: #f9f9f9;
 }
 td.actions {
+	text-align: center;
 	white-space: nowrap;
 }
 table td.actions a {
@@ -609,18 +610,19 @@ input[type=submit],
 	text-align:	center;
 	padding: 4px 8px;
 	background: #dcdcdc;
-	background-image: -webkit-gradient(linear, left top, left bottom, from(#1a70a5), to(#1a70bb));
-	background-image: -webkit-linear-gradient(top, #1a70a5, #1a70bb);
-	background-image: -moz-linear-gradient(top, #1a70a5, #1a70bb);
-	background-image: -ms-linear-gradient(top, #1a70a5, #1a70bb);
-	background-image: -o-linear-gradient(top, #1a70a5, #1a70bb);
-	background-image: linear-gradient(top, #1a70a5, #1a70bb);
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#FFFF66), to(#FFFF99));
+	background-image: -webkit-linear-gradient(top, #FFFF66, #FFFF99);
+	background-image: -moz-linear-gradient(top, #FFFF66, #FFFF99);
+	background-image: -ms-linear-gradient(top, #FFFF66, #FFFF99);
+	background-image: -o-linear-gradient(top, #FFFF66, #FFFF99);
+	background-image: linear-gradient(top, #FFFF66, #FFFF99);
+	color:#000;
 	border:1px solid #bbb;
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
 	border-radius: 4px;
 	text-decoration: none;
-    color: #eee !important;
+	text-shadow: #fff 0px 1px 0px;
 	min-width: 0;
 	-moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), 0px 1px 1px rgba(0, 0, 0, 0.2);
 	-webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), 0px 1px 1px rgba(0, 0, 0, 0.2);

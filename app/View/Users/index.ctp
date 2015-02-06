@@ -3,23 +3,16 @@ $(document).ready(function() {
     $('#userList').dataTable();
 } );
 </script>
-<div class="container-fluid">
-            
-             <!-- ENTER INDIVIDUAL PAGE CONTENT HERE!!!!! -->
-                <div class="row">
-                    <div class="col-lg-12">
-                        <h1 class="page-header">User List</h1>
-                    </div>
-                    <!-- /.col-lg-12 -->
-                </div>
+
 <div class="users index">
+	<h2><?php echo __('Users'); ?></h2>
 	<table id="userList" width="100%" cellspacing="0">
 	<thead>
 	<tr>
 			<th>Username</th>
 			<th>Full Name</th>
 			<th>User Type</th>
-			<th class="actions"></th>
+			<th class="actions"><?php echo __('Actions'); ?></th>
 	</tr>
 	</thead>
 	<tbody>
