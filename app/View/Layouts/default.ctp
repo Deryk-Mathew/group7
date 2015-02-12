@@ -59,21 +59,23 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 
             <ul class="nav navbar-top-links navbar-right">
                 
-                
-                
                 <!-- /.dropdown -->
-                <li class="dropdown">
-                   <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo $this->session->read( 'Auth.User.full_name' ); ?><b class="caret"></b></a>
-                    </a>
-                    <ul class="dropdown-menu dropdown-user">
-                    	<li><?php echo $this->Html->link(__('Logout'), array('controller' => 'users', 'action' => 'logout'), array('class' => 'fa fa-sign-out fa-fw')); ?></li>
-                    
-                        </li>
-                    </ul>
-                    <!-- /.dropdown-user -->
-                </li>
-                <!-- /.dropdown -->
-            </ul>
+              <?php  if ((AuthComponent::User('group_id')) != null){
+                
+               echo '<li class="dropdown">';
+                   echo '<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-user"></i>';
+                   echo $this->session->read( 'Auth.User.full_name' );
+                   echo '<b class="caret"></b></a>';
+                   echo ' <ul class="dropdown-menu dropdown-user">';
+                    echo '<li>';
+                    echo $this->Html->link(__('Logout'), array('controller' => 'users', 'action' => 'logout'), array('class' => 'glyphicon glyphicon-off'));
+                    echo '</li>';
+                    echo '</li>';
+                    echo '</ul>';
+                echo '</li>';
+            echo '</ul>';
+            }
+            ?>
           
           
           
@@ -90,40 +92,40 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
                                 <input type="text" class="form-control" placeholder="Search...">
                                 <span class="input-group-btn">
                                     <button class="btn btn-default" type="button">
-                                        <i class="fa fa-search"></i>
+                                        <i class="glyphicon glyphicon-search"></i>
                                     </button>
                                 </span>
                             </div>
                             <!-- /input-group -->
                         </li>
                         <li>
-                            <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                            <a href="index.html"><i class="glyphicon glyphicon-home"></i> Dashboard</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Clients<span class="fa arrow"></span></a>
+                            <a href="#"><i class="glyphicon glyphicon-gbp"></i> Clients<span class="sidebarIcon glyphicon glyphicon-menu-down"></span></a>
                             <ul class="nav nav-second-level">
                                 <li><?php echo $this->Html->link(__('Add New Client'), array('controller' => 'clients', 'action' => 'add')); ?></li>
-                                <li><?php echo $this->Html->link(__('My Clients'), array('controller' => 'clients', 'action' => 'index')); ?></li>
+                                <li><?php echo $this->Html->link(__('My Clients'), array('controller' => 'clients', 'action' => 'browse')); ?></li>
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
                          <li>
-                            <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Users<span class="fa arrow"></span></a>
+                            <a href="#"><i class="glyphicon glyphicon-user"></i> Users<span class="sidebarIcon glyphicon glyphicon-menu-down"></span></a>
                             <ul class="nav nav-second-level">
                                 <li><?php echo $this->Html->link(__('Add New User'), array('controller' => 'users', 'action' => 'add')); ?> </li>
-                                <li><?php echo $this->Html->link(__('User List'), array('controller' => 'users', 'action' => 'index')); ?> </li>
+                                <li><?php echo $this->Html->link(__('Browse Users'), array('controller' => 'users', 'action' => 'index')); ?> </li>
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Markets<span class="fa arrow"></span></a>
+                            <a href="#"><i class="glyphicon glyphicon-stats"></i> Markets<span class="sidebarIcon glyphicon glyphicon-menu-down"></span></a>
                             <ul class="nav nav-second-level">
                                 <li><?php echo $this->Html->link(__('List Stocks'), array('controller' => 'stocks', 'action' => 'index')); ?></li>
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Meetings<span class="fa arrow"></span></a>
+                            <a href="#"><i class="glyphicon glyphicon-calendar"></i> Meetings<span class="sidebarIcon glyphicon glyphicon-menu-down"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
                                     <a href="flot.html">Add Meeting</a>
@@ -138,8 +140,8 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
                     </ul>
                 </div>
                 <!-- /.sidebar-collapse -->
-                
-                
+                -
+
                 
                 
                 
