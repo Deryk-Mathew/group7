@@ -24,6 +24,10 @@ class StocksController extends AppController {
 		$this->Stock->recursive = 2;
 		$this->set('stocks', $this->Paginator->paginate());
 	}
+	public function browse() {
+		$this->Stock->recursive = 2;
+		$this->set('stocks', $this->Paginator->paginate());
+	}
 
 /**
  * view method

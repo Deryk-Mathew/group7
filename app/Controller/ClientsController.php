@@ -42,6 +42,25 @@ class ClientsController extends AppController {
 	}
 
 
+	public function browse() {
+		$this->Session->delete('current_client');
+		$this->Client->recursive = 0;
+
+		if ($this->Auth->user('group_id') == 2) {
+
+			/* Display only clients user has */
+			$var = $this->Auth->user('id');
+			debug($var);
+			$this->paginate = array(
+	        	'conditions' => array('Client.user_id' => $var),
+	        	'limit' => 10
+	        	
+	    	);
+		    $this->set('clients', $this->paginate($this->Client));
+		}else{
+			$this->set('clients', $this->Paginator->paginate());
+		}
+	}
 /**
  * view method
  *

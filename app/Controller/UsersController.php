@@ -24,6 +24,10 @@ class UsersController extends AppController {
 		$this->User->recursive = 0;
 		$this->set('users', $this->Paginator->paginate());
 	}
+public function browse() {
+		$this->User->recursive = 2;
+		$this->set('users', $this->Paginator->paginate());
+	}
 
 /**
  * view method
@@ -74,7 +78,7 @@ class UsersController extends AppController {
 		if ($this->request->is(array('post', 'put'))) {
 			if ($this->User->save($this->request->data)) {
 				$this->Session->setFlash(__('The user has been saved.'));
-				return $this->redirect(array('action' => 'index'));
+				return $this->redirect(array('action' => 'view'));
 			} else {
 				$this->Session->setFlash(__('The user could not be saved. Please, try again.'));
 			}
@@ -104,7 +108,7 @@ class UsersController extends AppController {
 		} else {
 			$this->Session->setFlash(__('The user could not be deleted. Please, try again.'));
 		}
-		return $this->redirect(array('action' => 'index'));
+		return $this->redirect(array('action' => 'browse'));
 	}
 
 	/* Method to login */
@@ -112,10 +116,10 @@ class UsersController extends AppController {
     if ($this->request->is('post')) {
     	if ($this->Session->read('Auth.User')) {
 	        $this->Session->setFlash('You are logged in!');
-	        return $this->redirect(array('controllers' => 'clients', 'action' => 'index'));
+	        return $this->redirect(array('controllers' => 'clients', 'action' => 'browse'));
 	    }
         if ($this->Auth->login()) {
-            return $this->redirect($this->Auth->redirectUrl('/', array('controller' => 'clients', 'action' => 'index', 'home')));
+            return $this->redirect($this->Auth->redirectUrl('/', array('controller' => 'clients', 'action' => 'browse', 'home')));
         }
         	$this->Session->setFlash(__('Your username or password was incorrect.'));
     	}
