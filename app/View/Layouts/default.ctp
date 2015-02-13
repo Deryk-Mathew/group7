@@ -102,7 +102,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
                             <a href="index.html"><i class="glyphicon glyphicon-home"></i> Dashboard</a>
                         </li>
                         <li>
-                            <a href="#"><i class="glyphicon glyphicon-gbp"></i> Clients<span class="sidebarIcon glyphicon glyphicon-menu-down"></span></a>
+                            <a href="#"><i class="glyphicon glyphicon-gbp"></i> Clients<span class="sidebarIcon glyphicon glyphicon-menu-hamburger"></span></a>
                             <ul class="nav nav-second-level">
                                 <li><?php echo $this->Html->link(__('Add New Client'), array('controller' => 'clients', 'action' => 'add')); ?></li>
                                 <li><?php echo $this->Html->link(__('My Clients'), array('controller' => 'clients', 'action' => 'browse')); ?></li>
@@ -110,29 +110,24 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
                             <!-- /.nav-second-level -->
                         </li>
                          <li>
-                            <a href="#"><i class="glyphicon glyphicon-user"></i> Users<span class="sidebarIcon glyphicon glyphicon-menu-down"></span></a>
+                            <a href="#"><i class="glyphicon glyphicon-user"></i> Users<span class="sidebarIcon glyphicon glyphicon-menu-hamburger"></span></a>
                             <ul class="nav nav-second-level">
                                 <li><?php echo $this->Html->link(__('Add New User'), array('controller' => 'users', 'action' => 'add')); ?> </li>
-                                <li><?php echo $this->Html->link(__('Browse Users'), array('controller' => 'users', 'action' => 'index')); ?> </li>
+                                <li><?php echo $this->Html->link(__('Browse Users'), array('controller' => 'users', 'action' => 'browse')); ?> </li>
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
                         <li>
-                            <a href="#"><i class="glyphicon glyphicon-stats"></i> Markets<span class="sidebarIcon glyphicon glyphicon-menu-down"></span></a>
+                            <a href="#"><i class="glyphicon glyphicon-stats"></i> Markets<span class="sidebarIcon glyphicon glyphicon-menu-hamburger"></span></a>
                             <ul class="nav nav-second-level">
-                                <li><?php echo $this->Html->link(__('List Stocks'), array('controller' => 'stocks', 'action' => 'index')); ?></li>
+                                <li><?php echo $this->Html->link(__('Browse Stocks'), array('controller' => 'stocks', 'action' => 'index')); ?> </li>
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
                         <li>
-                            <a href="#"><i class="glyphicon glyphicon-calendar"></i> Meetings<span class="sidebarIcon glyphicon glyphicon-menu-down"></span></a>
+                            <a href="#"><i class="glyphicon glyphicon-calendar"></i> Appointments<span class="sidebarIcon glyphicon glyphicon-menu-hamburger"></span></a>
                             <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="flot.html">Add Meeting</a>
-                                </li>
-                                <li>
-                                    <a href="morris.html">View Meetings</a>
-                                </li>
+                                <li><?php echo $this->Html->link(__('View Calendar'), array('controller' => 'meetings', 'action' => 'index')); ?></li>
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>

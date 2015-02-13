@@ -119,9 +119,21 @@ class User extends AppModel {
 			'exclusive' => '',
 			'finderQuery' => '',
 			'counterQuery' => ''
+        ),
+		'Meetings' => array(
+			'className' => 'Meetings',
+			'foreignKey' => 'user_id',
+			'dependent' => false,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
 		)
 	);
-
     public $actsAs = array('Acl' => array('type' => 'requester', 'enabled' => false));
 
     public function parentNode() {
