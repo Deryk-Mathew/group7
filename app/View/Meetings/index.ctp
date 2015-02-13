@@ -9,9 +9,13 @@
                     <!-- /.col-lg-12 -->
                 </div>
                 <!-- /.row -->
-  <script src='../lib/moment.min.js'></script>
-<script src='../lib/jquery.min.js'></script>
-<script src='../fullcalendar.min.js'></script>
+                
+                			<?php 
+			echo $this->Html->script('moment.min.');
+            echo $this->Html->script('fullcalendar.min');
+echo $this->Html->css('fullcalendar');
+echo $this->Html->css('ullcalendar.print');
+?>
 <script>
 
 	$(document).ready(function() {
