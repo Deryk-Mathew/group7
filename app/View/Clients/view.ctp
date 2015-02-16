@@ -198,7 +198,7 @@
 					<td><?php $stock_value =  $clientStock['Stock']['lastTradePriceOnly'] * $clientStock['quantity']; ?></td>
 					<td class="actions">
 						<?php echo $this->Html->link(__('View'), array('controller' => 'stocks', 'action' => 'view', $clientStock['Stock']['id'])); ?>
-						<?php echo $this->Html->link(__('Buy'), array('controller' => 'clientStocks', 'action' => 'buyStock', $clientStock['Stock']['id'], $clientStock['Stock']['lastTradePriceOnly'])); ?>
+						<?php echo $this->Html->link(__('Buy'), array('controller' => 'clientStocks', 'action' => 'buyStock', $client['Client']['id'], $clientStock['Stock']['id'])); ?>
 						<?php echo $this->Form->postLink(__('Sell'), array('controller' => 'clientStocks', 'action' => 'edit', $clientStock['id'])); ?>
 					</td>
 				</tr>
