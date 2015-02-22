@@ -11,74 +11,43 @@
                 <!-- /.row -->
                 
                 			<?php 
-			echo $this->Html->script('moment.min.');
+			echo $this->Html->script('moment.min');
             echo $this->Html->script('fullcalendar.min');
-echo $this->Html->css('fullcalendar');
-echo $this->Html->css('ullcalendar.print');
+
 ?>
 <script>
 
 	$(document).ready(function() {
+	
+	var today = new Date();
+	var dd = today.getDate();
+	var mm = today.getMonth()+1; //January is 0!
+	var yyyy = today.getFullYear();
+
+	if(dd<10) {
+		dd='0'+dd
+	} 
+
+	if(mm<10) {
+		mm='0'+mm
+	} 
+
+	today = mm+'/'+dd+'/'+yyyy;
 
 		$('#calendar').fullCalendar({
-			defaultDate: '2015-02-12',
+			defaultDate: today,
 			editable: true,
 			eventLimit: true, // allow "more" link when too many events
 			events: [
+				<?php $meetings; ?>
+				<?php foreach ($meetings as $meeting): ?>
 				{
-					title: 'All Day Event',
-					start: '2015-02-01'
+					title: '<?php echo h($meeting['Meeting']['user_id']);  ?>':,
+					start: '<?php echo h($meeting['Meeting']['startdate']);  ?>',
+					end: '<?php echo h($meeting['Meeting']['enddate']);  ?>'
 				},
-				{
-					title: 'Long Event',
-					start: '2015-02-07',
-					end: '2015-02-10'
-				},
-				{
-					id: 999,
-					title: 'Repeating Event',
-					start: '2015-02-09T16:00:00'
-				},
-				{
-					id: 999,
-					title: 'Repeating Event',
-					start: '2015-02-16T16:00:00'
-				},
-				{
-					title: 'Conference',
-					start: '2015-02-11',
-					end: '2015-02-13'
-				},
-				{
-					title: 'Meeting',
-					start: '2015-02-12T10:30:00',
-					end: '2015-02-12T12:30:00'
-				},
-				{
-					title: 'Lunch',
-					start: '2015-02-12T12:00:00'
-				},
-				{
-					title: 'Meeting',
-					start: '2015-02-12T14:30:00'
-				},
-				{
-					title: 'Happy Hour',
-					start: '2015-02-12T17:30:00'
-				},
-				{
-					title: 'Dinner',
-					start: '2015-02-12T20:00:00'
-				},
-				{
-					title: 'Birthday Party',
-					start: '2015-02-13T07:00:00'
-				},
-				{
-					title: 'Click for Google',
-					url: 'http://google.com/',
-					start: '2015-02-28'
-				}
+				<?php endforeach; ?>
+				
 			]
 		});
 		

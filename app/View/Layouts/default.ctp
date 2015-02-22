@@ -35,6 +35,8 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 		echo $this->Html->css('bootstrap.min');	
 		echo $this->Html->css('font-awesome.min');
 		echo $this->Html->css('wealth-style');
+		echo $this->Html->css('fullcalendar');
+	echo $this->Html->css('fullcalendar.print');
 		echo $this->fetch('meta');
 		echo $this->fetch('css');
 		echo $this->fetch('script');

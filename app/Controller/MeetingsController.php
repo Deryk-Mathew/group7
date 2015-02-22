@@ -21,7 +21,7 @@ class MeetingsController extends AppController {
  * @return void
  */
 	public function index() {
-		$this->Note->recursive = 0;
+		$this->Meeting->recursive = 0;
 		$this->set('meetings', $this->Paginator->paginate());
 	}
 
@@ -33,7 +33,7 @@ class MeetingsController extends AppController {
  * @return void
  */
 	public function view($id = null) {
-		if (!$this->Note->exists($id)) {
+		if (!$this->Meeting->exists($id)) {
 			throw new NotFoundException(__('Invalid Meeting'));
 		}
 		$options = array('conditions' => array('Meeting.' . $this->Meeting->primaryKey => $id));
