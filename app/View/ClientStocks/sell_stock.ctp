@@ -1,24 +1,23 @@
-<div class="clientStocks form">
+ <div class="container-fluid">
+            
+             <!-- ENTER INDIVIDUAL PAGE CONTENT HERE!!!!! -->
+                
 
+<div class="clientStocks form">
 <?php echo $this->Form->create('ClientStock', array('onsubmit' => 'return confirm("Are you sure you want to sell this stock?")')); ?>
 	<fieldset>
 		<legend><?php echo __('Sell Stock'); ?></legend>
+		<div class="stocks view">
+		<dt><?php echo __('Name'); ?></dt><dd><?php echo h($stock['Stock']['name'])?></dd>
+		<dt><?php echo __('Price'); ?></dt><dd><?php echo h($stock['Stock']['lastTradePriceOnly'])?></dd>
+		</br>
+		<dt><?php echo __('Stocks Owned'); ?></dt><dd><?php echo $quantity?></dd>
+		</div>
 	<?php
-		echo $this->Form->input('quantity', array('value' => '0'));
+		echo $this->Form->input('quantity',array('default'=>0));
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Sell')); ?>
 </div>
 
-<div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
-	<ul>
-		<li><?php echo $this->Html->link(__('List Clients'), array('controller' => 'clients', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Client'), array('controller' => 'clients', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Stocks'), array('controller' => 'stocks', 'action' => 'index')); ?> </li>
-		<?php if ($this->Session->read('current_client') != null): ?>
-			<li><?php echo $this->Html->link(__('Return To Client'), array('controller' => 'clients', 'action' => 'view', $this->Session->read('current_client'))); ?> </li>
-		<?php endif; ?>
-		<li><?php echo $this->Html->link(__('Logout'), array('controller' => 'users', 'action' => 'logout')); ?></li>
-	</ul>
 </div>

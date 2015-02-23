@@ -1,33 +1,12 @@
-	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
-	<script>
-      google.load("visualization", "1", {packages:["corechart"]});
-      google.setOnLoadCallback(drawChart);
-      function drawChart() {
-	        var data = google.visualization.arrayToDataTable([
-	          ['Cash', 'Stocks'],
-	          ['Cash',     <?php echo $client['Balance']['cash_balance']; ?>],
-	          ['Stocks',   <?php 
+
+
+        <?php 
 			  $stocktotal = 0;
 			  foreach ($client['ClientStock'] as $clientStock): 
 						$stocktotal = $stocktotal + $clientStock['quantity']*$clientStock['Stock']['lastTradePriceOnly'];
 						endforeach;
-						echo $stocktotal;
 			  
-			  ?>],
-	        	]);
-
-	        var options = {
-	          title: 'Asset Balance',
-	          is3D: true,
-	        };
-
-	        var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
-	        chart.draw(data, options);
-      }
-
-    </script>
-
-        
+			  ?>
             <div class="container-fluid">
             
              <!-- ENTER INDIVIDUAL PAGE CONTENT HERE!!!!! -->
@@ -125,7 +104,6 @@
 			</ul>
 
 		</div>
-		<div id="piechart_3d" style="width: 100%; height: 300px;"></div>
 		
 	</div>
 <!-- List all client notes -->
@@ -156,44 +134,7 @@
 		</ul>
 	</div>
 	<!-- New Note div end -->
-</div>            
-           
-	<?php if (!empty($client['ClientStock'])): ?>
-<table id="stockTable" cellpadding = "0" cellspacing = "0">
-			<tr>
-				<th><?php echo __('Stock Name'); ?></th>
-				<th><?php echo __('Stock Symbol'); ?></th>
-				<th><?php echo __('Quantity'); ?></th>
-				<th><?php echo __('Cost'); ?></th>
-				<th><?php echo __('Average Estimated Stock Owned Price'); ?></th>
-				<th><?php echo __('Current Stock Price'); ?></th>
-				<th><?php echo __('Average Estimated Profit Per Stock'); ?></th>
-				<th class="actions"><?php echo __('Actions'); ?></th>
-			</tr>		   
-<?php foreach ($client['ClientStock'] as $clientStock): ?>
-				<tr>
-					<?php if ($clientStock['quantity'] > 0): ?>
-						<td><?php echo $this->Html->link($clientStock['Stock']['name'], array('controller' => 'stocks', 'action' => 'view', $clientStock['Stock']['id'])); ?></td>
-						<td><?php echo $this->Html->link($clientStock['Stock']['symbol'], array('controller' => 'stocks', 'action' => 'view', $clientStock['Stock']['id'])); ?></td>
-						<td><?php echo $this->Html->link($clientStock['quantity'], array('controller' => 'stocks', 'action' => 'view', $clientStock['Stock']['id'])); ?></td>
-						<td><?php echo $this->Html->link($clientStock['cost'], array('controller' => 'stocks', 'action' => 'view', $clientStock['Stock']['id'])); ?></td>
-
-						<td><?php $aveStock = $clientStock['cost']/$clientStock['quantity']; echo h(round($aveStock,2)); ?></td>
-
-						<td><?php echo $this->Html->link($clientStock['Stock']['lastTradePriceOnly'], array('controller' => 'stocks', 'action' => 'view', $clientStock['Stock']['id'])); ?></td>
-
-						<td><?php $profit = $clientStock['Stock']['lastTradePriceOnly'] - $aveStock; echo h(round($profit,2));?></td>
-
-						<td class="actions">
-							<?php echo $this->Html->link(__('View'), array('controller' => 'stocks', 'action' => 'view', $clientStock['Stock']['id'])); ?>
-							<?php echo $this->Html->link(__('Buy'), array('controller' => 'clientStocks', 'action' => 'buyStock', $clientStock['client_id'], $clientStock['Stock']['id'])); ?>
-							<?php echo $this->Html->link(__('Sell'), array('controller' => 'clientStocks', 'action' => 'sellStock', $clientStock['client_id'], $clientStock['Stock']['id'])); ?>
-						</td>
-					<?php endif; ?>
-				</tr>
-			<?php endforeach; ?>            
-<?php endif; ?>			
-                
+</div>                   
 
 
 </div>

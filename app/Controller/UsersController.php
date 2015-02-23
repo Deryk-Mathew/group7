@@ -30,6 +30,17 @@ public function browse() {
 	}
 
 /**
+ * dashboard function
+ *
+ * @throws NotFoundException
+ * @return void
+ */
+	public function dashboard() {
+		$this->User->recursive = 2;
+	}
+	
+	
+/**
  * view method
  *
  * @throws NotFoundException
@@ -116,10 +127,10 @@ public function browse() {
     if ($this->request->is('post')) {
     	if ($this->Session->read('Auth.User')) {
 	        $this->Session->setFlash('You are logged in!');
-	        return $this->redirect(array('controllers' => 'clients', 'action' => 'browse'));
+	        return $this->redirect(array('controllers' => 'clients', 'action' => 'dashboard'));
 	    }
         if ($this->Auth->login()) {
-            return $this->redirect($this->Auth->redirectUrl('/', array('controller' => 'clients', 'action' => 'browse', 'home')));
+            return $this->redirect(array('controller' => 'clients', 'action' => 'dashboard',));
         }
         	$this->Session->setFlash(__('Your username or password was incorrect.'));
     	}
@@ -145,6 +156,7 @@ public function browse() {
 	    $group->id = 2;
 	    $this->Acl->deny($group, 'controllers');
 	    $this->Acl->allow($group, 'controllers/Clients');
+		$this->Acl->allow($group, 'controllers/Users');
 	    $this->Acl->allow($group, 'controllers/Notes');
 	    $this->Acl->allow($group, 'controllers/Balance');
 	    $this->Acl->allow($group, 'controllers/Stocks/index');

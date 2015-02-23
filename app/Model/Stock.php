@@ -123,9 +123,9 @@ class Stock extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		'stockExchange_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
+		'exchange' => array(
+			'notEmpty' => array(
+				'rule' => array('notEmpty'),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
@@ -142,15 +142,6 @@ class Stock extends AppModel {
  *
  * @var array
  */
-	public $belongsTo = array(
-		'StockExchange' => array(
-			'className' => 'StockExchange',
-			'foreignKey' => 'stockExchange_id',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		)
-	);
 
 	public $hasMany = array(
 		'ClientStock' => array(

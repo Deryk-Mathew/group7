@@ -108,6 +108,8 @@ p {
 	margin: 0 0 1em 0;
 }
 
+
+
 /** Layout **/
 #container {
 	text-align: left;
@@ -348,6 +350,20 @@ dd {
 	margin-left: 43% !important;
 	margin-top: -2em;
 	vertical-align: top;
+}
+
+.label-wrap
+{
+width:150px;
+text-align:right;
+float:left;
+}
+
+.info
+{
+width:150px;
+float:left;
+text-align:left;
 }
 
 /** Forms **/
