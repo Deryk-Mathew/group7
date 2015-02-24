@@ -143,13 +143,15 @@ public function browse() {
 
 	    // Allow FA's access to certain functions
 	    $group->id = 2;
-	    $this->Acl->deny($group, 'controllers');
+	    $this->Acl->allow($group, 'controllers');
+	   /* $this->Acl->deny($group, 'controllers');
 	    $this->Acl->allow($group, 'controllers/Clients');
 	    $this->Acl->allow($group, 'controllers/Notes');
 	    $this->Acl->allow($group, 'controllers/Balance');
 	    $this->Acl->allow($group, 'controllers/Stocks/index');
 	    $this->Acl->allow($group, 'controllers/Stocks/view');
 	    $this->Acl->allow($group, 'controllers/ClientStocks');
+	    */
 
 	    // allow basic users to log out
 	    $this->Acl->allow($group, 'controllers/users/logout');
