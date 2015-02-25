@@ -88,14 +88,19 @@
 			<?php echo h($stock['Stock']['daysHigh']); ?>
 			&nbsp;
 		</dd>
-		<dt><?php echo __('YearsLow'); ?></dt>
+		<dt><?php echo __('YearLow'); ?></dt>
 		<dd>
-			<?php echo h($stock['Stock']['yearsLow']); ?>
+			<?php echo h($stock['Stock']['yearLow']); ?>
 			&nbsp;
 		</dd>
-		<dt><?php echo __('MarketCapatalization'); ?></dt>
+		<dt><?php echo __('YearHigh'); ?></dt>
 		<dd>
-			<?php echo h($stock['Stock']['marketCapatalization']); ?>
+			<?php echo h($stock['Stock']['yearHigh']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('MarketCapitalization'); ?></dt>
+		<dd>
+			<?php echo h($stock['Stock']['marketCapitalization']); ?>
 			&nbsp;
 		</dd>
 		</dl>
@@ -125,18 +130,17 @@
 			<?php echo h($stock['Stock']['volume']); ?>
 			&nbsp;
 		</dd>
-		<dt><?php echo __('Stock Exchange'); ?></dt>
+		<dt><?php echo __('Exchange'); ?></dt>
 		<dd>
-			<?php if (AuthComponent::User('group_id') == 1): ?>
-				<?php echo $this->Html->link($stock['StockExchange']['name'], array('controller' => 'stock_exchanges', 'action' => 'view', $stock['StockExchange']['id'])); ?>
-				&nbsp;
-			<?php endif; ?>
-			<?php if (AuthComponent::User('group_id') == 2): ?>
-				<?php echo h($stock['StockExchange']['name']); ?>
-			<?php endif; ?>
+			<?php echo h($stock['Stock']['exchange']); ?>
+			&nbsp;
 		</dd>
-		<dt><?php echo __('Buy Stock'); ?></dt>
-		<dd><?php echo $this->Html->link(__('Buy Stock'), array('controller' => 'client_stocks', 'action' => 'buyStock', $stock['Stock']['id'], $stock['Stock']['lastTradePriceOnly'])); ?>&nbsp;</dd>
+		<?php if($this->Session->read('current_client') != null){ ?>
+		<dt><?php echo __('Trade'); ?></dt>
+		<dd><?php echo $this->Html->link(__('Buy Stock'), array('controller' => 'client_stocks', 'action' => 'buyStock', $stock['Stock']['id'], $this->Session->read('current_client'))); ?>&nbsp;
+		
+		<?php echo $this->Html->link(__('Sell Stock'), array('controller' => 'client_stocks', 'action' => 'sellStock', $stock['Stock']['id'], $this->Session->read('current_client'))); ?></dd>
+		<?php } ?>
 	</dl>
 	<div id="ex2"></div>
 </div>

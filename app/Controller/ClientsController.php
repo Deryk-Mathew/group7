@@ -29,7 +29,6 @@ class ClientsController extends AppController {
 
 			/* Display only clients user has */
 			$var = $this->Auth->user('id');
-			debug($var);
 			$this->paginate = array(
 	        	'conditions' => array('Client.user_id' => $var),
 	        	'limit' => 10
@@ -50,7 +49,6 @@ class ClientsController extends AppController {
 
 			/* Display only clients user has */
 			$var = $this->Auth->user('id');
-			debug($var);
 			$this->paginate = array(
 	        	'conditions' => array('Client.user_id' => $var),
 	        	'limit' => 10
@@ -61,6 +59,18 @@ class ClientsController extends AppController {
 			$this->set('clients', $this->Paginator->paginate());
 		}
 	}
+	
+	
+		/**
+ * dashboard function
+ *
+ * @throws NotFoundException
+ * @return void
+ */
+	public function dashboard() {
+		$this->Client->recursive = 2;
+	}
+	
 /**
  * view method
  *
@@ -68,9 +78,25 @@ class ClientsController extends AppController {
  * @param string $id
  * @return void
  */
-	public function view($id = null) {
+	public function profile($id = null,$name = null) {
 		$this->Client->recursive = 2;
 		$this->Session->write('current_client', $id);
+		$this->Session->write('current_client_name', $name);
+		$options = array('conditions' => array('Balance.' . $this->Client->Balance->primaryKey => $id));
+		$this->set('balance', $this->Client->Balance->find('first', $options));
+		if (!$this->Client->exists($id)) {
+			throw new NotFoundException(__('Invalid client'));
+		}
+		$options = array('conditions' => array('Client.' . $this->Client->primaryKey => $id));
+		$this->set('client', $this->Client->find('first', $options));
+	}
+	
+	public function portfolio($id = null,$name = null) {
+		$this->Client->recursive = 2;
+		$this->Session->write('current_client', $id);
+		$this->Session->write('current_client_name', $name);
+		$options = array('conditions' => array('Balance.' . $this->Client->Balance->primaryKey => $id));
+		$this->Session->write('balance',$this->Client->Balance->find('first',$options)['Balance']['cash_balance']);
 		if (!$this->Client->exists($id)) {
 			throw new NotFoundException(__('Invalid client'));
 		}

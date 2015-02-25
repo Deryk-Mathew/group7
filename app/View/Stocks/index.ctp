@@ -1,8 +1,13 @@
   <script>
 $(document).ready(function() {
-    $('#stockList').dataTable();
+    $('#stockList').dataTable(
+	
+	)
+	
+	;
 } );
-</script><div class="container-fluid">
+</script>
+<div class="container-fluid">
             
              <!-- ENTER INDIVIDUAL PAGE CONTENT HERE!!!!! -->
                 <div class="row">
@@ -21,9 +26,8 @@ $(document).ready(function() {
 			<th>Change</th>
 			<th>Day's Low</th>
 			<th>Day's High</th>
-			<th>Day's Range</th>
-			<th>Volume</th>
 			<th>Exchange</th>
+			<th>Price</th>
 			<th class="actions"></th>
 	</tr>
 	</thead>
@@ -36,15 +40,15 @@ $(document).ready(function() {
 		<td><?php echo h($stock['Stock']['change']); ?>&nbsp;</td>
 		<td><?php echo h($stock['Stock']['daysLow']); ?>&nbsp;</td>
 		<td><?php echo h($stock['Stock']['daysHigh']); ?>&nbsp;</td>
-		<td><?php echo h($stock['Stock']['daysRange']); ?>&nbsp;</td>
-		<td><?php echo h($stock['Stock']['volume']); ?>&nbsp;</td>
+		
 		<td>
-			<?php echo h($stock['StockExchange']['name']); ?>
+			<?php echo h($stock['Stock']['exchange']); ?>
 		</td>
+		<td><?php echo h($stock['Stock']['lastTradePriceOnly']); ?>&nbsp;</td>
 		<td class="actions">
 			<?php echo $this->Html->link(__('View'), array('action' => 'view', $stock['Stock']['id'])); ?>
 			<?php if ($this->Session->read('current_client') != null): ?>
-				<?php echo $this->Html->link(__('Buy'), array('controller' => 'client_stocks', 'action' => 'buyStock', $this->Session->read('current_client'), $stock['Stock']['id'])); ?>
+				<?php echo $this->Html->link(__('Buy'), array('controller' => 'client_stocks', 'action' => 'buyStock', $stock['Stock']['id'], $this->Session->read('current_client'))); ?>
 			<?php endif; ?>
 			<!-- Only show if admin logged in -->
 			<?php if (AuthComponent::User('group_id') == 1): ?>
@@ -56,6 +60,6 @@ $(document).ready(function() {
 	<?php endforeach; ?>
 	</tbody>
 	</table>
-
+</div>
 	
 </div>

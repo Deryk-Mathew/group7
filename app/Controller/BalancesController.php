@@ -132,8 +132,8 @@ class BalancesController extends AppController {
 
 			// save the data to the database
 			if ($this->Balance->save($this->request->data)) {
-				$this->Session->setFlash(__('The balance has been saved.'));
-				return $this->redirect(array('controller' => 'clients', 'action' => 'view', $cc));
+				$this->Session->setFlash(__('Deposit successful.'));
+				return $this->redirect(array('controller' => 'clients', 'action' => 'portfolio', $id,$this->Session->read('current_client_name')));
 			} else {
 				$this->Session->setFlash(__('The balance could not be saved. Please, try again.'));
 			}
@@ -156,14 +156,17 @@ class BalancesController extends AppController {
 		if ($this->request->is(array('post', 'put'))) {
 			$tmp = $this->Balance->read('cash_balance', $id);
 			$var = $this->request->data['Balance']['cash_balance'];
-			
+			if($tmp['Balance']['cash_balance']<$var){
+				$this->Session->setFlash(__('Client has insufficient funds.'));
+				return $this->redirect(array('controller' => 'balances', 'action' => 'withdraw', $id));
+			}
 			$this->request->data['Balance']['cash_balance'] = $this->Common->mathsSub($tmp['Balance']['cash_balance'], $var);
 
 			// Check if account does not pass 0 
 			if ($this->request->data['Balance']['cash_balance'] >= 0){	
 				if ($this->Balance->save($this->request->data)) {
-					$this->Session->setFlash(__('The balance has been saved.'));
-					return $this->redirect(array('controller' => 'clients', 'action' => 'view', $cc));
+					$this->Session->setFlash(__('Funds successfully withdrawn.'));
+					return $this->redirect(array('controller' => 'clients', 'action' => 'portfolio', $id,$this->Session->read('current_client_name')));
 				} else {
 					$this->Session->setFlash(__('The balance could not be saved. Please, try again.'));
 					}

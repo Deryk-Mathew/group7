@@ -35,8 +35,6 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 		echo $this->Html->css('bootstrap.min');	
 		echo $this->Html->css('font-awesome.min');
 		echo $this->Html->css('wealth-style');
-		echo $this->Html->css('fullcalendar');
-	echo $this->Html->css('fullcalendar.print');
 		echo $this->fetch('meta');
 		echo $this->fetch('css');
 		echo $this->fetch('script');
@@ -74,6 +72,10 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
                     echo '</li>';
                     echo '</li>';
                     echo '</ul>';
+					if($this->Session->read('current_client') != null):
+					echo '<font color = "white">Current Client: ' . $this->Session->read('current_client_name').'</br>' ;
+					echo 'Client Cash Balance: £' . $this->Session->read('balance').'</font>' ;
+					endif;
                 echo '</li>';
             echo '</ul>';
             }
@@ -101,16 +103,37 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
                             <!-- /input-group -->
                         </li>
                         <li>
-                            <a href="index.html"><i class="glyphicon glyphicon-home"></i> Dashboard</a>
+						<?php
+						echo $this->Html->link(
+    '<i class="glyphicon glyphicon-home"></i> Dashboard',
+    array('controller' => 'clients', 'action' => 'dashboard'),array('escape' => false)
+); ?>
+                            
                         </li>
-                        <li>
+                        
+						<?php if($this->Session->read('current_client') == null){ ?>
+						<li>
                             <a href="#"><i class="glyphicon glyphicon-gbp"></i> Clients<span class="sidebarIcon glyphicon glyphicon-menu-hamburger"></span></a>
                             <ul class="nav nav-second-level">
-                                <li><?php echo $this->Html->link(__('Add New Client'), array('controller' => 'clients', 'action' => 'add')); ?></li>
                                 <li><?php echo $this->Html->link(__('My Clients'), array('controller' => 'clients', 'action' => 'browse')); ?></li>
+								<li><?php echo $this->Html->link(__('Add New Client'), array('controller' => 'clients', 'action' => 'add')); ?></li>
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
+						<?php } else{?>
+						<li>
+                            <?php echo $this->Html->link(__('Return to My Clients'), array('controller' => 'clients', 'action' => 'browse')); ?>
+                        </li>
+						<li>
+                            <a href="#"><i class="glyphicon glyphicon-gbp"></i> <?php echo $this->Session->read('current_client_name');?><span class="sidebarIcon glyphicon glyphicon-menu-hamburger"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li><?php echo $this->Html->link(__('Portfolio'), array('controller' => 'clients', 'action' => 'portfolio', $this->Session->read('current_client'),$this->Session->read('current_client_name'))); ?></li>
+                                <li><?php echo $this->Html->link(__('View Profile'), array('controller' => 'clients', 'action' => 'profile', $this->Session->read('current_client'),$this->Session->read('current_client_name'))); ?></li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+						<?php } ?>
+						<?php if(AuthComponent::User('group_id') == 1): ?>
                          <li>
                             <a href="#"><i class="glyphicon glyphicon-user"></i> Users<span class="sidebarIcon glyphicon glyphicon-menu-hamburger"></span></a>
                             <ul class="nav nav-second-level">
@@ -119,6 +142,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
+						<?php endif; ?>
                         <li>
                             <a href="#"><i class="glyphicon glyphicon-stats"></i> Markets<span class="sidebarIcon glyphicon glyphicon-menu-hamburger"></span></a>
                             <ul class="nav nav-second-level">
