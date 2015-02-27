@@ -22,7 +22,17 @@ class MeetingsController extends AppController {
  */
 	public function index() {
 		$this->Meeting->recursive = 0;
-		$this->set('meetings', $this->Paginator->paginate());
+
+
+			/* Display only clients user has */
+			$var = $this->Auth->user('id');
+			$this->paginate = array(
+	        	'conditions' => array('Meeting.user_id' => $var),
+	        	'limit' => 1000
+	        	
+	    	);
+		    $this->set('meetings', $this->paginate($this->Meeting));
+		
 	}
 
 /**
