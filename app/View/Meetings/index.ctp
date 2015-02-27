@@ -31,6 +31,7 @@ $.getScript('http://arshaw.com/js/fullcalendar-1.6.4/fullcalendar/fullcalendar.m
       center: 'title',
       right: 'month,agendaWeek,agendaDay'
     },
+    defaultView: 'agendaWeek',
     editable: true,
     events: [
     <?php foreach ($meetings as $meeting): ?>
@@ -42,6 +43,7 @@ $.getScript('http://arshaw.com/js/fullcalendar-1.6.4/fullcalendar/fullcalendar.m
 		$year .= strval(date("y", $timestamp));
 		$month = (intval(date("m", $timestamp))) - 1;
 		$minuteStart = (intval(date("i", $timestamp))); ?>
+		
 		start: new Date(<?php echo $year; ?>, <?php echo $month ?>, <?php echo date("d", $timestamp); ?>, <?php echo date('h', $timestamp); ?>, <?php echo $minuteStart; ?>),
 		end: new Date(<?php echo $year; ?>, <?php echo $month ?>, <?php echo date("d", $timestamp); ?>, 18, <?php echo $minuteStart; ?>),
 		allDay: false,
@@ -49,11 +51,24 @@ $.getScript('http://arshaw.com/js/fullcalendar-1.6.4/fullcalendar/fullcalendar.m
 		
 	<?php endforeach; ?>
     ],
+    
     eventClick: function(event) {
         if (event.url) {
             window.open(event.url);
             return false;
         }
+    },
+    dayClick: function(date, jsEvent, view) {
+
+        alert('Clicked on: ' + date.format());
+
+        alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
+
+        alert('Current view: ' + view.name);
+
+        // change the day's background color just for fun
+        $(this).css('background-color', 'red');
+
     }
   });
 })
