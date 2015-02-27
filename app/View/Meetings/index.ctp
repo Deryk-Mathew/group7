@@ -10,49 +10,84 @@
                 </div>
                 <!-- /.row -->
                 
-                			<?php 
-			echo $this->Html->script('moment.min');
-            echo $this->Html->script('fullcalendar.min');
+                			<?php
+            $this->Html->css('calendar', null, array('inline' => false));
 
 ?>
+
 <script>
+$.getScript('http://arshaw.com/js/fullcalendar-1.6.4/fullcalendar/fullcalendar.min.js',function(){
+  
+  var date = new Date();
+  var d = date.getDate();
+  var m = date.getMonth();
+  var y = date.getFullYear();
+  
+  $('#calendar').fullCalendar({
+    header: {
+      left: 'prev,next today',
+      center: 'title',
+      right: 'month,agendaWeek,agendaDay'
+    },
+    editable: true,
+    events: [
+      {
+        title: 'All Day Event',
+        start: new Date(y, m, 1),
+      },
+      {
+        title: 'Long Event',
+        start: new Date(y, m, d-5),
+        end: new Date(y, m, d-2),
+      },
+      {
+        id: 999,
+        title: 'Repeating Event',
+        start: new Date(y, m, d-3, 16, 0),
+        allDay: false,
+      },
+      {
+        id: 999,
+        title: 'Repeating Event',
+        start: new Date(y, m, d+4, 16, 0),
+        allDay: false,
+      },
+      {
+        title: 'Meeting',
+        start: new Date(y, m, d, 10, 30),
+        allDay: false,
+      },
+      {
+        title: 'Lunch',
+        start: new Date(y, m, d, 12, 0),
+        end: new Date(y, m, d, 14, 0),
+        allDay: false,
+      },
+      {
+        title: 'Birthday Party',
+        start: new Date(y, m, d+1, 19, 0),
+        end: new Date(y, m, d+1, 22, 30),
+        allDay: false,
+      },
+      {
+        title: 'Click for Google',
+        start: new Date(y, m, 28),
+        end: new Date(y, m, 29),
+        url: 'www.google.com'
+      }
+    ],
+    eventClick: function(event) {
+        if (event.url) {
+            window.open(event.url);
+            return false;
+        }
+    }
+  });
+})
 
-	$(document).ready(function() {
-	
-	var today = new Date();
-	var dd = today.getDate();
-	var mm = today.getMonth()+1; //January is 0!
-	var yyyy = today.getFullYear();
 
-	if(dd<10) {
-		dd='0'+dd
-	} 
-
-	if(mm<10) {
-		mm='0'+mm
-	} 
-
-	today = mm+'/'+dd+'/'+yyyy;
-
-		$('#calendar').fullCalendar({
-			defaultDate: today,
-			editable: true,
-			eventLimit: true, // allow "more" link when too many events
-			events: [
-				<?php $meetings; ?>
-				<?php foreach ($meetings as $meeting): ?>
-				{
-					title: '<?php echo h($meeting['Meeting']['user_id']);  ?>':,
-					start: '<?php echo h($meeting['Meeting']['startdate']);  ?>',
-					end: '<?php echo h($meeting['Meeting']['enddate']);  ?>'
-				},
-				<?php endforeach; ?>
-				
-			]
-		});
-		
-	});
 
 </script>
-		<div id='calendar'></div>
-
+<div class="container calendarFullWidth">
+	<div id="calendar"></div>
+</div>
