@@ -53,7 +53,7 @@ class Stock extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		'yearsLow' => array(
+		'yearLow' => array(
 			'numeric' => array(
 				'rule' => array('numeric'),
 				//'message' => 'Your custom message here',
@@ -63,7 +63,7 @@ class Stock extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		'marketCapatalization' => array(
+		'marketCapitalization' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
 				//'message' => 'Your custom message here',
@@ -123,7 +123,7 @@ class Stock extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		'stockExchange_id' => array(
+		'exchange_id' => array(
 			'numeric' => array(
 				'rule' => array('numeric'),
 				//'message' => 'Your custom message here',
@@ -145,13 +145,12 @@ class Stock extends AppModel {
 	public $belongsTo = array(
 		'StockExchange' => array(
 			'className' => 'StockExchange',
-			'foreignKey' => 'stockExchange_id',
+			'foreignKey' => 'exchange_id',
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
 		)
 	);
-
 	public $hasMany = array(
 		'ClientStock' => array(
 			'className' => 'ClientStock',

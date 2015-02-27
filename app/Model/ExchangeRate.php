@@ -4,7 +4,8 @@ App::uses('AppModel', 'Model');
  * StockExchange Model
  *
  */
-class StockExchange extends AppModel {
+class ExchangeRate extends AppModel {
+
 
 /**
  * Validation rules
@@ -12,7 +13,7 @@ class StockExchange extends AppModel {
  * @var array
  */
 	public $validate = array(
-		'name' => array(
+		'currency' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
 				//'message' => 'Your custom message here',
@@ -22,7 +23,7 @@ class StockExchange extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		'currency' => array(
+		'rate' => array(
 			'numeric' => array(
 				'rule' => array('numeric'),
 				//'message' => 'Your custom message here',
@@ -34,24 +35,15 @@ class StockExchange extends AppModel {
 		),
 	);
 	
-	/**
+/**
  * belongsTo associations
  *
  * @var array
  */
-	public $belongsTo = array(
-		'ExchangeRate' => array(
-			'className' => 'ExchangeRate',
-			'foreignKey' => 'currency',
-			'conditions' => '',
-			'fields' => '',
-			'order' => ''
-		)
-	);
-	
+
 	public $hasMany = array(
-		'Stock' => array(
-			'className' => 'Stock',
+		'StockExchange' => array(
+			'className' => 'StockExchange',
 			'foreignKey' => 'id',
 			'dependent' => false,
 			'conditions' => '',
