@@ -42,7 +42,7 @@ $(document).ready(function() {
 		<td><?php echo h($stock['Stock']['daysHigh']); ?>&nbsp;</td>
 		
 		<td>
-			<?php echo h($stock['Stock']['exchange']); ?>
+			<?php echo h($stock['StockExchange']['name']); ?>
 		</td>
 		<td><?php echo h($stock['Stock']['lastTradePriceOnly']); ?>&nbsp;</td>
 		<td class="actions">

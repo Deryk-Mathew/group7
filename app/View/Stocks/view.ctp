@@ -105,9 +105,9 @@
 		</dd>
 		</dl>
 		<dl class="right-dl">
-		<dt><?php echo __('LastTradePriceOnly'); ?></dt>
+		<dt><?php echo __('Price'); ?></dt>
 		<dd>
-			<?php echo h($stock['Stock']['lastTradePriceOnly']); ?>
+			<?php echo h($stock['Stock']['lastTradePriceOnly'])." ".$stock['StockExchange']['ExchangeRate']['currency']." (".number_format((float)(1/$stock['StockExchange']['ExchangeRate']['rate'])*$stock['Stock']['lastTradePriceOnly'],2,'.',''). " GBP)"; ?>
 			&nbsp;
 		</dd>
 		<dt><?php echo __('DaysRange'); ?></dt>
@@ -132,7 +132,7 @@
 		</dd>
 		<dt><?php echo __('Exchange'); ?></dt>
 		<dd>
-			<?php echo h($stock['Stock']['exchange']); ?>
+			<?php echo $stock['StockExchange']['name']; ?>
 			&nbsp;
 		</dd>
 		<?php if($this->Session->read('current_client') != null){ ?>
