@@ -44,7 +44,7 @@ $.getScript('http://arshaw.com/js/fullcalendar-1.6.4/fullcalendar/fullcalendar.m
 		$minuteStart = (intval(date("i", $timestamp))); ?>
 		start: new Date(<?php echo $year; ?>, <?php echo $month ?>, <?php echo date("d", $timestamp); ?>, <?php echo date('h', $timestamp); ?>, <?php echo $minuteStart; ?>),
 		end: new Date(<?php echo $year; ?>, <?php echo $month ?>, <?php echo date("d", $timestamp); ?>, 18, <?php echo $minuteStart; ?>),
-		
+		allDay: false,
 		},
 		
 	<?php endforeach; ?>
