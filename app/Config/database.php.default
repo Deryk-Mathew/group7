@@ -71,10 +71,10 @@ class DATABASE_CONFIG {
 	public $default = array(
 		'datasource' => 'Database/Mysql',
 		'persistent' => false,
-		'host' => 'mysql.hostinger.co.uk',
-		'login' => 'wealth.group7@gmail.com',
-		'password' => 'group7abc',
-		'database' => 'u285514251_wms',
+		'host' => 'sql3.freesqldatabase.com',
+		'login' => 'sql368926',
+		'password' => 'yK8*tP2*',
+		'database' => 'sql368926',
 		'prefix' => '',
 		//'encoding' => 'utf8',
 	);
