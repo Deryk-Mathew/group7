@@ -58,7 +58,7 @@ class Meeting extends AppModel {
 			'fields' => '',
 			'order' => ''
 		),
-    'Client' => array(
+		'Client' => array(
 			'className' => 'Client',
 			'foreignKey' => 'client_id',
 			'conditions' => '',
