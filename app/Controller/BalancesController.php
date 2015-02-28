@@ -1,5 +1,6 @@
 <?php
 App::uses('AppController', 'Controller');
+App::import('Controller', 'TransactionRecords');
 /**
  * Balances Controller
  *
@@ -132,6 +133,8 @@ class BalancesController extends AppController {
 
 			// save the data to the database
 			if ($this->Balance->save($this->request->data)) {
+				$RecordCon = new TransactionRecordsController;
+				$RecordCon->create($id,'CASH',"DEPOSIT",$var);
 				$this->Session->setFlash(__('Deposit successful.'));
 				return $this->redirect(array('controller' => 'clients', 'action' => 'portfolio', $id,$this->Session->read('current_client_name')));
 			} else {
@@ -165,13 +168,15 @@ class BalancesController extends AppController {
 			// Check if account does not pass 0 
 			if ($this->request->data['Balance']['cash_balance'] >= 0){	
 				if ($this->Balance->save($this->request->data)) {
+					$RecordCon = new TransactionRecordsController;
+					$RecordCon->create($id,'CASH',"WITHDRAWAL",$var*(-1));
 					$this->Session->setFlash(__('Funds successfully withdrawn.'));
 					return $this->redirect(array('controller' => 'clients', 'action' => 'portfolio', $id,$this->Session->read('current_client_name')));
 				} else {
 					$this->Session->setFlash(__('The balance could not be saved. Please, try again.'));
 					}
 			} else {
-				$this->Session->setFlash(__('Insuficient balance. Please, try again.'));
+				$this->Session->setFlash(__('Insufficient balance. Please, try again.'));
 			}
 		} else {
 			$options = array('conditions' => array('Balance.' . $this->Balance->primaryKey => $id));

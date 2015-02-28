@@ -1,5 +1,6 @@
 <?php
 App::uses('AppController', 'Controller');
+App::import('Controller', 'TransactionRecords');
 /**
  * ClientStocks Controller
  *
@@ -119,60 +120,47 @@ public function view($id = null) {
 		
 		$conditions = array('ClientStock.client_id' => $client, 'ClientStock.stock_id' => $stock);
 		
-		if ($this->ClientStock->hasAny($conditions)){
-			if($this->request->is(array('post', 'put'))) {
-				
-			$specificallyThisOne = $this->ClientStock->find('first', array('conditions' => $conditions));
-			$this->request->data['ClientStock']['id'] = $specificallyThisOne['ClientStock']['id'];
-			$this->request->data['ClientStock']['client_id'] = $specificallyThisOne['ClientStock']['client_id'];
-			$this->request->data['ClientStock']['stock_id'] = $specificallyThisOne['ClientStock']['stock_id'];
+		
+		if($this->request->is(array('post', 'put'))) {
 			
-			$cost = $this->request->data['ClientStock']['quantity']*$stockdetails['Stock']['lastTradePriceOnly'];
-			
-			
-			
-			$this->request->data['ClientStock']['cost'] = $this->Common->mathsAdd($specificallyThisOne['ClientStock']['cost'], $cost);
-			$clientbalance = $this->ClientStock->Client->Balance->read('cash_balance', $client);
-			if($cost>$clientbalance['Balance']['cash_balance']){
-					$this->Session->setFlash(__('Client has insufficient funds.'));
-					return $this->redirect(array('controller' => 'client_stocks', 'action' => 'buyStock', $stock, $client));
-			}
-			$this->ClientStock->Client->Balance->saveField('cash_balance',$this->Common->mathsSub($clientbalance['Balance']['cash_balance'],$cost));
-			
-			$this->request->data['ClientStock']['quantity'] = $this->Common->mathsAdd($specificallyThisOne['ClientStock']['quantity'], $this->request->data['ClientStock']['quantity']);
-			if($this->ClientStock->save($this->request->data)){
-					$this->Session->setFlash(__('The client stock has been purchased.'));
-					return $this->redirect(array('controller' => 'clients', 'action' => 'portfolio', $this->Session->read('current_client'),$this->Session->read('current_client_name')));
-			}
-			else {
-				$this->Session->setFlash(__('The client stock could not be saved. Please, try again.'));
-				}
-			}
-		}
-		else{
-		if($this->request->is(array('post','put'))){
-			$this->ClientStock->create();
-			$this->request->data['ClientStock']['client_id'] = $client;
-			$this->request->data['ClientStock']['stock_id'] = $stock;
-			$cost = $this->request->data['ClientStock']['quantity']*$stockdetails['Stock']['lastTradePriceOnly'];
+			$quantity = $this->request->data['ClientStock']['quantity'];
+			$cost = $quantity*$stockdetails['Stock']['lastTradePriceOnly'];
 			$clientbalance = $this->ClientStock->Client->Balance->read('cash_balance', $client);
 			
 			if($cost>$clientbalance['Balance']['cash_balance']){
 					$this->Session->setFlash(__('Client has insufficient funds.'));
 					return $this->redirect(array('controller' => 'client_stocks', 'action' => 'buyStock', $stock, $client));
 			}
-			$this->request->data['ClientStock']['cost'] = $cost;
 			
-			
+			if (!$this->ClientStock->hasAny($conditions)){
+				$this->ClientStock->create();
+				$this->request->data['ClientStock']['client_id'] = $client;
+				$this->request->data['ClientStock']['stock_id'] = $stock;
+				$this->request->data['ClientStock']['cost'] = $cost;
+				$this->request->data['ClientStock']['quantity'] = $quantity;
+			}
+			else{
+				$specificallyThisOne = $this->ClientStock->find('first', array('conditions' => $conditions));
+				$this->request->data['ClientStock']['id'] = $specificallyThisOne['ClientStock']['id'];
+				$this->request->data['ClientStock']['client_id'] = $specificallyThisOne['ClientStock']['client_id'];
+				$this->request->data['ClientStock']['stock_id'] = $specificallyThisOne['ClientStock']['stock_id'];
+				$this->request->data['ClientStock']['cost'] = $this->Common->mathsAdd($specificallyThisOne['ClientStock']['cost'], $cost);
+				$this->request->data['ClientStock']['quantity'] = $this->Common->mathsAdd($specificallyThisOne['ClientStock']['quantity'], $quantity);
+			}
+
 			$this->ClientStock->Client->Balance->saveField('cash_balance',$this->Common->mathsSub($clientbalance['Balance']['cash_balance'],$cost));
+			
+			
+			
 			if($this->ClientStock->save($this->request->data)){
+					$RecordCon = new TransactionRecordsController;
+					$RecordCon->create($client,'STOCK',$stockdetails['Stock']['symbol']." PURCHASE QTY:".$quantity,$cost);
 					$this->Session->setFlash(__('The client stock has been purchased.'));
 					return $this->redirect(array('controller' => 'clients', 'action' => 'portfolio', $this->Session->read('current_client'),$this->Session->read('current_client_name')));
 			}
 			else {
 				$this->Session->setFlash(__('The client stock could not be saved. Please, try again.'));
 				}
-		}
 		}
 	}
 	
@@ -193,28 +181,32 @@ public function view($id = null) {
 			$specificallyThisOne = $this->ClientStock->find('first', array('conditions' => $conditions));
 			$this->set('quantity',$specificallyThisOne['ClientStock']['quantity']);
 			if($this->request->is(array('post', 'put'))) {
-			
-			$this->request->data['ClientStock']['id'] = $specificallyThisOne['ClientStock']['id'];
-			$this->request->data['ClientStock']['client_id'] = $specificallyThisOne['ClientStock']['client_id'];
-			$this->request->data['ClientStock']['stock_id'] = $specificallyThisOne['ClientStock']['stock_id'];
-			$quantity = $this->request->data['ClientStock']['quantity'];
-			if($quantity>$specificallyThisOne['ClientStock']['quantity']){
-					$this->Session->setFlash(__('Client has insufficient stock in this company.'));
-					return $this->redirect(array('controller' => 'client_stocks', 'action' => 'sellStock', $stock, $client));
-			}
-			
-			$cost = $quantity*$stockdetails['Stock']['lastTradePriceOnly'];
-			$this->request->data['ClientStock']['cost'] = $this->Common->mathsAdd($specificallyThisOne['ClientStock']['cost'], $cost);
-			$clientbalance = $this->ClientStock->Client->Balance->read('cash_balance', $client);
-			$this->ClientStock->Client->Balance->saveField('cash_balance',$this->Common->mathsAdd($clientbalance['Balance']['cash_balance'],$cost));
-			
-			$this->request->data['ClientStock']['quantity'] = $this->Common->mathsSub($specificallyThisOne['ClientStock']['quantity'], $this->request->data['ClientStock']['quantity']);
-			if($this->request->data['ClientStock']['quantity'] == 0){
-				$this->request->data['ClientStock']['cost'] = 0;
-			}
-			if($this->ClientStock->save($this->request->data)){
-					$this->Session->setFlash(__('The client stock has been sold.'));
-					return $this->redirect(array('controller' => 'clients', 'action' => 'portfolio', $this->Session->read('current_client'),$this->Session->read('current_client_name')));
+				$quantity = $this->request->data['ClientStock']['quantity'];
+				$this->request->data['ClientStock']['id'] = $specificallyThisOne['ClientStock']['id'];
+				$this->request->data['ClientStock']['client_id'] = $specificallyThisOne['ClientStock']['client_id'];
+				$this->request->data['ClientStock']['stock_id'] = $specificallyThisOne['ClientStock']['stock_id'];
+				
+				
+				if($quantity>$specificallyThisOne['ClientStock']['quantity']){
+						$this->Session->setFlash(__('Client has insufficient stock in this company.'));
+						return $this->redirect(array('controller' => 'client_stocks', 'action' => 'sellStock', $stock, $client));
+				}
+				
+				$cost = $quantity*$stockdetails['Stock']['lastTradePriceOnly'];
+				$this->request->data['ClientStock']['cost'] = $this->Common->mathsAdd($specificallyThisOne['ClientStock']['cost'], $cost);
+				$clientbalance = $this->ClientStock->Client->Balance->read('cash_balance', $client);
+				$this->ClientStock->Client->Balance->saveField('cash_balance',$this->Common->mathsAdd($clientbalance['Balance']['cash_balance'],$cost));
+		
+				$this->request->data['ClientStock']['quantity'] = $this->Common->mathsSub($specificallyThisOne['ClientStock']['quantity'],$quantity );
+				
+				if($this->request->data['ClientStock']['quantity'] == 0){
+					$this->request->data['ClientStock']['cost'] = 0;
+				}
+				if($this->ClientStock->save($this->request->data)){
+						$RecordCon = new TransactionRecordsController;
+						$RecordCon->create($client,'STOCK',$stockdetails['Stock']['symbol']." SELL QTY: ".$quantity,$cost*(-1));
+						$this->Session->setFlash(__('The client stock has been sold.'));
+						return $this->redirect(array('controller' => 'clients', 'action' => 'portfolio', $this->Session->read('current_client'),$this->Session->read('current_client_name')));
 			}
 			else {
 				$this->Session->setFlash(__('The client stock could not be saved. Please, try again.'));

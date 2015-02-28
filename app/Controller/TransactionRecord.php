@@ -4,7 +4,7 @@ App::uses('AppModel', 'Model');
  * StockExchange Model
  *
  */
-class StockExchange extends AppModel {
+class TransactionRecord extends AppModel {
 
 /**
  * Validation rules
@@ -12,7 +12,7 @@ class StockExchange extends AppModel {
  * @var array
  */
 	public $validate = array(
-		'currency' => array(
+		'client_id' => array(
 			'numeric' => array(
 				'rule' => array('numeric'),
 				//'message' => 'Your custom message here',
@@ -30,29 +30,12 @@ class StockExchange extends AppModel {
  * @var array
  */
 	public $belongsTo = array(
-		'ExchangeRate' => array(
-			'className' => 'ExchangeRate',
-			'foreignKey' => 'currency',
+		'Client' => array(
+			'className' => 'Client',
+			'foreignKey' => 'client_id',
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
 		)
 	);
-	
-	public $hasMany = array(
-		'Stock' => array(
-			'className' => 'Stock',
-			'foreignKey' => 'name',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		)
-	);
-
 }

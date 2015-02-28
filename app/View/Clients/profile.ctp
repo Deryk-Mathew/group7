@@ -76,6 +76,7 @@
 	</dl>
 	
 	
+	 
 
 <!-- List client balance -->
 	<div class="clientBalance">
@@ -86,7 +87,7 @@
 				<dd>
 				<?php echo $client['Balance']['cash_balance']; ?>
 				&nbsp;</dd>
-				<dt><?php echo __('Stock Balance'); ?></dt>
+				<dt><?php echo __('Stock Value'); ?></dt>
 				<dd>
 				<?php echo $stocktotal; ?>
 				&nbsp;</dd>
@@ -104,9 +105,7 @@
 			</ul>
 
 		</div>
-		
-	</div>
-<!-- List all client notes -->
+		<!-- List all client notes -->
 
 	<h3 class="notes"><?php echo __('Related Notes'); ?></h3>
 	<?php if (!empty($client['Note'])): ?>
@@ -134,6 +133,38 @@
 		</ul>
 	</div>
 	<!-- New Note div end -->
+
+	</div>
+	
+	
+	<div class="clients index">    
+
+	<?php if (!empty($client['TransactionRecord'])): ?>
+<table id="stockTable" cellpadding = "0" cellspacing = "0">
+ 
+			<tr>
+			<h3><?php echo __('Transaction Record'); ?></h3>	
+				<th><?php echo __('Type'); ?></th>
+				<th><?php echo __('Description'); ?></th>
+				<th><?php echo __('In'); ?></th>
+				<th><?php echo __('Out'); ?></th>
+				<th><?php echo __('Date'); ?></th>
+			</tr>		   
+			<?php foreach ($client['TransactionRecord'] as $transrec): ?>
+				<tr>
+						<td><?php echo $transrec['type']; ?></td>
+						<td><?php echo $transrec['description']; ?></td>
+						<?php if ($transrec['balance_change'] > 0): ?><td><?php echo $transrec['balance_change']; ?></td><td><?php echo "-"; ?></td><?php endif; ?>
+						<?php if ($transrec['balance_change'] < 0): ?><td><?php echo "-"; ?></td><td><?php echo $transrec['balance_change']*-1; ?></td><?php endif; ?>
+						<?php if ($transrec['balance_change'] == 0): ?><td><?php echo "-"; ?></td><td><?php echo "-"; ?></td><?php endif; ?>
+						<td><?php echo $transrec['date']; ?></td>
+				</tr>
+			<?php endforeach; ?>            
+<?php endif; ?>			
+                
+</div>
+
+
 </div>                   
 
 
