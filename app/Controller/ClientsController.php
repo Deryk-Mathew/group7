@@ -1,5 +1,6 @@
 <?php
 App::uses('AppController', 'Controller');
+App::import('Controller', 'Meetings');
 /**
  * Clients Controller
  *
@@ -68,6 +69,7 @@ class ClientsController extends AppController {
  * @return void
  */
 	public function dashboard() {
+<<<<<<< HEAD
 		$this->loadModel('Meeting');
 		$this->Meeting->recursive = 0;
 
@@ -87,6 +89,17 @@ class ClientsController extends AppController {
 	        	'conditions' => array('Meeting.user_id' => $var1),
 	        	'limit' => 1000	));
 		$this->set('meetings', $var); */
+=======
+		$this->Client->recursive = 0;
+
+		if ($this->Auth->user('group_id') == 2) {
+			$id = $this->Auth->user('id');
+			$options = array('conditions' => array('Meetings.user_id' => $id));
+		    $this->set('meetings', $this->Client->Meetings->find('first', $options));
+		}else{
+			$this->set('clients', $this->Paginator->paginate());
+		}
+>>>>>>> origin/master
 	}
 	
 /**
