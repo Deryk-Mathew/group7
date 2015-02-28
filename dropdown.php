@@ -1,7 +1,7 @@
 <?php	
 $options = array();
 foreach($clients as $client){
-	$options[] = $client['Client']['name'];
+	$options[] = array($client['Client']['id']=>$client['Client']['name']);
 }
 echo $this->Form->input('field', array(
     'options' => $options,
