@@ -68,7 +68,14 @@ class ClientsController extends AppController {
  * @return void
  */
 	public function dashboard() {
-		$this->Client->recursive = 2;
+		$this->Meeting->recursive = 2;
+		/* Display only clients user has */
+			$var = $this->Auth->user('id');
+			$this->Meeting->paginate = array(
+	        	'conditions' => array('Meeting.user_id' => $var),
+	        	'limit' => 1000	
+	    	);
+			 $this->set('meetings', $this->paginate($this->Meeting));
 	}
 	
 /**
