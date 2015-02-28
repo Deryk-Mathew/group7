@@ -27,7 +27,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 	</title>
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/metisMenu/1.1.3/metisMenu.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-	<script type="text/javascript" src="http://cdn.datatables.net/1.10.0/js/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" src="http://cdn.datatables.net/1.10.0/js/jquery.dataTables.min.js"></script> 
 	<?php
 		echo $this->Html->meta('icon');
 		
@@ -133,7 +133,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
                             <!-- /.nav-second-level -->
                         </li>
 						<?php } ?>
-						<?php if(AuthComponent::User('group_id') == 1): ?>
+						<?php if(AuthComponent::User('group_id') == ADMIN): ?>
                          <li>
                             <a href="#"><i class="glyphicon glyphicon-user"></i> Users<span class="sidebarIcon glyphicon glyphicon-menu-hamburger"></span></a>
                             <ul class="nav nav-second-level">
@@ -153,8 +153,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
                         <li>
                             <a href="#"><i class="glyphicon glyphicon-calendar"></i> Appointments<span class="sidebarIcon glyphicon glyphicon-menu-hamburger"></span></a>
                             <ul class="nav nav-second-level">
-                                <li><?php echo $this->Html->link(__('Add New Appointment'), array('controller' => 'meetings', 'action' => 'add')); ?></li>
-                                <li><?php echo $this->Html->link(__('View My Calendar'), array('controller' => 'meetings', 'action' => 'index')); ?></li>
+                                <li><?php echo $this->Html->link(__('View Calendar'), array('controller' => 'meetings', 'action' => 'index')); ?></li>
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
@@ -200,7 +199,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 			echo $this->Html->script('wealth');
 ?>
 
-<!--- <script src="//cdnjs.cloudflare.com/ajax/libs/metisMenu/1.1.3/metisMenu.min.js"></script> -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/metisMenu/1.1.3/metisMenu.min.js"></script>
 
 </body>
 </html>

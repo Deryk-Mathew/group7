@@ -152,7 +152,7 @@
 			</tr>		   
 			<?php foreach ($client['TransactionRecord'] as $transrec): ?>
 				<tr>
-						<td><?php echo $transrec['type']; ?></td>
+						<td><?php echo $transrec['TransactionType']['type']; ?></td>
 						<td><?php echo $transrec['description']; ?></td>
 						<?php if ($transrec['balance_change'] > 0): ?><td><?php echo $transrec['balance_change']; ?></td><td><?php echo "-"; ?></td><?php endif; ?>
 						<?php if ($transrec['balance_change'] < 0): ?><td><?php echo "-"; ?></td><td><?php echo $transrec['balance_change']*-1; ?></td><?php endif; ?>

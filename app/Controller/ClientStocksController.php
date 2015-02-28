@@ -154,7 +154,7 @@ public function view($id = null) {
 			
 			if($this->ClientStock->save($this->request->data)){
 					$RecordCon = new TransactionRecordsController;
-					$RecordCon->create($client,'STOCK',$stockdetails['Stock']['symbol']." PURCHASE QTY:".$quantity,$cost);
+					$RecordCon->create($client,STOCK,$stockdetails['Stock']['symbol']." PURCHASE QTY:".$quantity,$cost);
 					$this->Session->setFlash(__('The client stock has been purchased.'));
 					return $this->redirect(array('controller' => 'clients', 'action' => 'portfolio', $this->Session->read('current_client'),$this->Session->read('current_client_name')));
 			}
@@ -204,7 +204,7 @@ public function view($id = null) {
 				}
 				if($this->ClientStock->save($this->request->data)){
 						$RecordCon = new TransactionRecordsController;
-						$RecordCon->create($client,'STOCK',$stockdetails['Stock']['symbol']." SELL QTY: ".$quantity,$cost*(-1));
+						$RecordCon->create($client,STOCK,$stockdetails['Stock']['symbol']." SELL QTY: ".$quantity,$cost*(-1));
 						$this->Session->setFlash(__('The client stock has been sold.'));
 						return $this->redirect(array('controller' => 'clients', 'action' => 'portfolio', $this->Session->read('current_client'),$this->Session->read('current_client_name')));
 			}

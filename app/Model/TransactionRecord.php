@@ -36,6 +36,13 @@ class TransactionRecord extends AppModel {
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
+		),
+		'TransactionType' => array(
+			'className' => 'TransactionType',
+			'foreignKey' => 'type',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
 		)
 	);
 }

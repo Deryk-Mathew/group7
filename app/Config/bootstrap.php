@@ -26,6 +26,13 @@
 Cache::config('default', array('engine' => 'File'));
 CakePlugin::loadAll();
 
+/*
+*	Global constants
+*/
+define('ADMIN',1);
+define('FA',2);
+define('CASH',1);
+define('STOCK',2);
 /**
  * The settings below can be used to set additional paths to models, views and controllers.
  *

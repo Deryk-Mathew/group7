@@ -134,7 +134,7 @@ class BalancesController extends AppController {
 			// save the data to the database
 			if ($this->Balance->save($this->request->data)) {
 				$RecordCon = new TransactionRecordsController;
-				$RecordCon->create($id,'CASH',"DEPOSIT",$var);
+				$RecordCon->create($id,CASH,"DEPOSIT",$var);
 				$this->Session->setFlash(__('Deposit successful.'));
 				return $this->redirect(array('controller' => 'clients', 'action' => 'portfolio', $id,$this->Session->read('current_client_name')));
 			} else {
@@ -169,7 +169,7 @@ class BalancesController extends AppController {
 			if ($this->request->data['Balance']['cash_balance'] >= 0){	
 				if ($this->Balance->save($this->request->data)) {
 					$RecordCon = new TransactionRecordsController;
-					$RecordCon->create($id,'CASH',"WITHDRAWAL",$var*(-1));
+					$RecordCon->create($id,CASH,"WITHDRAWAL",$var*(-1));
 					$this->Session->setFlash(__('Funds successfully withdrawn.'));
 					return $this->redirect(array('controller' => 'clients', 'action' => 'portfolio', $id,$this->Session->read('current_client_name')));
 				} else {
