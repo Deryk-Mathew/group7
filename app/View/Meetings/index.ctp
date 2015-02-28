@@ -32,7 +32,7 @@ $.getScript('http://arshaw.com/js/fullcalendar-1.6.4/fullcalendar/fullcalendar.m
     <?php foreach ($meetings as $meeting): ?>
 	{
 		title: '<?php echo h($meeting["Meeting"]["client_id"]);  ?>',
-		<?php $dateReturn = h($meeting['Meeting']['time']);  
+		<?php $dateReturn = h($meeting['Meeting']['startDate']);  
 		$timestamp = strtotime($dateReturn);
 		$year = strval('20');
 		$year .= strval(date("y", $timestamp));

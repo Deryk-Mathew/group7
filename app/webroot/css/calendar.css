@@ -1,10 +1,14 @@
 .calendarFullWidth {
     width: 100% !important;   
 }
-#calendar > table > tbody > tr > td.fc-header-center > span > h2 {
+#calendar > table > tbody > tr > td.fc-header-center > span > h2 #calendar > table > tbody > tr > td.fc-header-left > span > h2 {
     font-size: 18px;   
 }
 
+#calendar.hideHeader > table {
+	display: none;
+	}
+	
 .fc {
 	direction: ltr;
 	text-align: left;

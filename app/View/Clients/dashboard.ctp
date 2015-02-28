@@ -1,3 +1,4 @@
+
             <div class="container-fluid">
             
              <!-- ENTER INDIVIDUAL PAGE CONTENT HERE!!!!! -->
@@ -8,36 +9,66 @@
                     <!-- /.col-lg-12 -->
                 </div>
                 <!-- /.row -->
-<<<<<<< HEAD
                 
                 			<?php
-            $this->Html->css('calendar', null, array('inline' => false)); ?>
+            $this->Html->css('calendar', null, array('inline' => false));
 
+?>
+
+<script>
+
+$.getScript('http://arshaw.com/js/fullcalendar-1.6.4/fullcalendar/fullcalendar.min.js',function(){
+
+
+  $('#calendar').fullCalendar({
+    defaultView: 'basicDay',
+    events: [
     <?php foreach ($meetings as $meeting): ?>
-		<?php echo h($meeting["Meeting"]["client_id"]);  ?>
-	<?php endforeach; ?>
-=======
-	  <div class="clients index">
-	<table id="clientList" width="100%" cellpadding="0" cellspacing="0">
-	<thead>
-	<tr>
-			<th>ID</th>
-			<th>User ID</th>
-			<th>Date</th>
-			<!--<th class="actions"><?php echo __('Actions'); ?></th> -->
-	</tr>
-	</thead>
-	<tbody>
-	<?php foreach ($meetings as $meeting): ?>
-	<tr>
-		<td><?php echo $meeting['id']; ?>&nbsp;</td>
-		<td><?php echo $meeting['user_id']; ?>&nbsp;</td>
-		<td><?php echo $meeting['startDate']; ?>&nbsp;</td>
+	{
+		title: '<?php echo h($meeting["Meeting"]["client_id"]);  ?>',
+		<?php $dateReturn = h($meeting['Meeting']['startDate']);  
+		$timestamp = strtotime($dateReturn);
+		$year = strval('20');
+		$year .= strval(date("y", $timestamp));
+		$month = (intval(date("m", $timestamp))) - 1;
+		$hourStart = (intval(date("i", $timestamp)));
+		$minuteStart = (intval(date("i", $timestamp))); ?>
 		
-	</tr>
-<?php endforeach; ?>
-	</tbody>
-	</table>
-</div>
+		start: new Date(<?php echo $year; ?>, <?php echo $month ?>, <?php echo date("d", $timestamp); ?>, <?php echo date('h', $timestamp); ?>, <?php echo $minuteStart; ?>),
+		end: new Date(<?php echo $year; ?>, <?php echo $month ?>, <?php echo date("d", $timestamp); ?>, 18, <?php echo $minuteStart; ?>),
+		url: 'http://localhost/group7/meetings/edit/<?php echo h($meeting["Meeting"]["id"]); ?>',
+		allDay: false,
+		},
+		
+	<?php endforeach; ?>
+    ],
+    
+    eventClick: function(event) {
+        if (event.url) {
+            window.open(event.url);
+            return false;
+        }
+    },
+    dayClick: function(date, jsEvent, view) {
 
->>>>>>> origin/master
+        alert('Clicked on: ' + date.format());
+
+        alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
+
+        alert('Current view: ' + view.name);
+
+        // change the day's background color just for fun
+        $(this).css('background-color', 'red');
+
+    }
+  });
+})
+
+
+
+</script>
+<div class="col-xs-5">
+<div class="container calendarFullWidth">
+	<div id="calendar" class="hideHeader"></div>
+</div>
+</div>
