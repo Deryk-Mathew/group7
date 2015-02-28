@@ -37,11 +37,19 @@ $.getScript('http://arshaw.com/js/fullcalendar-1.6.4/fullcalendar/fullcalendar.m
 		$year = strval('20');
 		$year .= strval(date("y", $timestamp));
 		$month = (intval(date("m", $timestamp))) - 1;
-		$hourStart = (intval(date("i", $timestamp)));
-		$minuteStart = (intval(date("i", $timestamp))); ?>
-		
+		$hourStart = (intval(date("h", $timestamp)));
+		$minuteStart = (intval(date("i", $timestamp)));
+		$duration = intval(h($meeting['Meeting']['duration']));
+		$hours = ($duration)/60;
+		$minutes = ($duration)%60;
+		$hourEnd = $hourStart + $hours;
+		$minutesEnd = $minuteStart + $minutes;
+		if($minutesEnd > 59){
+			$hourEnd = $hoursEnd + 1;
+			$minutesEnd = $minutesEnd - 60;
+		} ?>
 		start: new Date(<?php echo $year; ?>, <?php echo $month ?>, <?php echo date("d", $timestamp); ?>, <?php echo date('h', $timestamp); ?>, <?php echo $minuteStart; ?>),
-		end: new Date(<?php echo $year; ?>, <?php echo $month ?>, <?php echo date("d", $timestamp); ?>, 18, <?php echo $minuteStart; ?>),
+		end: new Date(<?php echo $year; ?>, <?php echo $month ?>, <?php echo date("d", $timestamp); ?>, <?php echo $hourEnd; ?>, <?php echo $minutesEnd; ?>),
 		url: 'http://localhost/group7/meetings/edit/<?php echo h($meeting["Meeting"]["id"]); ?>',
 		allDay: false,
 		},
