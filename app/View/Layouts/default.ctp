@@ -122,8 +122,12 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
                         </li>
 						<?php } else{?>
 						<li>
-                            <?php echo $this->Html->link(__('Return to My Clients'), array('controller' => 'clients', 'action' => 'browse')); ?>
-                        </li>
+							<?php
+						echo $this->Html->link(
+    '<i class="glyphicon glyphicon-arrow-left"></i> View/Select Another Client',
+    array('controller' => 'clients', 'action' => 'browse'),array('escape' => false)
+); ?>
+                         </li>
 						<li>
                             <a href="#"><i class="glyphicon glyphicon-gbp"></i> <?php echo $this->Session->read('current_client_name');?><span class="sidebarIcon glyphicon glyphicon-menu-hamburger"></span></a>
                             <ul class="nav nav-second-level">
