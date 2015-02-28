@@ -47,7 +47,7 @@ class MeetingsController extends AppController {
 			throw new NotFoundException(__('Invalid Meeting'));
 		}
 		$options = array('conditions' => array('Meeting.' . $this->Meeting->primaryKey => $id));
-		$this->set('note', $this->Meeting->find('first', $options));
+		$this->set('meeting', $this->Meeting->find('first', $options));
 	}
 
 /**
@@ -63,11 +63,11 @@ class MeetingsController extends AppController {
 			$this->Meeting->create();
 			$this->request->data['Meeting']['client_id'] = $var;
             $this->request->data['Meeting']['user_id'] = $var2;
-			if ($this->Note->save($this->request->data)) {
+			if ($this->Meeting->save($this->request->data)) {
 				$this->Session->setFlash(__('The meeting has been saved.'));
 				return $this->redirect(array( 'controller' => 'meetings', 'action' => 'browse'));
 			} else {
-				$this->Session->setFlash(__('The note could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('The meeting could not be saved. Please, try again.'));
 			}
 		}
 	}
@@ -86,14 +86,14 @@ class MeetingsController extends AppController {
 		if ($this->request->is(array('post', 'put'))) {
 			$this->request->data['Meeting']['client_id'] = $client_id;
 			$this->request->data['Meeting']['id'] = $id;
-			if ($this->Note->save($this->request->data)) {
+			if ($this->Meeting->save($this->request->data)) {
 				$this->Session->setFlash(__('The note has been saved.'));
 				return $this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(__('The note could not be saved. Please, try again.'));
 			}
 		} else {
-			$options = array('conditions' => array('Note.' . $this->Meeting->primaryKey => $id));
+			$options = array('conditions' => array('Meeting.' . $this->Meeting->primaryKey => $id));
 			$this->request->data = $this->Meeting->find('first', $options);
 		}
 	}

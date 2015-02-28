@@ -16,15 +16,10 @@
 ?>
 
 <script>
+
 $.getScript('http://arshaw.com/js/fullcalendar-1.6.4/fullcalendar/fullcalendar.min.js',function(){
-  
-  var date = new Date();
-  var d = date.getDate();
-  var m = date.getMonth();
-  var y = date.getFullYear();
 
 
-	
   $('#calendar').fullCalendar({
     header: {
       left: 'prev,next today',
@@ -42,10 +37,12 @@ $.getScript('http://arshaw.com/js/fullcalendar-1.6.4/fullcalendar/fullcalendar.m
 		$year = strval('20');
 		$year .= strval(date("y", $timestamp));
 		$month = (intval(date("m", $timestamp))) - 1;
+		$hourStart = (intval(date("i", $timestamp)));
 		$minuteStart = (intval(date("i", $timestamp))); ?>
 		
 		start: new Date(<?php echo $year; ?>, <?php echo $month ?>, <?php echo date("d", $timestamp); ?>, <?php echo date('h', $timestamp); ?>, <?php echo $minuteStart; ?>),
 		end: new Date(<?php echo $year; ?>, <?php echo $month ?>, <?php echo date("d", $timestamp); ?>, 18, <?php echo $minuteStart; ?>),
+		url: 'http://localhost/group7/meetings/edit/<?php echo h($meeting["Meeting"]["id"]); ?>',
 		allDay: false,
 		},
 		

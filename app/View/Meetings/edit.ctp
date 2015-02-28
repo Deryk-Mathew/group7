@@ -1,37 +1,21 @@
 <div class="notes form">
-<?php echo $this->Form->create('Note'); ?>
+<?php echo $this->Form->create('Meeting'); ?>
 	<fieldset>
-		<legend><?php echo __('Edit Note'); ?></legend>
 	<?php
-		//echo $this->Form->input('id');
-		//echo $this->Form->input('client_id');
-		echo $this->Form->input('body');
+		echo $this->Form->input('client_id');
+		echo $this->Form->input('time', ['id' => 'datetimepicker']);
+		echo $this->Form->input('duration');
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Submit')); ?>
 </div>
-<div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
-	<?php if (AuthComponent::User('group_id') == 1): ?>
-		<ul>
-			<li><?php echo $this->Html->link(__('New Client'), array('controller' => 'clients','action' => 'add')); ?></li>
-			<li><?php echo $this->Html->link(__('List Clients'), array('controller' => 'clients','action' => 'index')); ?> </li>
-			<li><?php echo $this->Html->link(__('List Users'), array('controller' => 'users', 'action' => 'index')); ?> </li>
-			<li><?php echo $this->Html->link(__('New User'), array('controller' => 'users', 'action' => 'add')); ?> </li>
-			<?php if ($this->Session->read('current_client') != null): ?>
-				<li><?php echo $this->Html->link(__('Return To Client'), array('controller' => 'clients', 'action' => 'view', $this->Session->read('current_client'))); ?> </li>
-			<?php endif; ?>
-			<li><?php echo $this->Html->link(__('Logout'), array('controller' => 'users', 'action' => 'logout')); ?></li>
-		</ul>
-	<?php endif; ?>
-	<?php if (AuthComponent::User('group_id') == 2): ?>
-		<ul>
-			<li><?php echo $this->Html->link(__('List Clients'), array('controller' => 'clients','action' => 'index')); ?> </li>
-			<li><?php echo $this->Html->link(__('New Client'), array('controller' => 'clients','action' => 'add')); ?> </li>
-			<?php if ($this->Session->read('current_client') != null): ?>
-				<li><?php echo $this->Html->link(__('Return To Client'), array('controller' => 'clients', 'action' => 'view', $this->Session->read('current_client'))); ?> </li>
-			<?php endif; ?>
-			<li><?php echo $this->Html->link(__('Logout'), array('controller' => 'users', 'action' => 'logout')); ?></li>
-		</ul>
-	<?php endif; ?>
-</div>
+
+<script>
+$('#datetimepicker').datetimepicker({
+dayOfWeekStart : 1,
+lang:'en',
+disabledDates:['1986/01/08','1986/01/09','1986/01/10'],
+startDate:	'2015/01/05'
+});
+$('#datetimepicker').datetimepicker({step:5});
+</script>

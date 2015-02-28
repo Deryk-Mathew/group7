@@ -1,4 +1,3 @@
-<div class="clients form">
 <?php echo $this->Form->create('Client'); ?>
 	<fieldset>
 		<legend><?php echo __('Edit Client'); ?></legend>
@@ -15,17 +14,5 @@
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Submit')); ?>
-</div>
-<div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
-	<ul>
 
-		<li><?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $this->Form->value('Client.id')), array(), __('Are you sure you want to delete # %s?', $this->Form->value('Client.id'))); ?></li>
-		<li><?php echo $this->Html->link(__('List Clients'), array('action' => 'index')); ?></li>
-		<li><?php echo $this->Html->link(__('New Note'), array('controller' => 'notes', 'action' => 'add')); ?> </li>
-		<?php if ($this->Session->read('current_client') != null): ?>
-			<li><?php echo $this->Html->link(__('Return To Client'), array('controller' => 'clients', 'action' => 'view', $this->Session->read('current_client'))); ?> </li>
-		<?php endif; ?>
-		<li><?php echo $this->Html->link(__('Logout'), array('controller' => 'users', 'action' => 'logout')); ?></li>
-	</ul>
-</div>
+

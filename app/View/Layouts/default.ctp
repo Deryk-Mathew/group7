@@ -27,7 +27,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 	</title>
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/metisMenu/1.1.3/metisMenu.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-	<script type="text/javascript" src="http://cdn.datatables.net/1.10.0/js/jquery.dataTables.min.js"></script> 
+	<script type="text/javascript" src="http://cdn.datatables.net/1.10.0/js/jquery.dataTables.min.js"></script>
 	<?php
 		echo $this->Html->meta('icon');
 		
