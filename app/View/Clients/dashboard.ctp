@@ -89,7 +89,29 @@ $.getScript('http://arshaw.com/js/fullcalendar-1.6.4/fullcalendar/fullcalendar.m
 </div>
 </div>
 <div class="col-xs-6">
-<h3>Market Information:</h3>
+<h3>Today's Most Valuable Stocks:</h3>
+<br/>
+<table id="clientList" width="100%" cellpadding="0" cellspacing="0">
+	<thead>
+	<tr>
+			<th>Name</th>
+			<th>Price</th>
+			
+	</tr>
+	</thead>
+	<tbody>
+	
+	<?php foreach ($topStocks as $stock): ?>
+	<tr>
+		<td><?php echo h($stock["Stock"]["name"]) ?></td>
+		<td><?php echo h($stock["Stock"]["lastTradePriceOnly"]) ?></td>
+		
+	</tr>
+<?php endforeach; ?>
+
+	</tbody>
+	</table>
+
 <br/>
 
 </div>

@@ -91,7 +91,18 @@ class ClientsController extends AppController {
 	        	
 	    	);
 		    $this->set('meetings', $this->paginate($this->Meeting));
-		
+		    
+		    
+		    
+		    
+		    
+		    
+		    $this->loadModel('Stock');
+		    $this->paginate = array(
+                 'order' => array('Stock.lastTradePriceOnly' => 'DESC'),
+                 'limit' => 10
+                 );
+			$this->set('topStocks', $this->paginate($this->Stock));
 	}
 
 		if ($this->Auth->user('group_id') == 1) {
