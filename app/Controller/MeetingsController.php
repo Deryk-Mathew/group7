@@ -83,13 +83,16 @@ class MeetingsController extends AppController {
  * @return void
  */
 	public function edit($id = null) {
+		
+		
+		$currentUser = $this->Auth->user('id');
 		if (!$this->Meeting->exists($id)) {
 			throw new NotFoundException(__('Invalid Meeting'));
 		}
 		if ($this->request->is(array('post', 'put'))) {
 			$var = $this->Auth->user('id');
 			
-			$this->request->data['Meeting']['user_id'] = $var;
+			$this->request->data['Meeting']['user_id'] = $currentUser;
 			$this->request->data['Meeting']['id'] = $id;
 			if ($this->Meeting->save($this->request->data)) {
 				$this->Session->setFlash(__('The note has been saved.'));
@@ -98,9 +101,10 @@ class MeetingsController extends AppController {
 				$this->Session->setFlash(__('The note could not be saved. Please, try again.'));
 			}
 		} else {
-			$options = array('conditions' => array('Meeting.' . $this->Meeting->primaryKey => $id));
-			$this->request->data = $this->Meeting->find('first', $options);
-			
+			$this->loadModel('User');
+			$clients = $this->User->Client->find('list',array(
+													'conditions' => array('Client.user_id' => $currentUser)));
+			$this->set(compact('clients'));
 		}
 	}
 

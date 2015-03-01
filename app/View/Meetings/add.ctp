@@ -8,17 +8,14 @@
                     <!-- /.col-lg-12 -->
                 </div>
                 <!-- /.row -->
-<?php
-            echo $this->Html->css('jquery.datetimepicker');
-            echo $this->Html->script('jquery.datetimepicker');
-?>
+
 <?php echo $this->Form->create('Meeting'); ?>
 	<fieldset>
 		<?php	
 
 			echo $this->Form->input('client_id');
 			echo $this->Form->input('startDate');
-			echo $this->Form->input('duration',array('type'=>'number', 'min' => '5', 'max'=>'120'));
+			echo $this->Form->input('duration',array('min' => '5', 'max'=>'120'));
 		?>
 	</fieldset>
 <?php echo $this->Form->end(__('Submit')); ?>

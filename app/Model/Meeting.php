@@ -27,7 +27,7 @@ class Meeting extends AppModel {
 			),
 		'startDate' => array(
 			'notEmpty' => array(
-				'rule' => array('datetime'),
+			'rule' => array('datetime', 'Y-m-d H:i:00'),
 				//'message' => 'Please enter data.',
 				//'allowEmpty' => false,
 				//'required' => false,
