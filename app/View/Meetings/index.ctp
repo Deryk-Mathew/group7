@@ -14,7 +14,10 @@
             $this->Html->css('calendar', null, array('inline' => false));
 
 ?>
+<?php 
+echo $clients[22];
 
+ ?>
 <script>
 
 $.getScript('http://arshaw.com/js/fullcalendar-1.6.4/fullcalendar/fullcalendar.min.js',function(){
@@ -29,9 +32,15 @@ $.getScript('http://arshaw.com/js/fullcalendar-1.6.4/fullcalendar/fullcalendar.m
     defaultView: 'agendaWeek',
     editable: false,
     events: [
-    <?php foreach ($meetings as $meeting): ?>
+    <?php 
+	
+	
+	foreach ($meetings as $meeting): ?>
 	{
-		title: '<?php echo h($meeting["Meeting"]["client_id"]);  ?>',
+		title: '<?php 
+		
+		$id = $meeting["Meeting"]["client_id"];
+		echo $id;  ?>',
 		<?php $dateReturn = h($meeting['Meeting']['startDate']);  
 		$timestamp = strtotime($dateReturn);
 		$year = strval('20');

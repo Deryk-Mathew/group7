@@ -22,20 +22,23 @@ class MeetingsController extends AppController {
  */
 	public function index() {
 		$this->Meeting->recursive = 0;
-
+		
 
 			/* Display only clients user has */
-			$currentUser = $this->Auth->user('id');
+			$var = $this->Auth->user('id');
 			$this->paginate = array(
-	        	'conditions' => array('Meeting.user_id' => $currentUser),
+	        	'conditions' => array('Meeting.user_id' => $var),
 	        	'limit' => 1000
 	        	
 	    	);
 		    $this->set('meetings', $this->paginate($this->Meeting));
-			$this->loadModel('Client');
-		$clients = $this->Client->find('list',array(
-    'conditions' => array('Client.user_id' => $currentUser)));
-		$this->set(compact('clients'));
+			$options = array('conditions' => array('Client.user_id'  => $var));
+			$clients = $this->Meeting->Client->find('all', $options);
+			foreach($clients as $client):
+				$name[$client['Client']['id']] =  $client['Client']['name'];
+			endforeach;
+			$this->set('clients', $name);
+		
 	}
 	
 	/**
@@ -67,6 +70,7 @@ class MeetingsController extends AppController {
 				$this->Session->setFlash(__('The Meeting has been saved.'));
 				return $this->redirect(array( 'controller' => 'meetings', 'action' => 'index'));
 			} else {
+			var_dump($this->Meeting->data['Meeting']);
 				$this->Session->setFlash(__('The Meeting could not be saved. Please, try again.'));
 			}
 		}
