@@ -22,7 +22,7 @@
                 
     <div class="clients view">
 
-
+	<div class="col-xs-12 col-md-6">
 	<dl>
 		<!-- Only display if admin -->
 		<?php if (AuthComponent::User('group_id') == 1): ?>
@@ -76,10 +76,10 @@
 	</dl>
 	
 	
-	 
+	 </div>
 
 <!-- List client balance -->
-	<div class="clientBalance">
+	<div class="col-xs-12 col-md-6">
 		<h3><?php echo __('Related Balances'); ?></h3>
 			<?php if (!empty($client['Balance'])): ?>
 				<dl>
@@ -137,11 +137,11 @@
 	</div>
 	
 	
-	<div class="clients index">    
+  
 
 	<?php if (!empty($client['TransactionRecord'])): ?>
 <table id="stockTable" cellpadding = "0" cellspacing = "0">
- 
+ 	<div class="col-xs-12 col-md-6">  
 			<tr>
 			<h3><?php echo __('Transaction Record'); ?></h3>	
 				<th><?php echo __('Type'); ?></th>
@@ -159,10 +159,11 @@
 						<?php if ($transrec['balance_change'] == 0): ?><td><?php echo "-"; ?></td><td><?php echo "-"; ?></td><?php endif; ?>
 						<td><?php echo $transrec['date']; ?></td>
 				</tr>
-			<?php endforeach; ?>            
+			<?php endforeach; ?>  
+			</div>          
 <?php endif; ?>			
                 
-</div>
+
 
 
 </div>                   

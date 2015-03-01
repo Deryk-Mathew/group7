@@ -30,7 +30,6 @@
 }
 
 div.clients.view > table {
-	width: 43%;
 	display: inline-block;
 }
 div.clients.view > table > tbody{
@@ -327,8 +326,6 @@ display: inline-block;
 /** Scaffold View **/
 dl {
 	line-height: 2em;
-	width: 43%;
-	display: inline-block;
 }
 dl dd:nth-child(4n+2),
 dl dt:nth-child(4n+1) {
