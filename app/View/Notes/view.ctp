@@ -1,5 +1,16 @@
+
+            <div class="container-fluid">
+            
+             <!-- ENTER INDIVIDUAL PAGE CONTENT HERE!!!!! -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">Note</h1>
+                    </div>
+                    <!-- /.col-lg-12 -->
+                </div>
+                <!-- /.row -->
+
 <div class="notes view">
-<h2><?php echo __('Note'); ?></h2>
 	<dl>
 		<dt><?php echo __('Content'); ?></dt>
 		<dd>

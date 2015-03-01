@@ -1,6 +1,17 @@
+
+            <div class="container-fluid">
+            
+             <!-- ENTER INDIVIDUAL PAGE CONTENT HERE!!!!! -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">Edit Client</h1>
+                    </div>
+                    <!-- /.col-lg-12 -->
+                </div>
+                <!-- /.row -->
+
 <?php echo $this->Form->create('Client'); ?>
 	<fieldset>
-		<legend><?php echo __('Edit Client'); ?></legend>
 	<?php
 		echo $this->Form->input('id');
 		echo $this->Form->input('user_id');

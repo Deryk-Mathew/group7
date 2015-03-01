@@ -1,5 +1,16 @@
+
+            <div class="container-fluid">
+            
+             <!-- ENTER INDIVIDUAL PAGE CONTENT HERE!!!!! -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">Notes</h1>
+                    </div>
+                    <!-- /.col-lg-12 -->
+                </div>
+                <!-- /.row -->
+
 <div class="notes index">
-	<h2><?php echo __('Notes'); ?></h2>
 	<table cellpadding="0" cellspacing="0">
 	<thead>
 	<tr>
@@ -41,29 +52,4 @@
 		echo $this->Paginator->next(__('next') . ' >', array(), null, array('class' => 'next disabled'));
 	?>
 	</div>
-</div>
-<div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
-	<?php if (AuthComponent::User('group_id') == 1): ?>
-		<ul>
-			<li><?php echo $this->Html->link(__('New Client'), array('controller' => 'clients','action' => 'add')); ?></li>
-			<li><?php echo $this->Html->link(__('List Clients'), array('controller' => 'clients','action' => 'index')); ?> </li>
-			<li><?php echo $this->Html->link(__('List Users'), array('controller' => 'users', 'action' => 'index')); ?> </li>
-			<li><?php echo $this->Html->link(__('New User'), array('controller' => 'users', 'action' => 'add')); ?> </li>
-			<?php if ($this->Session->read('current_client') != null): ?>
-				<li><?php echo $this->Html->link(__('Return To Client'), array('controller' => 'clients', 'action' => 'view', $this->Session->read('current_client'))); ?> </li>
-			<?php endif; ?>
-			<li><?php echo $this->Html->link(__('Logout'), array('controller' => 'users', 'action' => 'logout')); ?></li>
-		</ul>
-	<?php endif; ?>
-	<?php if (AuthComponent::User('group_id') == 2): ?>
-		<ul>
-			<li><?php echo $this->Html->link(__('List Clients'), array('controller' => 'clients','action' => 'index')); ?> </li>
-			<li><?php echo $this->Html->link(__('New Client'), array('controller' => 'clients','action' => 'add')); ?> </li>
-			<?php if ($this->Session->read('current_client') != null): ?>
-				<li><?php echo $this->Html->link(__('Return To Client'), array('controller' => 'clients', 'action' => 'view', $this->Session->read('current_client'))); ?> </li>
-			<?php endif; ?>
-			<li><?php echo $this->Html->link(__('Logout'), array('controller' => 'users', 'action' => 'logout')); ?></li>
-		</ul>
-	<?php endif; ?>
 </div>

@@ -75,8 +75,15 @@ $.getScript('http://arshaw.com/js/fullcalendar-1.6.4/fullcalendar/fullcalendar.m
 
 
 </script>
-<div class="col-xs-5">
+<div class="col-xs-6">
+<h3>Today's Schedule:</h3>
+<br/>
 <div class="container calendarFullWidth">
 	<div id="calendar" class="hideHeader"></div>
 </div>
+</div>
+<div class="col-xs-6">
+<h3>Market Information:</h3>
+<br/>
+
 </div>

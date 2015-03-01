@@ -60,8 +60,20 @@
     }</script>
 
 
+
+            <div class="container-fluid">
+            
+             <!-- ENTER INDIVIDUAL PAGE CONTENT HERE!!!!! -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">Stock Information: <?php echo h($stock['Stock']['name']); ?></h1>
+                    </div>
+                    <!-- /.col-lg-12 -->
+                </div>
+                <!-- /.row -->
+
 <div class="stocks view">
-<h2><?php echo __('Stock'); ?></h2>
+<h2>
 	<dl>
 		<dt><?php echo __('Id'); ?></dt>
 		<dd>
@@ -143,18 +155,4 @@
 		<?php } ?>
 	</dl>
 	<div id="ex2"></div>
-</div>
-<div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
-	<ul>
-		<?php if (AuthComponent::User('group_id') == 1): ?>
-			<li><?php echo $this->Html->link(__('Edit Stock'), array('action' => 'edit', $stock['Stock']['id'])); ?> </li>
-			<li><?php echo $this->Form->postLink(__('Delete Stock'), array('action' => 'delete', $stock['Stock']['id']), array(), __('Are you sure you want to delete # %s?', $stock['Stock']['id'])); ?> </li>
-		<?php endif; ?>
-		<li><?php echo $this->Html->link(__('List Stocks'), array('action' => 'index')); ?> </li>
-		<?php if ($this->Session->read('current_client') != null): ?>
-			<li><?php echo $this->Html->link(__('Return To Client'), array('controller' => 'clients', 'action' => 'view', $this->Session->read('current_client'))); ?> </li>
-		<?php endif; ?>
-		<li><?php echo $this->Html->link(__('Logout'), array('controller' => 'users', 'action' => 'logout')); ?></li>
-	</ul>
 </div>
