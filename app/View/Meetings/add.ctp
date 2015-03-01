@@ -15,11 +15,8 @@
 <?php echo $this->Form->create('Meeting'); ?>
 	<fieldset>
 		<?php	
-			$options = array();
-			foreach($clients as $client){
-				$options[] = array($client['Client']['id']);
-			}
-			echo $this->Form->input('client_id', array('options' => $options));
+
+			echo $this->Form->input('client_id');
 			echo $this->Form->input('startDate');
 			echo $this->Form->input('duration',array('type'=>'number', 'min' => '5', 'max'=>'120'));
 		?>

@@ -21,7 +21,7 @@ $.getScript('http://arshaw.com/js/fullcalendar-1.6.4/fullcalendar/fullcalendar.m
 
 
   $('#calendar').fullCalendar({
-    defaultView: 'basicDay',
+    defaultView: 'agendaDay',
     events: [
    <?php foreach ($meetings as $meeting): ?>
 	{
