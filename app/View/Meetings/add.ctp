@@ -20,8 +20,7 @@
 				$options[] = array($client['Client']['id']=>$client['Client']['name']);
 			}
 			echo $this->Form->input('client_id', array(
-				'options' => $options,
-				'empty' => '(choose one)'
+				'options' => $options
 			));
 		echo $this->Form->input('time', ['id' => 'datetimepicker']);
 		echo $this->Form->input('length',array('name'=>'meetingLength','value'=>'60','step'=>'5','data-show-value'=>'true','type'=>'number', 'min' => '5', 'max'=>'120'));

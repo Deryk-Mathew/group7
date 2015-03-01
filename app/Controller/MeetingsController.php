@@ -56,6 +56,21 @@ class MeetingsController extends AppController {
  * @return void
  */
 	public function add() {
+		
+		$this->loadModel('Client');
+		$this->Client->recursive = 0;
+
+
+			/* Display only clients user has */
+			$var = $this->Auth->user('id');
+			$this->paginate = array(
+	        	'conditions' => array('Client.user_id' => $var),
+	        	'limit' => 10
+	        	
+	    	);
+		    $this->set('clients', $this->paginate($this->Client));
+		
+		
         $this->request->data['Client']['user_id'] = $this->Auth->user('id');
 		$var = $this->Session->read('current_client');
         $var2 = $this->Auth->user('id');
