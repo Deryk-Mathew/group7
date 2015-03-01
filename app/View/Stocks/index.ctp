@@ -1,11 +1,30 @@
-  <script>
-$(document).ready(function() {
-    $('#stockList').dataTable(
+<?php echo $this->Html->script('jquery.dataTables'); ?>
+<script type="text/javascript">
+    $(document).ready(function() {
+        var table = $('#stockList').dataTable({
+            "bProcessing": true,
+            "bServerSide": true,
+			"iDisplayLength": 20,
+            "sAjaxSource": "<?php echo $this->Html->Url(array('controller' => 'clients', 'action' => 'ajaxData')); ?>",
+			"aoColumns": [
+			{mData:"symbol"},
+			{mData:"name"},
+			{mData:"daysHigh"},
+			{mData:"daysLow"},
+			{mData:"lastTradePriceOnly"},
+			{
+            "mData": "action"
+			}
+    ],
 	
-	)
-	
-	;
-} );
+        });
+		
+		$('#stockList tbody').on( 'click', 'button', function () {
+        var data = table.row( $(this).parents('tr') ).data();
+        alert( "ID is: "+ data[ 5 ] );
+		} );
+		
+    });
 </script>
 <div class="container-fluid">
             
@@ -21,43 +40,18 @@ $(document).ready(function() {
 	<table id="stockList" width="100%" cellpadding="0" cellspacing="0">
 	<thead>
 	<tr>
-			<th>Company</th>
 			<th>Symbol</th>
-			<th>Change</th>
-			<th>Day's Low</th>
-			<th>Day's High</th>
-			<th>Exchange</th>
+			<th>Company</th>
+			<th>Days High</th>
+			<th>Days Low</th>
 			<th>Price</th>
-			<th class="actions"></th>
-	</tr>
+			<th></th>
+			</tr>
 	</thead>
 	<tbody>
-		<?php $client_stocks; ?>
-	<?php foreach ($stocks as $stock): ?>
 	<tr>
-		<td> <?php echo h($stock['Stock']['name']);  ?></td>
-		<td><?php echo h($stock['Stock']['symbol']); ?>&nbsp;</td>
-		<td><?php echo h($stock['Stock']['change']); ?>&nbsp;</td>
-		<td><?php echo h($stock['Stock']['daysLow']); ?>&nbsp;</td>
-		<td><?php echo h($stock['Stock']['daysHigh']); ?>&nbsp;</td>
-		
-		<td>
-			<?php echo h($stock['StockExchange']['name']); ?>
-		</td>
-		<td><?php echo h($stock['Stock']['lastTradePriceOnly']); ?>&nbsp;</td>
-		<td class="actions">
-			<?php echo $this->Html->link(__('View'), array('action' => 'view', $stock['Stock']['id'])); ?>
-			<?php if ($this->Session->read('current_client') != null): ?>
-				<?php echo $this->Html->link(__('Buy'), array('controller' => 'client_stocks', 'action' => 'buyStock', $stock['Stock']['id'], $this->Session->read('current_client'))); ?>
-			<?php endif; ?>
-			<!-- Only show if admin logged in -->
-			<?php if (AuthComponent::User('group_id') == 1): ?>
-				<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $stock['Stock']['id'])); ?>
-				<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $stock['Stock']['id']), array(), __('Are you sure you want to delete # %s?', $stock['Stock']['id'])); ?>
-			<?php endif; ?>
-		</td>
-	</tr>
-	<?php endforeach; ?>
+            <td colspan="7" class="dataTables_empty">Loading data from server...</td>
+        </tr>
 	</tbody>
 	</table>
 </div>

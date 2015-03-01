@@ -61,6 +61,14 @@ class ClientsController extends AppController {
 		}
 	}
 	
+	public function ajaxData() {
+		$this->modelClass = "Stock";
+		$this->autoRender = false;          
+        $output = $this->Stock->GetData();
+         
+        echo json_encode($output);
+	}
+	
 	
 		/**
  * dashboard function

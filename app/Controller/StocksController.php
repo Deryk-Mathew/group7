@@ -13,22 +13,78 @@ class StocksController extends AppController {
  *
  * @var array
  */
-	public $components = array('Paginator');
+    //public $components = array('Paginator');
+	
+	/*
+	public $components = [
+        'DataTable.DataTable' => [
+            'Stock' => [
+                'columns' => [
+                    'id',
+                    'averageDailyVolume',
+                    'change',
+					'daysLow',
+					'daysHigh',
+					'yearLow',
+					'yearHigh',
+					'marketCapitalization',
+					'lastTradePriceOnly',
+					'daysRange',
+					'name',
+					'symbol',
+					'volume',
+					'exchange_id',
+                    'Actions' => null,
+                ],
+            ],
+        ],
+    ];
+*/
+/*
+	public $components = [
+        'DataTable.DataTable' => [
+            'Stock' => [
+                'columns' => [
+                    'change',
+					'daysLow',
+					'daysHigh',
+					'lastTradePriceOnly',
+					'name',
+					'symbol',
+                    'Actions' => null,
+                ],
+            ],
+        ],
+    ];
+
+    public $helpers = [
+        'DataTable.DataTable',
+    ];*/
+
+        function browse(){
+			$this->Stock->recursive = 2;
+			$this->set('stocks', $this->Paginator->paginate());
+		}
 
 /**
  * index method
  *
  * @return void
  */
+
 	public function index() {
-		$this->Stock->recursive = 2;
-		$this->set('stocks', $this->Paginator->paginate());
-	}
-	public function browse() {
-		$this->Stock->recursive = 2;
-		$this->set('stocks', $this->Paginator->paginate());
+		        
 	}
 
+	public function ajaxData() {
+		$this->Stock->recursive = 2;
+		$this->modelClass = "Stock";
+		//$this->autoRender = false;          
+        $output = $this->Stock->GetData();
+         
+        echo json_encode($output);
+	}
+	
 /**
  * view method
  *
@@ -43,6 +99,7 @@ class StocksController extends AppController {
 		}
 		$options = array('conditions' => array('Stock.' . $this->Stock->primaryKey => $id));
 		$this->set('stock', $this->Stock->find('first', $options));
+		
 	}
 
 /**
