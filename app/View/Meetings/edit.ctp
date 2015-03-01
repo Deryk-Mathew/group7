@@ -18,7 +18,7 @@
 	<fieldset>
 	<?php
 		echo $this->Form->input('startDate');
-		echo $this->Form->input('duration',array('type'=>'number', 'min'=>'5', 'max'=>'120'));
+		echo $this->Form->input('duration',array('min' => '30', 'max'=>'120','step'=>'5'));
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Submit')); ?>

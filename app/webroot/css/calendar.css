@@ -5,6 +5,10 @@
     font-size: 18px;   
 }
 
+div.fc-event-inner > div {
+	display: inline-block;
+}
+
 #calendar.hideHeader > table {
 	display: none;
 	}
