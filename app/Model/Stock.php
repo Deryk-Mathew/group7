@@ -1,5 +1,6 @@
 <?php
 App::uses('AppModel', 'Model');
+//App::import('Controller', 'TransactionRecords');
 /**
  * Stock Model
  *
@@ -9,7 +10,7 @@ class Stock extends AppModel {
 
 //public $actsAs = array('Linkable','Containable');
 
-public function GetData() {
+public function GetData($client) {
         /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
          * Easy set variables
         */
@@ -198,7 +199,13 @@ public function GetData() {
                     $row[$aColumns[$i]] = $aRow[ $aColumns[$i] ];
                 }
             }
-			$row["action"] = "<a href = '/wms/stocks/view/".$aRow['id']."'>View</a>";
+			
+			if($client == null){
+				$row["action"] = "<a href = '/wms/stocks/view/".$aRow['id']."'>View</a>";
+			}
+			else{
+				$row["action"] = "<a href = '/wms/stocks/view/".$aRow['id']."'>View</a> "."<a href = '/wms/clientStocks/buyStock/".$aRow['id']."/".$client."'>Buy</a> ";
+			}
             $output['aaData'][] = $row;
         }
          
