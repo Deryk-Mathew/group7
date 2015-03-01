@@ -15,7 +15,10 @@
 		width: auto !important;
 	}
 }
- 
+i{ 
+font-style: italic;
+padding-right: 2px;
+}
 label{
 	display:block !important;
 	}

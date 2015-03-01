@@ -68,7 +68,10 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
                    echo '<b class="caret"></b></a>';
                    echo ' <ul class="dropdown-menu dropdown-user">';
                     echo '<li>';
-                    echo $this->Html->link(__('Logout'), array('controller' => 'users', 'action' => 'logout'), array('class' => 'glyphicon glyphicon-off'));
+                    echo $this->Html->link(
+						'<i class="glyphicon glyphicon-off"></i> Logout',
+						array('controller' => 'users', 'action' => 'logout'),array('escape' => false)
+					);
                     echo '</li>';
                     echo '</li>';
                     echo '</ul>';
