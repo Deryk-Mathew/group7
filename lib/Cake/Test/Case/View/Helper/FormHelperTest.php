@@ -764,6 +764,32 @@ class FormHelperTest extends CakeTestCase {
 	}
 
 /**
+ * Tests correct generation of decimal fields as text inputs
+ *
+ * @return void
+ */
+	public function testTextFieldGenerationForDecimalAsText() {
+		$this->Form->create('ValidateUser');
+		$result = $this->Form->input('cost_decimal', array(
+			'type' => 'text'
+		));
+		$expected = array(
+			'div' => array('class' => 'input text'),
+			'label' => array('for' => 'ValidateUserCostDecimal'),
+			'Cost Decimal',
+			'/label',
+			array('input' => array(
+				'type' => 'text',
+				'name' => 'data[ValidateUser][cost_decimal]',
+				'id' => 'ValidateUserCostDecimal',
+				'maxlength' => 6,
+			)),
+			'/div'
+		);
+		$this->assertTags($result, $expected);
+	}
+
+/**
  * Tests correct generation of number fields for integer fields
  *
  * @return void
@@ -1338,6 +1364,18 @@ class FormHelperTest extends CakeTestCase {
 		$this->Form->radio('Test.test', $options);
 		$expected = array('Test.test');
 		$this->assertEquals($expected, $this->Form->fields);
+
+		$this->Form->radio('Test.all', $options, array(
+			'disabled' => array('option1', 'option2')
+		));
+		$expected = array('Test.test', 'Test.all' => '');
+		$this->assertEquals($expected, $this->Form->fields);
+
+		$this->Form->radio('Test.some', $options, array(
+			'disabled' => array('option1')
+		));
+		$expected = array('Test.test', 'Test.all' => '', 'Test.some');
+		$this->assertEquals($expected, $this->Form->fields);
 	}
 
 /**
@@ -1372,9 +1410,11 @@ class FormHelperTest extends CakeTestCase {
 
 		$this->Form->checkbox('Model.checkbox', array('disabled' => true));
 		$this->Form->text('Model.text', array('disabled' => true));
-		$this->Form->password('Model.text', array('disabled' => true));
+		$this->Form->text('Model.text2', array('disabled' => 'disabled'));
+		$this->Form->password('Model.password', array('disabled' => true));
 		$this->Form->textarea('Model.textarea', array('disabled' => true));
 		$this->Form->select('Model.select', array(1, 2), array('disabled' => true));
+		$this->Form->select('Model.select', array(1, 2), array('disabled' => array(1, 2)));
 		$this->Form->radio('Model.radio', array(1, 2), array('disabled' => array(1, 2)));
 		$this->Form->year('Model.year', null, null, array('disabled' => true));
 		$this->Form->month('Model.month', array('disabled' => true));

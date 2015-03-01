@@ -513,16 +513,15 @@ class CakeResponse {
 /**
  * Sends a header to the client.
  *
+ * Will skip sending headers if headers have already been sent.
+ *
  * @param string $name the header name
  * @param string $value the header value
  * @return void
- * @throws CakeException When headers have already been sent
  */
 	protected function _sendHeader($name, $value = null) {
 		if (headers_sent($filename, $linenum)) {
-			throw new CakeException(
-				__d('cake_dev', 'Headers already sent in %s on line %s', $filename, $linenum)
-			);
+			return;
 		}
 		if ($value === null) {
 			header($name);
@@ -1139,7 +1138,7 @@ class CakeResponse {
 /**
  * Checks whether a response has not been modified according to the 'If-None-Match'
  * (Etags) and 'If-Modified-Since' (last modification date) request
- * headers headers. If the response is detected to be not modified, it
+ * headers. If the response is detected to be not modified, it
  * is marked as so accordingly so the client can be informed of that.
  *
  * In order to mark a response as not modified, you need to set at least

@@ -553,6 +553,10 @@ class MysqlTest extends CakeTestCase {
 		$result = $this->Dbo->column('decimal(14,7) unsigned');
 		$expected = 'decimal';
 		$this->assertEquals($expected, $result);
+
+		$result = $this->Dbo->column("set('a','b','c')");
+		$expected = "set('a','b','c')";
+		$this->assertEquals($expected, $result);
 	}
 
 /**
@@ -3031,7 +3035,7 @@ SQL;
 		$this->assertSame($expected, $result);
 
 		$result = $this->Dbo->length(false);
-		$this->assertTrue($result === null);
+		$this->assertNull($result);
 
 		$result = $this->Dbo->length('datetime');
 		$expected = null;
@@ -4069,6 +4073,23 @@ SQL;
 		$this->assertNotEmpty($model->read(null, 1));
 
 		$this->Dbo->useNestedTransactions = $nested;
+	}
+
+/**
+ * Test that value() quotes set values even when numeric.
+ *
+ * @return void
+ */
+	public function testSetValue() {
+		$column = "set('a','b','c')";
+		$result = $this->Dbo->value('1', $column);
+		$this->assertEquals("'1'", $result);
+
+		$result = $this->Dbo->value(1, $column);
+		$this->assertEquals("'1'", $result);
+
+		$result = $this->Dbo->value('a', $column);
+		$this->assertEquals("'a'", $result);
 	}
 
 }
