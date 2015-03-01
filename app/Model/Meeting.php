@@ -26,14 +26,14 @@ class Meeting extends AppModel {
 				)
 			),
 		'startDate' => array(
-			'notEmpty' => array(
-			'rule' => array('datetime', 'Y-m-d H:i:00'),
+			'datetime' => array(
+			'rule' => array('datetime'),
 				//'message' => 'Please enter data.',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
+			),),
             'duration' => array(
 			'notEmpty' => array(
 				'rule' => array('numeric'),
@@ -43,7 +43,7 @@ class Meeting extends AppModel {
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			)
-		)));
+		));
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 

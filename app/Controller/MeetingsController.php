@@ -64,6 +64,7 @@ class MeetingsController extends AppController {
 				$this->Session->setFlash(__('The Meeting has been saved.'));
 				return $this->redirect(array( 'controller' => 'meetings', 'action' => 'index'));
 			} else {
+			var_dump($this->Meeting->data['Meeting']);
 				$this->Session->setFlash(__('The Meeting could not be saved. Please, try again.'));
 			}
 		}

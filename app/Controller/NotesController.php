@@ -52,6 +52,7 @@ class NotesController extends AppController {
 			$this->request->data['Note']['client_id'] = $var;
 			if ($this->Note->save($this->request->data)) {
 				$this->Session->setFlash(__('The note has been saved.'));
+				var_dump($this->Meeting->data['Meeting']);
 				return $this->redirect(array( 'controller' => 'clients', 'action' => 'view', $var));
 			} else {
 				$this->Session->setFlash(__('The note could not be saved. Please, try again.'));
