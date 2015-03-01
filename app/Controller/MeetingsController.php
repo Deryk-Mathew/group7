@@ -56,22 +56,23 @@ class MeetingsController extends AppController {
  * @return void
  */
 	public function add() {
-
-
-			/* Display only clients user has */
-			$var = $this->Auth->user('id');
-	
-
+		$currentUser = $this->Auth->user('id');
 		if ($this->request->is('post')) {
 			$this->Meeting->create();
-            $this->request->data['Meeting']['user_id'] = $var;
+            $this->request->data['Meeting']['user_id'] = $currentUser;
 			if ($this->Meeting->save($this->request->data)) {
-				$this->Session->setFlash(__('The meeting has been saved.'));
+				$this->Session->setFlash(__('The Meeting has been saved.'));
 				return $this->redirect(array( 'controller' => 'meetings', 'action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The meeting could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('The Meeting could not be saved. Please, try again.'));
 			}
 		}
+		$this->loadModel('User');
+		$clients = $this->User->Client->find('list',array(
+    'conditions' => array('Client.user_id' => $currentUser)));
+		$this->set(compact('clients'));
+	
+
 	}
 
 /**
