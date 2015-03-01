@@ -40,7 +40,7 @@ $.getScript('http://arshaw.com/js/fullcalendar-1.6.4/fullcalendar/fullcalendar.m
 		title: '<?php 
 		
 		$id = $meeting["Meeting"]["client_id"];
-		echo $id;  ?>',
+		echo $clients[$id];  ?>',
 		<?php $dateReturn = h($meeting['Meeting']['startDate']);  
 		$timestamp = strtotime($dateReturn);
 		$year = strval('20');
