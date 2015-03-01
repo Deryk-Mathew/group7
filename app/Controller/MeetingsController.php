@@ -75,7 +75,7 @@ class MeetingsController extends AppController {
             $this->request->data['Meeting']['user_id'] = $var;
 			if ($this->Meeting->save($this->request->data)) {
 				$this->Session->setFlash(__('The meeting has been saved.'));
-				return $this->redirect(array( 'controller' => 'meetings', 'action' => 'browse'));
+				return $this->redirect(array( 'controller' => 'meetings', 'action' => 'index'));
 			} else {
 				$this->Session->setFlash(__('The meeting could not be saved. Please, try again.'));
 			}
@@ -89,12 +89,14 @@ class MeetingsController extends AppController {
  * @param string $id
  * @return void
  */
-	public function edit($id = null, $client_id) {
+	public function edit($id = null) {
 		if (!$this->Meeting->exists($id)) {
 			throw new NotFoundException(__('Invalid Meeting'));
 		}
 		if ($this->request->is(array('post', 'put'))) {
-			$this->request->data['Meeting']['client_id'] = $client_id;
+			$var = $this->Auth->user('id');
+			
+			$this->request->data['Meeting']['user_id'] = $var;
 			$this->request->data['Meeting']['id'] = $id;
 			if ($this->Meeting->save($this->request->data)) {
 				$this->Session->setFlash(__('The note has been saved.'));
@@ -105,6 +107,7 @@ class MeetingsController extends AppController {
 		} else {
 			$options = array('conditions' => array('Meeting.' . $this->Meeting->primaryKey => $id));
 			$this->request->data = $this->Meeting->find('first', $options);
+			
 		}
 	}
 

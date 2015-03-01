@@ -15,26 +15,28 @@ class Meeting extends AppModel {
 	public $validate = array(
 		'user_id' => array(
 			'notEmpty' => array(
-				'rule' => array('notEmpty'),
+				'rule' => array('numeric'),
 				//'message' => 'Please enter data.'
-				),
-			'client_id' => array(
-				'rule' => array('validNi'),
-				'message' => 'Please enter a valid NI number i.e. AB123456C',
-				),
+				)
+			),
+		'client_id' => array(
+			'notEmpty' => array(
+				'rule' => array('numeric'),
+				//'message' => 'Please enter data.'
+				)
 			),
 		'startDate' => array(
 			'notEmpty' => array(
-				'rule' => array('notEmpty'),
+				'rule' => array('datetime'),
 				//'message' => 'Please enter data.',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
-            'endDate' => array(
+            'duration' => array(
 			'notEmpty' => array(
-				'rule' => array('notEmpty'),
+				'rule' => array('numeric'),
 				//'message' => 'Please enter data.',
 				//'allowEmpty' => false,
 				//'required' => false,

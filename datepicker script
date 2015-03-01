@@ -1,0 +1,9 @@
+<script>
+$('#datetimepicker').datetimepicker({
+dayOfWeekStart : 1,
+lang:'en',
+format:'Y-m-d H:i:00',
+startDate:	'2015-01-01'
+});
+$('#datetimepicker').datetimepicker({value:'2015-04-15 09:30:00',step:5});
+</script>
