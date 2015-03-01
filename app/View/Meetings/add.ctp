@@ -1,4 +1,13 @@
-
+<div class="container-fluid">
+            
+             <!-- ENTER INDIVIDUAL PAGE CONTENT HERE!!!!! -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">Add new Appointment</h1>
+                    </div>
+                    <!-- /.col-lg-12 -->
+                </div>
+                <!-- /.row -->
 <?php
             echo $this->Html->css('jquery.datetimepicker');
             echo $this->Html->script('jquery.datetimepicker');
