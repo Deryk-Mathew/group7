@@ -65,19 +65,14 @@ class MeetingsController extends AppController {
 			$var = $this->Auth->user('id');
 			$this->paginate = array(
 	        	'conditions' => array('Client.user_id' => $var),
-	        	'limit' => 10
-	        	
+	        	'limit' => 10	
 	    	);
 		    $this->set('clients', $this->paginate($this->Client));
 		
-		
-        $this->request->data['Client']['user_id'] = $this->Auth->user('id');
-		$var = $this->Session->read('current_client');
-        $var2 = $this->Auth->user('id');
+        $var = $this->Auth->user('id');
 		if ($this->request->is('post')) {
 			$this->Meeting->create();
-			$this->request->data['Meeting']['client_id'] = $var;
-            $this->request->data['Meeting']['user_id'] = $var2;
+            $this->request->data['Meeting']['user_id'] = $var;
 			if ($this->Meeting->save($this->request->data)) {
 				$this->Session->setFlash(__('The meeting has been saved.'));
 				return $this->redirect(array( 'controller' => 'meetings', 'action' => 'browse'));
