@@ -64,7 +64,7 @@ class ClientsController extends AppController {
 	public function ajaxData() {
 		$this->modelClass = "Stock";
 		$this->autoRender = false;          
-        $output = $this->Stock->GetData($this->Session->read('current_client'));
+        $output = $this->Stock->GetData($this);
          
         echo json_encode($output);
 	}

@@ -73,7 +73,8 @@ class StocksController extends AppController {
  */
 
 	public function index() {
-		        
+		$this->loadModel('StockExchange');
+		$this->set('exchanges', $this->paginate($this->StockExchange));
 	}
 
 	public function ajaxData() {

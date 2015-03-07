@@ -1,5 +1,6 @@
 <?php
 App::uses('AppModel', 'Model');
+App::import('Helper','Html');
 //App::import('Controller', 'TransactionRecords');
 /**
  * Stock Model
@@ -10,7 +11,10 @@ class Stock extends AppModel {
 
 //public $actsAs = array('Linkable','Containable');
 
-public function GetData($client) {
+public function GetData($con) {
+		$view = new View($con);
+		$html = $view->loadHelper('Html');
+		
         /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
          * Easy set variables
         */
@@ -18,8 +22,10 @@ public function GetData($client) {
         /* Array of database columns which should be read and sent back to DataTables. Use a space where
          * you want to insert a non-database field (for example a counter or static image)
         */
-        $aColumns = array('id', 'symbol', 'name', 'daysHigh', 'daysLow', 'lastTradePriceOnly', 'exchange_id' );
-         
+        $aColumns = array('id', 'symbol', 'name', 'exchange_id', 'change','lastTradePriceOnly');
+        $firstsearchindex = 1;
+		$lastsearchindex = 4;
+		
         /* Indexed column (used for fast and accurate table cardinality) */
         $sIndexColumn = "id";
          
@@ -110,19 +116,39 @@ public function GetData($client) {
         if ( isset($_GET['sSearch']) && $_GET['sSearch'] != "" )
         {
             $sWhere = "WHERE (";
-            for ( $i=0 ; $i<count($aColumns) ; $i++ )
+            for ( $i=$firstsearchindex ; $i<$lastsearchindex-1 ; $i++ )
             {
-                $sWhere .= "`".$aColumns[$i]."` LIKE '%".mysql_real_escape_string( $_GET['sSearch'] )."%' OR ";
+				if( $aColumns[$i] == "exchange_id" ){
+					$sWhere .= "`".$aColumns[$i]."` LIKE '".mysql_real_escape_string( $_GET['sSearch'] )."' OR ";
+				}
+				else{
+					$sWhere .= "`".$aColumns[$i]."` LIKE '%".mysql_real_escape_string( $_GET['sSearch'] )."%' OR ";
+				}
             }
             $sWhere = substr_replace( $sWhere, "", -3 );
             $sWhere .= ')';
         }
          
         /* Individual column filtering */
-        for ( $i=0 ; $i<count($aColumns) ; $i++ )
+        for ( $i=$firstsearchindex ; $i<$lastsearchindex ; $i++ )
         {
-            if ( isset($_GET['bSearchable_'.$i]) && $_GET['bSearchable_'.$i] == "true" && $_GET['sSearch_'.$i] != '' )
-            {
+			if( $aColumns[$i] == "exchange_id" ){
+				if ( isset($_GET['bSearchable_'.$i]) && $_GET['bSearchable_'.$i] == "true" && $_GET['sSearch_'.$i] != '' )
+					{
+                if ( $sWhere == "" )
+                {
+                    $sWhere = "WHERE ";
+                }
+                else
+                {
+                    $sWhere .= " AND ";
+                }
+                $sWhere .= "`".$aColumns[$i]."` LIKE '".mysql_real_escape_string($_GET['sSearch_'.$i])."' ";
+					}
+			}
+			else{
+				if ( isset($_GET['bSearchable_'.$i]) && $_GET['bSearchable_'.$i] == "true" && $_GET['sSearch_'.$i] != '' )
+					{
                 if ( $sWhere == "" )
                 {
                     $sWhere = "WHERE ";
@@ -132,7 +158,9 @@ public function GetData($client) {
                     $sWhere .= " AND ";
                 }
                 $sWhere .= "`".$aColumns[$i]."` LIKE '%".mysql_real_escape_string($_GET['sSearch_'.$i])."%' ";
-            }
+					}
+			}
+            
         }
          
          
@@ -193,6 +221,20 @@ public function GetData($client) {
                     /* Special output formatting for 'version' column */
                     $row[] = ($aRow[ $aColumns[$i] ]=="0") ? '-' : $aRow[ $aColumns[$i] ];
                 }
+				else if ( $aColumns[$i] == "change" )
+                {
+                    /* Special output formatting for 'change' column */
+					$current = $aRow[$aColumns[$i]];
+					if($current[0]=="+"){
+						$row["change"] = "<font color = 'green'>".$current."</font>";
+					}
+                    else if($current[0]=="-"){
+						$row["change"] = "<font color = 'red'>".$current."</font>";
+					}
+					else{
+						$row["change"] = $current;
+					}
+                }
                 else if ( $aColumns[$i] != ' ' )
                 {
                     /* General output */
@@ -200,12 +242,16 @@ public function GetData($client) {
                 }
             }
 			
-			if($client == null){
-				$row["action"] = "<a href = '/wms/stocks/view/".$aRow['id']."'>View</a>";
+			if($con->Session->read('current_client') == null){
+				$row["action"] = 
+				$html->link(__('View'), array('controller' => 'stocks', 'action' => 'view', $aRow['id']));
 			}
 			else{
-				$row["action"] = "<a href = '/wms/stocks/view/".$aRow['id']."'>View</a> "."<a href = '/wms/clientStocks/buyStock/".$aRow['id']."/".$client."'>Buy</a> ";
+				$row["action"] = $html->link(__('View'), array('controller' => 'stocks', 'action' => 'view', $aRow['id'])).$html->link(__('Buy'),
+				array('controller' => 'clientStocks', 'action' => 'buyStock', $aRow['id'],$con->Session->read('current_client')));
 			}
+			
+			//$row["exchange"] = $exchanges[$aRow['exchange_id']];
             $output['aaData'][] = $row;
         }
          
