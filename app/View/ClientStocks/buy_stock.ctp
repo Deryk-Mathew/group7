@@ -1,21 +1,47 @@
+<script type="text/javascript">
+$(document).ready(function() {
+$('#ClientStockQuantity, #xrate, #price').on('input',function() {
+    var qty = parseInt($('#ClientStockQuantity').val());
+	var price = parseFloat($('#price').val());
+	var rate = parseFloat($('#xrate').val());
+    $('#total').text("£".concat((qty * (price*(1/rate)) ? qty * (price*(1/rate)) : 0).toFixed(2)));
+});
 
- 
+
+
+$('#ClientStockBuyStockForm, #ClientStockQuantity, #xrate, #price').submit(function() {
+	var qty = parseInt($('#ClientStockQuantity').val());
+	var price = parseFloat($('#price').val());
+	var rate = parseFloat($('#xrate').val());
+    var c = confirm("Purchase for £".concat((qty * (price*(1/rate)) ? qty * (price*(1/rate)) : 0).toFixed(2)));
+    return c; //you can just return c because it will be true or false
+});
+
+});
+</script>
  <div class="container-fluid">
             
              <!-- ENTER INDIVIDUAL PAGE CONTENT HERE!!!!! -->
                 
 
 <div class="clientStocks form">
-<?php echo $this->Form->create('ClientStock', array('onsubmit' => 'return confirm("Are you sure you want to purchase this stock?")')); ?>
+<?php echo $this->Form->create('ClientStock'); ?>
 	<fieldset>
 		<legend><?php echo __('Buy Stock'); ?></legend>
 		<div class="stocks view">
 		<dt><?php echo __('Name'); ?></dt><dd><?php echo h($stock['Stock']['name'])?></dd>
-		<dt><?php echo __('Price'); ?></dt><dd><?php echo h($stock['Stock']['lastTradePriceOnly'])?></dd>
+		<dt><?php echo __('Price'); ?></dt><dd><?php echo h($stock['Stock']['lastTradePriceOnly'])." ".$stock['StockExchange']['ExchangeRate']['currency'].' ('.
+		$this->Number->precision($stock['Stock']['lastTradePriceOnly']*(1/$stock['StockExchange']['ExchangeRate']['rate']),2).' GBP)'?></dd>
+		<dt><?php echo __($stock['StockExchange']['ExchangeRate']['currency'].' to GBP Exchange Rate'); ?></dt><dd><?php echo 1/$stock['StockExchange']['ExchangeRate']['rate']?></dd>
+		<br/>
+		<input type='hidden' name='price' id='price' value='<?php echo $stock['Stock']['lastTradePriceOnly']?>' disabled/>
+		<input type='hidden' name='xrate' id='xrate' value='<?php echo $stock['StockExchange']['ExchangeRate']['rate']?>' disabled/>
+		
+		<dt><?php echo __('Total'); ?></dt><dd><p id="total">£0.00</p></dd>
 		</br>
 		</div>
 	<?php
-		echo $this->Form->input('quantity',array('default'=>0),array('maxlength'=>'4','type' => 'number'));
+		echo $this->Form->input('quantity',array('default'=>0),array('maxlength'=>'10','type' => 'number'));
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Buy')); ?>

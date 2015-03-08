@@ -57,7 +57,7 @@ $(document).ready(function() {
              <!-- ENTER INDIVIDUAL PAGE CONTENT HERE!!!!! -->
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1 class="page-header"><?php echo __('Stock List'); ?></h1>
+                        <h1 class="page-header"><?php echo __('Markets'); ?></h1>
                     </div>
                     <!-- /.col-lg-12 -->
                 </div>

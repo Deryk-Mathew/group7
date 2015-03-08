@@ -54,10 +54,10 @@ class BalancesController extends AppController {
 			$this->request->data['Balance']['client_id'] = $var;
 			$this->Balance->create();
 			if ($this->Balance->save($this->request->data)) {
-				$this->Session->setFlash(__('The balance has been saved.'));
+				$this->Session->setFlash(__('The balance has been saved.'),"success");
 				return $this->redirect(array('controller' => 'clients', 'action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The balance could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('The balance could not be saved. Please, try again.'),"error");
 			}
 		}
 		$clients = $this->Balance->Client->find('list');
@@ -135,10 +135,10 @@ class BalancesController extends AppController {
 			if ($this->Balance->save($this->request->data)) {
 				$RecordCon = new TransactionRecordsController;
 				$RecordCon->create($id,CASH,"DEPOSIT",$var);
-				$this->Session->setFlash(__('Deposit successful.'));
+				$this->Session->setFlash(__('Deposit successful.'),"success");
 				return $this->redirect(array('controller' => 'clients', 'action' => 'portfolio', $id,$this->Session->read('current_client_name')));
 			} else {
-				$this->Session->setFlash(__('The balance could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('The balance could not be saved. Please, try again.'),"error");
 			}
 		} else {
 			$options = array('conditions' => array('Balance.' . $this->Balance->primaryKey => $id));
@@ -160,7 +160,7 @@ class BalancesController extends AppController {
 			$tmp = $this->Balance->read('cash_balance', $id);
 			$var = $this->request->data['Balance']['cash_balance'];
 			if($tmp['Balance']['cash_balance']<$var){
-				$this->Session->setFlash(__('Client has insufficient funds.'));
+				$this->Session->setFlash(__('Client has insufficient funds.'),"error");
 				return $this->redirect(array('controller' => 'balances', 'action' => 'withdraw', $id));
 			}
 			$this->request->data['Balance']['cash_balance'] = $this->Common->mathsSub($tmp['Balance']['cash_balance'], $var);
@@ -170,13 +170,13 @@ class BalancesController extends AppController {
 				if ($this->Balance->save($this->request->data)) {
 					$RecordCon = new TransactionRecordsController;
 					$RecordCon->create($id,CASH,"WITHDRAWAL",$var*(-1));
-					$this->Session->setFlash(__('Funds successfully withdrawn.'));
+					$this->Session->setFlash(__('Funds successfully withdrawn.'),"success");
 					return $this->redirect(array('controller' => 'clients', 'action' => 'portfolio', $id,$this->Session->read('current_client_name')));
 				} else {
-					$this->Session->setFlash(__('The balance could not be saved. Please, try again.'));
+					$this->Session->setFlash(__('The balance could not be saved. Please, try again.'),"error");
 					}
 			} else {
-				$this->Session->setFlash(__('Insufficient balance. Please, try again.'));
+				$this->Session->setFlash(__('Insufficient balance. Please, try again.'),"error");
 			}
 		} else {
 			$options = array('conditions' => array('Balance.' . $this->Balance->primaryKey => $id));

@@ -191,9 +191,9 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
        
         
 			
-
+	<div id="flashMessages">
 			<?php echo $this->Session->flash(); ?>
- 
+	</div>
 			<?php echo $this->fetch('content'); ?>
 			           </div>
             <!-- /.container-fluid -->

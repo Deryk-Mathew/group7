@@ -36,7 +36,7 @@ class ClientStocksController extends AppController {
 public function view($id = null) {
 	$this->ClientStock->recursive = 2;
 		if (!$this->ClientStock->exists($id)) {
-			throw new NotFoundException(__('Invalid client stock'));
+			throw new NotFoundException(__('Invalid client stock'),"error");
 		}
 		//$p_plan = $this->ClientStock->find('all', array('contain' => array('Stock')));
 		$options = array('conditions' => array('ClientStock.' . $this->ClientStock->primaryKey => $id));
@@ -76,7 +76,7 @@ public function view($id = null) {
 				$this->Session->setFlash(__('The client stock has been saved.'));
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The client stock could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('The client stock could not be saved. Please, try again.'),"error");
 			}
 		} else {
 			$options = array('conditions' => array('ClientStock.' . $this->ClientStock->primaryKey => $id));
@@ -101,15 +101,15 @@ public function view($id = null) {
 		}
 		$this->request->allowMethod('post', 'delete');
 		if ($this->ClientStock->delete()) {
-			$this->Session->setFlash(__('The client stock has been deleted.'));
+			$this->Session->setFlash(__('The client stock has been deleted.'),"success");
 		} else {
-			$this->Session->setFlash(__('The client stock could not be deleted. Please, try again.'));
+			$this->Session->setFlash(__('The client stock could not be deleted. Please, try again.'),"error");
 		}
 		return $this->redirect(array('action' => 'index'));
 	}
 
 	public function buyStock($stock,$client) {
-		
+		$this->ClientStock->Stock->recursive = 2;
 		$options = array('conditions' => array('Stock.' . $this->ClientStock->Stock->primaryKey => $stock));
 		$stockdetails = $this->ClientStock->Stock->find('first', $options);
 		$this->set('stock', $stockdetails);
@@ -124,11 +124,11 @@ public function view($id = null) {
 		if($this->request->is(array('post', 'put'))) {
 			
 			$quantity = $this->request->data['ClientStock']['quantity'];
-			$cost = $quantity*$stockdetails['Stock']['lastTradePriceOnly'];
+			$cost = $quantity*$stockdetails['Stock']['lastTradePriceOnly']*(1/$stockdetails['StockExchange']['ExchangeRate']['rate']);
 			$clientbalance = $this->ClientStock->Client->Balance->read('cash_balance', $client);
 			
 			if($cost>$clientbalance['Balance']['cash_balance']){
-					$this->Session->setFlash(__('Client has insufficient funds.'));
+					$this->Session->setFlash('Client has insufficient funds.','error');
 					return $this->redirect(array('controller' => 'client_stocks', 'action' => 'buyStock', $stock, $client));
 			}
 			
@@ -155,18 +155,18 @@ public function view($id = null) {
 			if($this->ClientStock->save($this->request->data)){
 					$RecordCon = new TransactionRecordsController;
 					$RecordCon->create($client,STOCK,$stockdetails['Stock']['symbol']." PURCHASE QTY:".$quantity,$cost);
-					$this->Session->setFlash(__('The client stock has been purchased.'));
+					$this->Session->setFlash("The client stock has been purchased.","success");
 					return $this->redirect(array('controller' => 'clients', 'action' => 'portfolio', $this->Session->read('current_client'),$this->Session->read('current_client_name')));
 			}
 			else {
-				$this->Session->setFlash(__('The client stock could not be saved. Please, try again.'));
+				$this->Session->setFlash('The client stock could not be saved. Please, try again.','error');
 				}
 		}
 	}
 	
 
 	public function sellStock($stock,$client) {
-		
+		$this->ClientStock->Stock->recursive = 2;
 		$options = array('conditions' => array('Stock.' . $this->ClientStock->Stock->primaryKey => $stock));
 		$stockdetails = $this->ClientStock->Stock->find('first', $options);
 		$this->set('stock', $stockdetails);
@@ -188,11 +188,11 @@ public function view($id = null) {
 				
 				
 				if($quantity>$specificallyThisOne['ClientStock']['quantity']){
-						$this->Session->setFlash(__('Client has insufficient stock in this company.'));
+						$this->Session->setFlash(__('Client has insufficient stock in this company.'),"error");
 						return $this->redirect(array('controller' => 'client_stocks', 'action' => 'sellStock', $stock, $client));
 				}
 				
-				$cost = $quantity*$stockdetails['Stock']['lastTradePriceOnly'];
+				$cost = $quantity*$stockdetails['Stock']['lastTradePriceOnly']*(1/$stockdetails['StockExchange']['ExchangeRate']['rate']);
 				$this->request->data['ClientStock']['cost'] = $this->Common->mathsAdd($specificallyThisOne['ClientStock']['cost'], $cost);
 				$clientbalance = $this->ClientStock->Client->Balance->read('cash_balance', $client);
 				$this->ClientStock->Client->Balance->saveField('cash_balance',$this->Common->mathsAdd($clientbalance['Balance']['cash_balance'],$cost));
@@ -205,11 +205,11 @@ public function view($id = null) {
 				if($this->ClientStock->save($this->request->data)){
 						$RecordCon = new TransactionRecordsController;
 						$RecordCon->create($client,STOCK,$stockdetails['Stock']['symbol']." SELL QTY: ".$quantity,$cost*(-1));
-						$this->Session->setFlash(__('The client stock has been sold.'));
+						$this->Session->setFlash(__('The client stock has been sold.'),"success");
 						return $this->redirect(array('controller' => 'clients', 'action' => 'portfolio', $this->Session->read('current_client'),$this->Session->read('current_client_name')));
 			}
 			else {
-				$this->Session->setFlash(__('The client stock could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('The client stock could not be saved. Please, try again.'),"error");
 				}
 			}
 		}

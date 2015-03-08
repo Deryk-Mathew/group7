@@ -1,17 +1,7 @@
-<div class="container-fluid">
-            
-             <!-- ENTER INDIVIDUAL PAGE CONTENT HERE!!!!! -->
-                <div class="row">
-                    <div class="col-lg-12">
-                        <h1 class="page-header">Edit Stock</h1>
-                    </div>
-                    <!-- /.col-lg-12 -->
-                </div>
-                <!-- /.row -->
-
 <div class="stocks form">
 <?php echo $this->Form->create('Stock'); ?>
 	<fieldset>
+		<legend><?php echo __('Edit Stock'); ?></legend>
 	<?php
 		echo $this->Form->input('id');
 		echo $this->Form->input('averageDailyVolume');
@@ -30,4 +20,15 @@
 	</fieldset>
 <?php echo $this->Form->end(__('Submit')); ?>
 </div>
+<div class="actions">
+	<h3><?php echo __('Actions'); ?></h3>
+	<ul>
 
+		<li><?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $this->Form->value('Stock.id')), array(), __('Are you sure you want to delete # %s?', $this->Form->value('Stock.id'))); ?></li>
+		<li><?php echo $this->Html->link(__('List Stocks'), array('action' => 'index')); ?></li>
+		<?php if ($this->Session->read('current_client') != null): ?>
+			<li><?php echo $this->Html->link(__('Return To Client'), array('controller' => 'clients', 'action' => 'view', $this->Session->read('current_client'))); ?> </li>
+		<?php endif; ?>
+		<li><?php echo $this->Html->link(__('Logout'), array('controller' => 'users', 'action' => 'logout')); ?></li>
+	</ul>
+</div>
