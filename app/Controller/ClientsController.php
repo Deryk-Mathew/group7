@@ -69,6 +69,14 @@ class ClientsController extends AppController {
         echo json_encode($output);
 	}
 	
+	public function ajaxRecData() {
+		$this->autoRender = false;        
+		$options = array('conditions' => array('TransactionRecord.client_id' => $this->Session->read('current_client')));		
+        $data = $this->Client->TransactionRecord->find('all', $options);
+        echo json_encode($data);
+	}
+	
+	
 	
 		/**
  * dashboard function

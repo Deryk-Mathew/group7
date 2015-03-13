@@ -126,15 +126,15 @@ class BalancesController extends AppController {
 		if ($this->request->is(array('post', 'put'))) {
 
 			$tmp = $this->Balance->read('cash_balance', $id); //read current balance
-			$var = $this->request->data['Balance']['cash_balance']; // read amount to be added to balance
+			$amount = $this->request->data['Balance']['cash_balance']; // read amount to be added to balance
 
 			// Call mathsAdd component to add the numbers together
-			$this->request->data['Balance']['cash_balance'] = $this->Common->mathsAdd($tmp['Balance']['cash_balance'], $var);
+			$this->request->data['Balance']['cash_balance'] = $this->Common->mathsAdd($tmp['Balance']['cash_balance'], $amount);
 
 			// save the data to the database
 			if ($this->Balance->save($this->request->data)) {
 				$RecordCon = new TransactionRecordsController;
-				$RecordCon->create($id,CASH,"DEPOSIT",$var);
+				$RecordCon->create($id,CASH,$amount);
 				$this->Session->setFlash(__('Deposit successful.'),"success");
 				return $this->redirect(array('controller' => 'clients', 'action' => 'portfolio', $id,$this->Session->read('current_client_name')));
 			} else {
@@ -158,18 +158,18 @@ class BalancesController extends AppController {
 
 		if ($this->request->is(array('post', 'put'))) {
 			$tmp = $this->Balance->read('cash_balance', $id);
-			$var = $this->request->data['Balance']['cash_balance'];
-			if($tmp['Balance']['cash_balance']<$var){
+			$amount = $this->request->data['Balance']['cash_balance'];
+			if($tmp['Balance']['cash_balance']<$amount){
 				$this->Session->setFlash(__('Client has insufficient funds.'),"error");
 				return $this->redirect(array('controller' => 'balances', 'action' => 'withdraw', $id));
 			}
-			$this->request->data['Balance']['cash_balance'] = $this->Common->mathsSub($tmp['Balance']['cash_balance'], $var);
+			$this->request->data['Balance']['cash_balance'] = $this->Common->mathsSub($tmp['Balance']['cash_balance'], $amount);
 
 			// Check if account does not pass 0 
 			if ($this->request->data['Balance']['cash_balance'] >= 0){	
 				if ($this->Balance->save($this->request->data)) {
 					$RecordCon = new TransactionRecordsController;
-					$RecordCon->create($id,CASH,"WITHDRAWAL",$var*(-1));
+					$RecordCon->create($id,CASH,$amount*(-1));
 					$this->Session->setFlash(__('Funds successfully withdrawn.'),"success");
 					return $this->redirect(array('controller' => 'clients', 'action' => 'portfolio', $id,$this->Session->read('current_client_name')));
 				} else {

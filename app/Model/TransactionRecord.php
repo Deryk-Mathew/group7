@@ -5,7 +5,7 @@ App::uses('AppModel', 'Model');
  *
  */
 class TransactionRecord extends AppModel {
-
+	public $actsAs = array( 'Nullable.Nullable' );
 /**
  * Validation rules
  *
@@ -33,6 +33,13 @@ class TransactionRecord extends AppModel {
 		'Client' => array(
 			'className' => 'Client',
 			'foreignKey' => 'client_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		),
+		'Stock' => array(
+			'className' => 'Stock',
+			'foreignKey' => 'stock_id',
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''

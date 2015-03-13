@@ -127,30 +127,38 @@ p {
 
 #flashMessages .error {
 	background-color: #FFCCCC;
-    background-image: url("/img/error.png");
+    background-image: url("../img/error.png");
     border-color: #8F0000;
     color: #8F0000;
 }
 
 #flashMessages .notice {
 	background-color: #e6ecf2;
-	background-image: url("/img/notice.png");
+	background-image: url("../img/notice.png");
 	border-color: #314e6c;
 	color: #314e6c;
 }
 
 #flashMessages .success {
     background-color: #DEFADE;
-    background-image: url("/img/success.png");
+    background-image: url("../img/success.png");
     border-color: #267726;
     color: #267726;
 }
 
 #flashMessages .warning {
     background-color: #FFEEBF;
-    background-image: url("/img/warning.png");
+    background-image: url("../img/warning.png");
     border-color: #B87D00;
     color: #B87D00;
+}
+
+td.details-control {
+    background: url('../img/details_open.png') no-repeat center center;
+    cursor: pointer;
+}
+tr.shown td.details-control {
+    background: url('../img/details_close.png') no-repeat center center;
 }
 
 .headerFull {

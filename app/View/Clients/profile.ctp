@@ -1,5 +1,33 @@
 
+ <script>
+ 
+ $(document).ready(function() {
+	 var lastIdx = null;
+    var table = $('#tranRec').dataTable({
+		"bProcessing": true,
+		"bFilter": true,
+		"dom" : '<"H"lfr>t<"F"ip>',
+		"order": [[4, "desc" ]]
 
+	});
+    $('#tranRec tbody')
+        .on( 'mouseover', 'td', function () {
+            var colIdx = table.cell(this).index().column;
+ 
+            if ( colIdx !== lastIdx ) {
+                $( table.cells().nodes() ).removeClass( 'highlight' );
+                $( table.column( colIdx ).nodes() ).addClass( 'highlight' );
+            }
+        } )
+        .on( 'mouseleave', function () {
+            $( table.cells().nodes() ).removeClass( 'highlight' );
+        } );
+	$('#Filter').change( function() { 
+				table.fnFilter( $(this).val(),0); 
+			});
+} );
+ 
+</script>
         <?php 
 			  $stocktotal = 0;
 			  foreach ($client['ClientStock'] as $clientStock): 
@@ -18,7 +46,7 @@
                 </div>
                 <!-- /.row -->
                 
-                
+ 
                 
     <div class="clients view">
 
@@ -77,45 +105,26 @@
 	
 	
 	 </div>
+	 
 
-<!-- List client balance -->
+<!-- List all client notes -->
 	<div class="col-xs-12 col-md-6">
-		<h3><?php echo __('Related Balances'); ?></h3>
-			<?php if (!empty($client['Balance'])): ?>
-				<dl>
-				<dt><?php echo __('Cash Balance'); ?></dt>
-				<dd>
-				<?php echo $client['Balance']['cash_balance']; ?>
-				&nbsp;</dd>
-				<dt><?php echo __('Stock Value'); ?></dt>
-				<dd>
-				<?php echo $stocktotal; ?>
-				&nbsp;</dd>
-				<dt><?php echo __('Total Balance'); ?></dt>
-				<dd>
-				<?php echo $stocktotal + $client['Balance']['cash_balance']; ?>
-				&nbsp;</dd>
-				</dl>
-			<?php endif; ?>
-		<div class="actions">
-			<ul>
-				<li><?php echo $this->Html->link(__('Deposit'), array('controller' => 'balances', 'action' => 'deposit', $client['Balance']['id'])); ?></li>
-				<li><?php echo $this->Html->link(__('Withdraw'), array('controller' => 'balances', 'action' => 'withdraw', $client['Balance']['id'])); ?></li>
-				<li><?php echo $this->Html->link(__('Buy New Stock'), array('controller' => 'stocks', 'action' => 'index')); ?> </li>
-			</ul>
-
-		</div>
-		<!-- List all client notes -->
-
-	<h3 class="notes"><?php echo __('Related Notes'); ?></h3>
-	<?php if (!empty($client['Note'])): ?>
-	<table cellpadding = "0" cellspacing = "0">
+		<h3><?php echo __('Related Notes'); ?></h3>
+		<?php if (!empty($client['Note'])): ?>
+	<table id = "noteTable" cellpadding = "0" cellspacing = "0">
 	<tr>
-		<th><?php echo __('Created'); ?></th>
-		<th class="actions"><?php echo __('Actions'); ?></th>
-	</tr>
-	<?php foreach ($client['Note'] as $note): ?>
-		<tr>
+			
+			
+				<th><?php echo __('Subject'); ?></th>
+				<th></th>
+				<th><?php echo __('Created'); ?></th>
+				<th></th>
+			</tr>
+			<?php foreach ($client['Note'] as $note): ?>
+				<tr>
+			<td><?php echo $this->Html->link($note['title'], array('controller' => 'notes', 'action' => 'view', $note['id'])); ?></td>
+			<?php $content = $note['body']; if(strlen($content)>10) $content = substr($content,0,10)."...";?>
+			<td><?php echo $this->Html->link($content, array('controller' => 'notes', 'action' => 'view', $note['id'])); ?></td>
 			<td><?php echo $this->Html->link($note['created'], array('controller' => 'notes', 'action' => 'view', $note['id'])); ?></td>
 			<td class="actions">
 				<?php echo $this->Html->link(__('View'), array('controller' => 'notes', 'action' => 'view', $note['id'])); ?>
@@ -123,43 +132,67 @@
 				<?php echo $this->Form->postLink(__('Delete'), array('controller' => 'notes', 'action' => 'delete', $note['id']), array(), __('Are you sure you want to delete # %s?', $note['id'])); ?>
 			</td>
 		</tr>
-	<?php endforeach; ?>
-	</table>
-<?php endif; ?>
-	<!-- Add new client note -->
-	<div class="actions">
+		<?php endforeach; ?>
+		</table>
+			<?php endif; ?>
+			
+			<div class="actions">
 		<ul>
-			<li><?php echo $this->Html->link(__('New Note'), array('controller' => 'notes', 'action' => 'add')); ?> </li>
+		<li><a href = "#" id = "create-note">New Note</a></i>
 		</ul>
 	</div>
-	<!-- New Note div end -->
-
-	</div>
+		</div>
+		</div>
 	
 	
   
 
 	<?php if (!empty($client['TransactionRecord'])): ?>
-<table id="stockTable" cellpadding = "0" cellspacing = "0">
+<table id="tranRec" class="row-border hover order-column" cellpadding = "0" cellspacing = "0">
+
  	<div class="col-xs-12 col-md-6">  
-			<tr>
 			<h3><?php echo __('Transaction Record'); ?></h3>	
+			<div id ="filter">
+			<?php	
+
+			$options["STOCK"] = "Stocks";
+			$options["CASH"] = "Cash";
+			echo $this->Form->input('Filter', array(
+				'options' => $options,
+				'empty' => 'All'
+			));
+			?>
+			</div>
+			<thead>
+			<tr role = "row">
+			
 				<th><?php echo __('Type'); ?></th>
 				<th><?php echo __('Description'); ?></th>
 				<th><?php echo __('In'); ?></th>
 				<th><?php echo __('Out'); ?></th>
 				<th><?php echo __('Date'); ?></th>
-			</tr>		   
+			</tr>
+			</thead>	
+
+<tbody>			
 			<?php foreach ($client['TransactionRecord'] as $transrec): ?>
 				<tr>
 						<td><?php echo $transrec['TransactionType']['type']; ?></td>
-						<td><?php echo $transrec['description']; ?></td>
+						<?php if ($transrec['type'] == CASH){ ?>
+						<td><?php if ($transrec['balance_change'] >= 0): echo "DEPOSIT"; endif;
+						if ($transrec['balance_change'] < 0): echo "WITHDRAWAL"; endif;?></td>
+						<?php } else {?>
+						<td><?php echo $this->Html->link($transrec['Stock']['symbol'], array('controller' => 'stocks', 'action' => 'view', $transrec['Stock']['id']));
+						if ($transrec['balance_change'] <= 0): echo " PURCHASE ".$transrec['quantity']." @ ".$transrec['balance_change']/$transrec['quantity']*-1; endif;
+						if ($transrec['balance_change'] > 0): echo " SALE ".$transrec['quantity']." @ ".$transrec['balance_change']/$transrec['quantity']; endif;?></td>
+						<?php }?>
 						<?php if ($transrec['balance_change'] > 0): ?><td><?php echo $transrec['balance_change']; ?></td><td><?php echo "-"; ?></td><?php endif; ?>
 						<?php if ($transrec['balance_change'] < 0): ?><td><?php echo "-"; ?></td><td><?php echo $transrec['balance_change']*-1; ?></td><?php endif; ?>
 						<?php if ($transrec['balance_change'] == 0): ?><td><?php echo "-"; ?></td><td><?php echo "-"; ?></td><?php endif; ?>
 						<td><?php echo $transrec['date']; ?></td>
 				</tr>
 			<?php endforeach; ?>  
+			</tbody>
 			</div>          
 <?php endif; ?>			
                 

@@ -154,7 +154,7 @@ public function view($id = null) {
 			
 			if($this->ClientStock->save($this->request->data)){
 					$RecordCon = new TransactionRecordsController;
-					$RecordCon->create($client,STOCK,$stockdetails['Stock']['symbol']." PURCHASE QTY:".$quantity,$cost);
+					$RecordCon->create($client,STOCK,$cost,$stockdetails['Stock']['id'],$quantity);
 					$this->Session->setFlash("The client stock has been purchased.","success");
 					return $this->redirect(array('controller' => 'clients', 'action' => 'portfolio', $this->Session->read('current_client'),$this->Session->read('current_client_name')));
 			}
@@ -192,7 +192,7 @@ public function view($id = null) {
 						return $this->redirect(array('controller' => 'client_stocks', 'action' => 'sellStock', $stock, $client));
 				}
 				
-				$cost = $quantity*$stockdetails['Stock']['lastTradePriceOnly']*(1/$stockdetails['StockExchange']['ExchangeRate']['rate']);
+				$cost = $quantity*$stockdetails['Stock']['lastTradePriceOnly']*(1/$stockdetails['StockExchange']['ExchangeRate']['rate'])*(-1);
 				$this->request->data['ClientStock']['cost'] = $this->Common->mathsAdd($specificallyThisOne['ClientStock']['cost'], $cost);
 				$clientbalance = $this->ClientStock->Client->Balance->read('cash_balance', $client);
 				$this->ClientStock->Client->Balance->saveField('cash_balance',$this->Common->mathsAdd($clientbalance['Balance']['cash_balance'],$cost));
@@ -204,7 +204,7 @@ public function view($id = null) {
 				}
 				if($this->ClientStock->save($this->request->data)){
 						$RecordCon = new TransactionRecordsController;
-						$RecordCon->create($client,STOCK,$stockdetails['Stock']['symbol']." SELL QTY: ".$quantity,$cost*(-1));
+						$RecordCon->create($client,STOCK,$cost,$stockdetails['Stock']['id'],$quantity);
 						$this->Session->setFlash(__('The client stock has been sold.'),"success");
 						return $this->redirect(array('controller' => 'clients', 'action' => 'portfolio', $this->Session->read('current_client'),$this->Session->read('current_client_name')));
 			}
