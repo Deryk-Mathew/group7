@@ -183,11 +183,11 @@
 						if ($transrec['balance_change'] < 0): echo "WITHDRAWAL"; endif;?></td>
 						<?php } else {?>
 						<td><?php echo $this->Html->link($transrec['Stock']['symbol'], array('controller' => 'stocks', 'action' => 'view', $transrec['Stock']['id']));
-						if ($transrec['balance_change'] <= 0): echo " PURCHASE ".$transrec['quantity']." @ ".$transrec['balance_change']/$transrec['quantity']*-1; endif;
-						if ($transrec['balance_change'] > 0): echo " SALE ".$transrec['quantity']." @ ".$transrec['balance_change']/$transrec['quantity']; endif;?></td>
+						if ($transrec['balance_change'] > 0): echo " PURCHASE ".$transrec['quantity']." @ ".$transrec['balance_change']/$transrec['quantity']; endif;
+						if ($transrec['balance_change'] <= 0): echo " SALE ".$transrec['quantity']." @ ".$transrec['balance_change']/$transrec['quantity']*-1; endif;?></td>
 						<?php }?>
-						<?php if ($transrec['balance_change'] > 0): ?><td><?php echo $transrec['balance_change']; ?></td><td><?php echo "-"; ?></td><?php endif; ?>
-						<?php if ($transrec['balance_change'] < 0): ?><td><?php echo "-"; ?></td><td><?php echo $transrec['balance_change']*-1; ?></td><?php endif; ?>
+						<?php if ($transrec['balance_change'] < 0): ?><td><?php echo $transrec['balance_change']*-1; ?></td><td><?php echo "-"; ?></td><?php endif; ?>
+						<?php if ($transrec['balance_change'] > 0): ?><td><?php echo "-"; ?></td><td><?php echo $transrec['balance_change']; ?></td><?php endif; ?>
 						<?php if ($transrec['balance_change'] == 0): ?><td><?php echo "-"; ?></td><td><?php echo "-"; ?></td><?php endif; ?>
 						<td><?php echo $transrec['date']; ?></td>
 				</tr>
