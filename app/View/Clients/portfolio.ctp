@@ -103,8 +103,8 @@
 			<?php endif; ?>
 		<div class="actions">
 			<ul>
-				<li><?php echo $this->Html->link(__('Deposit'), array('controller' => 'balances', 'action' => 'deposit', $client['Balance']['id'])); ?></li>
-				<li><?php echo $this->Html->link(__('Withdraw'), array('controller' => 'balances', 'action' => 'withdraw', $client['Balance']['id'])); ?></li>
+				<li><?php echo $this->Html->link(__('Deposit'), array('controller' => 'balances', 'action' => 'deposit', $client['Client']['id'])); ?></li>
+				<li><?php echo $this->Html->link(__('Withdraw'), array('controller' => 'balances', 'action' => 'withdraw', $client['Client']['id'])); ?></li>
 				<li><?php echo $this->Html->link(__('Browse Markets'), array('controller' => 'stocks', 'action' => 'index')); ?> </li>
 			</ul>
 

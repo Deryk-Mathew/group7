@@ -43,6 +43,10 @@ h3.notes {
 
 /** View Stocks Page **/
 
+.left-dl{
+	float: right;
+}
+
 .right-dl{
 	float: right;
 }

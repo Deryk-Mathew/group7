@@ -1,5 +1,6 @@
 <?php
 App::uses('AppController', 'Controller');
+App::import('Controller', 'Balances');
 App::import('Controller', 'TransactionRecords');
 /**
  * ClientStocks Controller
@@ -125,9 +126,12 @@ public function view($id = null) {
 			
 			$quantity = $this->request->data['ClientStock']['quantity'];
 			$cost = $quantity*$stockdetails['Stock']['lastTradePriceOnly']*(1/$stockdetails['StockExchange']['ExchangeRate']['rate']);
-			$clientbalance = $this->ClientStock->Client->Balance->read('cash_balance', $client);
 			
-			if($cost>$clientbalance['Balance']['cash_balance']){
+			$options = array('conditions' => array('Balance.client_id' => $client));
+			$balance = $this->ClientStock->Client->Balance->find('first',$options);
+			$clientbalance = $balance['Balance']['cash_balance']; //read current balance
+			
+			if($cost>$clientbalance){
 					$this->Session->setFlash('Client has insufficient funds.','error');
 					return $this->redirect(array('controller' => 'client_stocks', 'action' => 'buyStock', $stock, $client));
 			}
@@ -148,10 +152,8 @@ public function view($id = null) {
 				$this->request->data['ClientStock']['quantity'] = $this->Common->mathsAdd($specificallyThisOne['ClientStock']['quantity'], $quantity);
 			}
 
-			$this->ClientStock->Client->Balance->saveField('cash_balance',$this->Common->mathsSub($clientbalance['Balance']['cash_balance'],$cost));
-			
-			
-			
+			$this->ClientStock->Client->Balance->updateAll(array('cash_balance' => $clientbalance-$cost),array('client_id' => $client));
+
 			if($this->ClientStock->save($this->request->data)){
 					$RecordCon = new TransactionRecordsController;
 					$RecordCon->create($client,STOCK,$cost,$stockdetails['Stock']['id'],$quantity);
@@ -194,8 +196,12 @@ public function view($id = null) {
 				
 				$cost = $quantity*$stockdetails['Stock']['lastTradePriceOnly']*(1/$stockdetails['StockExchange']['ExchangeRate']['rate'])*(-1);
 				$this->request->data['ClientStock']['cost'] = $this->Common->mathsAdd($specificallyThisOne['ClientStock']['cost'], $cost);
-				$clientbalance = $this->ClientStock->Client->Balance->read('cash_balance', $client);
-				$this->ClientStock->Client->Balance->saveField('cash_balance',$this->Common->mathsAdd($clientbalance['Balance']['cash_balance'],$cost));
+				
+				$options = array('conditions' => array('Balance.client_id' => $client));
+				$balance = $this->ClientStock->Client->Balance->find('first',$options);
+				$clientbalance = $balance['Balance']['cash_balance']; //read current balance
+				
+				$this->ClientStock->Client->Balance->updateAll(array('cash_balance' => $clientbalance-$cost),array('client_id' => $client));
 		
 				$this->request->data['ClientStock']['quantity'] = $this->Common->mathsSub($specificallyThisOne['ClientStock']['quantity'],$quantity );
 				
@@ -219,6 +225,8 @@ public function view($id = null) {
 		}
 		
 	}
+
+	
 	
 }
 

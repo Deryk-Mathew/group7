@@ -7,12 +7,7 @@ App::uses('AppModel', 'Model');
  */
 class Balance extends AppModel {
 
-/**
- * Use table
- *
- * @var mixed False or table name
- */
-	public $useTable = 'balance';
+
 
 /**
  * Validation rules

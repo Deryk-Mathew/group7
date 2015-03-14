@@ -22,10 +22,11 @@ public function GetData($con) {
         /* Array of database columns which should be read and sent back to DataTables. Use a space where
          * you want to insert a non-database field (for example a counter or static image)
         */
-        $aColumns = array('id', 'symbol', 'name', 'exchange_id', 'change','lastTradePriceOnly');
+        $aColumns = array('id', 'symbol', 'name', 'exchange_id', 'change','lastTradePriceOnly','gbp_price');
         $firstsearchindex = 1;
 		$lastsearchindex = 4;
-		
+		$localprice = 5;
+		$gbpprice = 6;
         /* Indexed column (used for fast and accurate table cardinality) */
         $sIndexColumn = "id";
          
@@ -93,8 +94,14 @@ public function GetData($con) {
             {
                 if ( $_GET[ 'bSortable_'.intval($_GET['iSortCol_'.$i]) ] == "true" )
                 {
+					if(intval( $_GET['iSortCol_'.$i]) == $localprice){
+						$sOrder .= "`".$aColumns[ $gbpprice ]."` ".
+                        ($_GET['sSortDir_'.$i]==='asc' ? 'asc' : 'desc') .", ";
+					}
+					else{
                     $sOrder .= "`".$aColumns[ intval( $_GET['iSortCol_'.$i] ) ]."` ".
                         ($_GET['sSortDir_'.$i]==='asc' ? 'asc' : 'desc') .", ";
+					}
                 }
             }
          
@@ -225,14 +232,14 @@ public function GetData($con) {
                 {
                     /* Special output formatting for 'change' column */
 					$current = $aRow[$aColumns[$i]];
-					if($current[0]=="+"){
-						$row["change"] = "<font color = 'green'>".$current."</font>";
+					if($current>0){
+						$row["change"] = "<font color = 'green'>".$current."%</font>";
 					}
-                    else if($current[0]=="-"){
-						$row["change"] = "<font color = 'red'>".$current."</font>";
+                    else if($current<0){
+						$row["change"] = "<font color = 'red'>".$current."%</font>";
 					}
 					else{
-						$row["change"] = $current;
+						$row["change"] = $current."%";
 					}
                 }
                 else if ( $aColumns[$i] != ' ' )

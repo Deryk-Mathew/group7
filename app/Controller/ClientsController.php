@@ -1,5 +1,7 @@
 <?php
 App::uses('AppController', 'Controller');
+App::uses('DboSource', 'Model/DataSource');
+App::import('Controller', 'Balances');
 App::import('Controller', 'Meetings');
 /**
  * Clients Controller
@@ -141,8 +143,8 @@ class ClientsController extends AppController {
 		$this->Client->recursive = 2;
 		$this->Session->write('current_client', $id);
 		$this->Session->write('current_client_name', $name);
-		$options = array('conditions' => array('Balance.' . $this->Client->Balance->primaryKey => $id));
-		$this->set('balance', $this->Client->Balance->find('first', $options));
+		$options = array('conditions' => array('Balance.client_id' => $id));
+		$this->Session->write('balance',$this->Client->Balance->find('first',$options)['Balance']['cash_balance']);
 		if (!$this->Client->exists($id)) {
 			throw new NotFoundException(__('Invalid client'));
 		}
@@ -154,7 +156,7 @@ class ClientsController extends AppController {
 		$this->Client->recursive = 2;
 		$this->Session->write('current_client', $id);
 		$this->Session->write('current_client_name', $name);
-		$options = array('conditions' => array('Balance.' . $this->Client->Balance->primaryKey => $id));
+		$options = array('conditions' => array('Balance.client_id' => $id));
 		$this->Session->write('balance',$this->Client->Balance->find('first',$options)['Balance']['cash_balance']);
 		if (!$this->Client->exists($id)) {
 			throw new NotFoundException(__('Invalid client'));
@@ -163,6 +165,7 @@ class ClientsController extends AppController {
 		$this->set('client', $this->Client->find('first', $options));
 	}
 
+
 /**
  * add method
  *
@@ -170,12 +173,15 @@ class ClientsController extends AppController {
  */
 	public function add() {
 		$this->request->data['Client']['user_id'] = $this->Auth->user('id');
+		$this->request->data['Client']['balance'] = 0.00;
+		$this->request->data['Client']['registered'] = DboSource::expression('NOW()');
 		if ($this->request->is('post')) {
 			$this->Client->create();
-			
 			if ($this->Client->save($this->request->data)) {
+				$BalanceCon = new BalancesController;
+				$BalanceCon->create($this->Client->id);
 				$this->Session->setFlash(__('The client has been saved.'));
-				return $this->redirect(array('action' => 'index'));
+				return $this->redirect(array('controller' => 'clients','action' => 'browse'));
 			} else {
 				$this->Session->setFlash(__('The client could not be saved. Please, try again.'));
 			}
@@ -261,6 +267,9 @@ class ClientsController extends AppController {
 
 		}
 	}
+	
+	
+	
 
 }
 
