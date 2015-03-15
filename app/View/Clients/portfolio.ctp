@@ -69,7 +69,7 @@ $(document).ready(function() {
                 
 				             
 	<?php if (!empty($client['ClientStock'])): ?>
-	<div class="col-lg-5 col-md-5 col-xs-12">
+	<div class="col-lg-12 col-md-12 col-xs-12">
 <table id="stockTable" class="row-border hover order-column" cellpadding = "0" cellspacing = "0">
 <thead>
 			<tr>
