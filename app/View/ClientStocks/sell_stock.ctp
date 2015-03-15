@@ -23,12 +23,18 @@ $('#ClientStockSellStockForm, #ClientStockQuantity, #xrate, #price').submit(func
 <div class="container-fluid">
             
              <!-- ENTER INDIVIDUAL PAGE CONTENT HERE!!!!! -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">Sell Stock</h1>
+                    </div>
+                    <!-- /.col-lg-12 -->
+                </div>
+                <!-- /.row -->
                 
 
-<div class="clientStocks form">
+<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12">
 <?php echo $this->Form->create('ClientStock'); ?>
 	<fieldset>
-		<legend><?php echo __('Sell Stock'); ?></legend>
 		<div class="stocks view">
 		<dt><?php echo __('Name'); ?></dt><dd><?php echo h($stock['Stock']['name'])?></dd>
 				<dt><?php echo __('Price'); ?></dt><dd><?php echo h($stock['Stock']['lastTradePriceOnly'])." ".$stock['StockExchange']['ExchangeRate']['currency'].' ('.
