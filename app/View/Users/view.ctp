@@ -1,6 +1,6 @@
 
 
-            <div class="container-fluid">
+            
             
              <!-- ENTER INDIVIDUAL PAGE CONTENT HERE!!!!! -->
                 <div class="row">

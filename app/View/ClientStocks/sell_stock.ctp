@@ -20,7 +20,7 @@ $('#ClientStockSellStockForm, #ClientStockQuantity, #xrate, #price').submit(func
 });
 </script>
 
-<div class="container-fluid">
+
             
              <!-- ENTER INDIVIDUAL PAGE CONTENT HERE!!!!! -->
                 <div class="row">

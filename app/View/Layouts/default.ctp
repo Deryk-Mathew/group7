@@ -182,7 +182,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 
         <!-- Page Content -->
         <div id="page-wrapper">
-        
+        <div class="container-fluid">
        
         
 			

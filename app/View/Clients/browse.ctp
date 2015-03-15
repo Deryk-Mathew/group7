@@ -3,7 +3,7 @@ $(document).ready(function() {
     $('#clientList').dataTable();
 } );
 </script>
-            <div class="container-fluid">
+            
             
              <!-- ENTER INDIVIDUAL PAGE CONTENT HERE!!!!! -->
                 <div class="row">
