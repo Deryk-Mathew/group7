@@ -141,11 +141,11 @@ $(document).ready(function() {
 				&nbsp;</dd>
 				</dl>
 			<?php endif; ?>
-		<div class="actions">
+		<div class="actions col-lg-12">
 			<ul>
-				<li><?php echo $this->Html->link(__('Deposit'), array('controller' => 'balances', 'action' => 'deposit', $client['Client']['id'])); ?></li>
-				<li><?php echo $this->Html->link(__('Withdraw'), array('controller' => 'balances', 'action' => 'withdraw', $client['Client']['id'])); ?></li>
-				<li><?php echo $this->Html->link(__('Browse Markets'), array('controller' => 'stocks', 'action' => 'index')); ?> </li>
+				<li class="col-lg-3"><?php echo $this->Html->link(__('Deposit'), array('controller' => 'balances', 'action' => 'deposit', $client['Client']['id'])); ?></li>
+				<li class="col-lg-3"><?php echo $this->Html->link(__('Withdraw'), array('controller' => 'balances', 'action' => 'withdraw', $client['Client']['id'])); ?></li>
+				<li class="col-lg-5"><?php echo $this->Html->link(__('Browse Markets'), array('controller' => 'stocks', 'action' => 'index')); ?> </li>
 			</ul>
 
 		</div>
