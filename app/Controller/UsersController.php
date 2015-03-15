@@ -24,7 +24,7 @@ class UsersController extends AppController {
 		$this->User->recursive = 0;
 		$this->set('users', $this->Paginator->paginate());
 	}
-public function browse() {
+	public function browse() {
 		$this->User->recursive = 2;
 		$this->set('users', $this->Paginator->paginate());
 	}
@@ -156,12 +156,17 @@ public function browse() {
 	    $group->id = 2;
 	    $this->Acl->deny($group, 'controllers');
 	    $this->Acl->allow($group, 'controllers/Clients');
-		$this->Acl->allow($group, 'controllers/Users');
+	    $this->Acl->deny($group, 'controllers/Clients/delete');
 	    $this->Acl->allow($group, 'controllers/Notes');
 	    $this->Acl->allow($group, 'controllers/Balance');
 	    $this->Acl->allow($group, 'controllers/Stocks/index');
 	    $this->Acl->allow($group, 'controllers/Stocks/view');
+	    $this->Acl->allow($group, 'controllers/Stocks/browse');
+	    $this->Acl->allow($group, 'controllers/Stocks/ajaxData');
 	    $this->Acl->allow($group, 'controllers/ClientStocks');
+	    $this->Acl->allow($group, 'controllers/TransactionRecords');
+	    $this->Acl->allow($group, 'controllers/StockExchanges');
+	    $this->Acl->allow($group, 'controllers/Meetings');
 
 	    // allow basic users to log out
 	    $this->Acl->allow($group, 'controllers/users/logout');
