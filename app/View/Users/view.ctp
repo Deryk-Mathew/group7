@@ -1,5 +1,18 @@
+
+
+            <div class="container-fluid">
+            
+             <!-- ENTER INDIVIDUAL PAGE CONTENT HERE!!!!! -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header"><?php echo h($user['User']['full_name']); ?></h1>
+                    </div>
+                    <!-- /.col-lg-12 -->
+                </div>
+                <!-- /.row -->
+
+
 <div class="users view">
-<h2><?php echo __('User'); ?></h2>
 	<dl>
 		<dt><?php echo __('Id'); ?></dt>
 		<dd>
@@ -33,19 +46,8 @@
 	</dl>
 </div>
 
-<div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
-	<?php if (AuthComponent::User('group_id') == 1): ?>
-		<ul>
-			<li><?php echo $this->Html->link(__('List Clients'), array('controller' => 'clients', 'action' => 'index')); ?> </li>
-			<li><?php echo $this->Html->link(__('List Users'), array('controller' => 'users', 'action' => 'index')); ?> </li>
-			<li><?php echo $this->Html->link(__('List Groups'), array('controller' => 'groups', 'action' => 'index')); ?> </li>
-			<li><?php echo $this->Html->link(__('Logout'), array('controller' => 'users', 'action' => 'logout')); ?></li>
-		</ul>
-	<?php endif; ?>
-</div>
 
-<div class="related">
+<div class="col-xl-12 col-md-12 col-xs-12">
 	<h3><?php echo __('Related Clients'); ?></h3>
 	<?php if (!empty($user['Client'])): ?>
 	<table cellpadding = "0" cellspacing = "0">

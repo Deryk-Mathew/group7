@@ -57,8 +57,21 @@ $(document).ready(function() {
 <input type='hidden' id='daysrangegbp' value='<?php echo $this->number->precision($stock['Stock']['daysLow']*(1/$stock['StockExchange']['ExchangeRate']['rate']),2)
 ." - ". $this->number->precision($stock['Stock']['daysHigh']*(1/$stock['StockExchange']['ExchangeRate']['rate']),2)?>' disabled/>
 
+
+
+            <div class="container-fluid">
+            
+             <!-- ENTER INDIVIDUAL PAGE CONTENT HERE!!!!! -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header"><?php echo __($stock['Stock']['name']); ?></h1>
+                    </div>
+                    <!-- /.col-lg-12 -->
+                </div>
+                <!-- /.row -->
+
 <div class="stocks view">
-<h2><?php echo __($stock['Stock']['name']); ?></h2>
+
 
 <div class="col-xs-12 col-md-6">
 	<dl>

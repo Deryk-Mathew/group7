@@ -1,5 +1,17 @@
+
+            <div class="container-fluid">
+            
+             <!-- ENTER INDIVIDUAL PAGE CONTENT HERE!!!!! -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header"><?php echo h($group['Group']['name']); ?> Users</h1>
+                    </div>
+                    <!-- /.col-lg-12 -->
+                </div>
+                <!-- /.row -->
+
+
 <div class="groups view">
-<h2><?php echo __('Group'); ?></h2>
 	<dl>
 		<dt><?php echo __('Id'); ?></dt>
 		<dd>
@@ -14,18 +26,9 @@
 	</dl>
 </div>
 
-<div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
-		<ul>
-			<li><?php echo $this->Html->link(__('List Groups'), array('action' => 'index')); ?> </li>
-			<li><?php echo $this->Html->link(__('List Clients'), array('controller' => 'clients', 'action' => 'index')); ?> </li>
-			<li><?php echo $this->Html->link(__('List Users'), array('controller' => 'users', 'action' => 'index')); ?> </li>
-			<li><?php echo $this->Html->link(__('Logout'), array('controller' => 'users', 'action' => 'logout')); ?></li>
-		</ul>
-</div>
 
-<div class="related">
-	<h3><?php echo __('Related Users'); ?></h3>
+<div class="col-xl-12 col-md-12 col-xs-12">
+	<h3><?php echo __('Users in this group'); ?></h3>
 	<?php if (!empty($group['User'])): ?>
 	<table cellpadding = "0" cellspacing = "0">
 	<tr>
