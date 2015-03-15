@@ -41,6 +41,29 @@ class MeetingsController extends AppController {
 		
 	}
 	
+	
+	public function browse() {
+		$this->Meeting->recursive = 0;
+		
+
+			/* Display only clients user has */
+			$var = $this->Auth->user('id');
+			$this->paginate = array(
+	        	'conditions' => array('Meeting.user_id' => $var),
+	        	'limit' => 1000
+	        	
+	    	);
+		    $this->set('meetings', $this->paginate($this->Meeting));
+			$options = array('conditions' => array('Client.user_id'  => $var));
+			$clients = $this->Meeting->Client->find('all', $options);
+			foreach($clients as $client):
+				$name[$client['Client']['id']] =  $client['Client']['name'];
+			endforeach;
+			$this->set('clients', $name);
+		
+	}
+	
+	
 	/**
  * view method
  *
@@ -125,7 +148,7 @@ class MeetingsController extends AppController {
 		} else {
 			$this->Session->setFlash(__('The meeting could not be cancelled. Please, try again.'));
 		}
-		return $this->redirect(array('action' => 'index'));
+		return $this->redirect(array('action' => 'browse'));
 	}
 
 }

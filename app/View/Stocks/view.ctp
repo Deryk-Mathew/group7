@@ -17,7 +17,7 @@ $(document).ready(function() {
 	  transition: 'swing', // animation transition,
 	  checkbox: null, // the checkbox to toggle (for use in forms)
 	  clicker: null, // element that can be clicked on to toggle. removes binding from the toggle itself (use nesting)
-	  width: 50, // width used if not set in css
+	  width: 60, // width used if not set in css
 	  height: 20, // height if not set in css
 	  type: 'compact' // if this is set to 'select' then the select style toggle will be used
 	});
@@ -158,8 +158,10 @@ $(document).ready(function() {
 	</dl>
 	</div>
 	</div>
-	<div class="col-xs-1 col-md-1 col-lg-1">
+	<div class="col-xs-6 col-md-2 col-lg-2">
+		<div class="col-xl-11 col-md-11">
 	<dt>Currency</dt>
-		<div class="toggle toggle-modern" width ="10"></div></li>
+		<div class="toggle toggle-modern" width ="70%"></div></li>
+		</div>
 		</div>
 </div>

@@ -102,7 +102,13 @@ class ClientsController extends AppController {
 	    	);
 		    $this->set('meetings', $this->paginate($this->Meeting));
 		    
-		    
+		    $var = $this->Auth->user('id');
+		$options2 = array('conditions' => array('Client.user_id'  => $var));
+			$clients = $this->Meeting->Client->find('all', $options2);
+			foreach($clients as $client):
+				$name[$client['Client']['id']] =  $client['Client']['name'];
+			endforeach;
+			$this->set('clients', $name);
 		    
 		    
 		    

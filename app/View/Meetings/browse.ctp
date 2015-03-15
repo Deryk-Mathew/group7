@@ -9,77 +9,85 @@
                     <!-- /.col-lg-12 -->
                 </div>
                 <!-- /.row -->
-  <script src='../lib/moment.min.js'></script>
-<script src='../lib/jquery.min.js'></script>
-<script src='../fullcalendar.min.js'></script>
+                
+                			<?php
+            $this->Html->css('calendar', null, array('inline' => false));
+
+?>
 <script>
 
-	$(document).ready(function() {
+$.getScript('http://arshaw.com/js/fullcalendar-1.6.4/fullcalendar/fullcalendar.min.js',function(){
 
-		$('#calendar').fullCalendar({
-			defaultDate: '2015-02-12',
-			editable: true,
-			eventLimit: true, // allow "more" link when too many events
-			events: [
-				{
-					title: 'All Day Event',
-					start: '2015-02-01'
-				},
-				{
-					title: 'Long Event',
-					start: '2015-02-07',
-					end: '2015-02-10'
-				},
-				{
-					id: 999,
-					title: 'Repeating Event',
-					start: '2015-02-09T16:00:00'
-				},
-				{
-					id: 999,
-					title: 'Repeating Event',
-					start: '2015-02-16T16:00:00'
-				},
-				{
-					title: 'Conference',
-					start: '2015-02-11',
-					end: '2015-02-13'
-				},
-				{
-					title: 'Meeting',
-					start: '2015-02-12T10:30:00',
-					end: '2015-02-12T12:30:00'
-				},
-				{
-					title: 'Lunch',
-					start: '2015-02-12T12:00:00'
-				},
-				{
-					title: 'Meeting',
-					start: '2015-02-12T14:30:00'
-				},
-				{
-					title: 'Happy Hour',
-					start: '2015-02-12T17:30:00'
-				},
-				{
-					title: 'Dinner',
-					start: '2015-02-12T20:00:00'
-				},
-				{
-					title: 'Birthday Party',
-					start: '2015-02-13T07:00:00'
-				},
-				{
-					title: 'Click for Google',
-					url: 'http://google.com/',
-					start: '2015-02-28'
-				}
-			]
-		});
+
+  $('#calendar').fullCalendar({
+    header: {
+      left: 'prev,next today',
+      center: 'title',
+      right: 'month,agendaWeek,agendaDay'
+    },
+    defaultView: 'agendaWeek',
+    editable: false,
+    events: [
+    <?php 
+	
+	
+	foreach ($meetings as $meeting): ?>
+	{
+		title: 'Meeting with <?php 
 		
-	});
+		$id = $meeting["Meeting"]["client_id"];
+		echo $clients[$id];  ?>',
+		<?php $dateReturn = h($meeting['Meeting']['startDate']);  
+		$timestamp = strtotime($dateReturn);
+		$year = strval('20');
+		$year .= strval(date("y", $timestamp));
+		$month = (intval(date("m", $timestamp))) - 1;
+		$date = (intval(date("d", $timestamp)));
+		$hour = (intval(date("h", $timestamp)));
+		$hourStart = (intval(date("h", $timestamp)));
+		$minuteStart = (intval(date("i", $timestamp)));
+		$duration = intval(h($meeting['Meeting']['duration']));
+		$hours = ($duration)/60;
+		$minutes = ($duration)%60;
+		$hourEnd = $hourStart + $hours;
+		$minutesEnd = $minuteStart + $minutes;
+		if($minutesEnd > 59){
+			$hourEnd = $hourEnd + 1;
+			$minutesEnd = $minutesEnd - 60;
+		} ?>
+		start: new Date(<?php echo $year; ?>, <?php echo $month ?>, <?php echo $date; ?>, <?php echo $hour; ?>, <?php echo $minuteStart; ?>),
+		end: new Date(<?php echo $year; ?>, <?php echo $month ?>, <?php echo $date; ?>, <?php echo $hourEnd; ?>, <?php echo $minutesEnd; ?>),
+		url: 'http://localhost/group7/meetings/view/<?php echo h($meeting["Meeting"]["id"]); ?>',
+		allDay: false,
+		},
+		
+	<?php endforeach; ?>
+    ],
+    
+    eventClick: function(event) {
+        if (event.url) {
+            window.open(event.url, '_self');
+            return false;
+        }
+    },
+    dayClick: function(date, jsEvent, view) {
+
+        alert('Clicked on: ' + date.format());
+
+        alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
+
+        alert('Current view: ' + view.name);
+
+        // change the day's background color just for fun
+        $(this).css('background-color', 'red');
+
+    }
+  });
+})
+
+
 
 </script>
-		<div id='calendar'></div>
-
+<div class="container calendarFullWidth">
+	<div id="calendar"></div>
+</div>

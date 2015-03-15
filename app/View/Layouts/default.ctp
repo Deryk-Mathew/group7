@@ -166,7 +166,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
                             <a href="#"><i class="glyphicon glyphicon-calendar"></i> Appointments<span class="sidebarIcon glyphicon glyphicon-menu-hamburger"></span></a>
                             <ul class="nav nav-second-level">
 								 <li><?php echo $this->Html->link(__('Add New Appointment'), array('controller' => 'meetings', 'action' => 'add')); ?></li>
-                                <li><?php echo $this->Html->link(__('View Calendar'), array('controller' => 'meetings', 'action' => 'index')); ?></li>
+                                <li><?php echo $this->Html->link(__('View Calendar'), array('controller' => 'meetings', 'action' => 'browse')); ?></li>
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
