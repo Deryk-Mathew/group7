@@ -66,7 +66,7 @@ $(document).ready(function() {
 	<?php	
 $options = array();
 foreach($exchanges as $exchange){
-	$options[$exchange['StockExchange']['id']] = $exchange['StockExchange']['name'];
+	$options[$exchange['StockExchange']['id']] = $exchange['StockExchange']['full_name'];
 }
 echo $this->Form->input('Filter', array(
     'options' => $options,

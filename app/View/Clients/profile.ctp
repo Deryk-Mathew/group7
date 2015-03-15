@@ -40,7 +40,7 @@
              <!-- ENTER INDIVIDUAL PAGE CONTENT HERE!!!!! -->
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1 class="page-header"><?php echo __('Client'); ?></h1>
+                        <h1 class="page-header"><?php echo __($client['Client']['name']); ?></h1>
                     </div>
                     <!-- /.col-lg-12 -->
                 </div>
@@ -138,7 +138,7 @@
 			
 			<div class="actions">
 		<ul>
-		<li><a href = "#" id = "create-note">New Note</a></i>
+		<li><?php echo $this->Html->link(__('New Note'), array('controller' => 'notes', 'action' => 'add')); ?></i>
 		</ul>
 	</div>
 		</div>
@@ -181,13 +181,15 @@
 						<?php if ($transrec['type'] == CASH){ ?>
 						<td><?php if ($transrec['balance_change'] >= 0): echo "DEPOSIT"; endif;
 						if ($transrec['balance_change'] < 0): echo "WITHDRAWAL"; endif;?></td>
+						<?php if ($transrec['balance_change'] > 0): ?><td><?php echo $transrec['balance_change']; ?></td><td><?php echo "-"; ?></td><?php endif; ?>
+						<?php if ($transrec['balance_change'] < 0): ?><td><?php echo "-"; ?></td><td><?php echo $transrec['balance_change']*-1; ?></td><?php endif; ?>
 						<?php } else {?>
 						<td><?php echo $this->Html->link($transrec['Stock']['symbol'], array('controller' => 'stocks', 'action' => 'view', $transrec['Stock']['id']));
 						if ($transrec['balance_change'] > 0): echo " PURCHASE ".$transrec['quantity']." @ ".$transrec['balance_change']/$transrec['quantity']; endif;
 						if ($transrec['balance_change'] <= 0): echo " SALE ".$transrec['quantity']." @ ".$transrec['balance_change']/$transrec['quantity']*-1; endif;?></td>
-						<?php }?>
 						<?php if ($transrec['balance_change'] < 0): ?><td><?php echo $transrec['balance_change']*-1; ?></td><td><?php echo "-"; ?></td><?php endif; ?>
 						<?php if ($transrec['balance_change'] > 0): ?><td><?php echo "-"; ?></td><td><?php echo $transrec['balance_change']; ?></td><?php endif; ?>
+						<?php }?>
 						<?php if ($transrec['balance_change'] == 0): ?><td><?php echo "-"; ?></td><td><?php echo "-"; ?></td><?php endif; ?>
 						<td><?php echo $transrec['date']; ?></td>
 				</tr>

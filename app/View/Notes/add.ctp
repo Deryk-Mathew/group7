@@ -14,6 +14,7 @@
 <?php echo $this->Form->create('Note'); ?>
 	<fieldset>
 	<?php
+		echo $this->Form->input('title');
 		echo $this->Form->input('body');
 	?>
 	</fieldset>
