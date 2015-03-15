@@ -225,6 +225,8 @@ public function view($id = null) {
 		}
 		
 	}
+	
+	
 
 	
 	

@@ -153,7 +153,7 @@ class ClientsController extends AppController {
 	}
 	
 	public function portfolio($id = null,$name = null) {
-		$this->Client->recursive = 2;
+		$this->Client->recursive = 4;
 		$this->Session->write('current_client', $id);
 		$this->Session->write('current_client_name', $name);
 		$options = array('conditions' => array('Balance.client_id' => $id));

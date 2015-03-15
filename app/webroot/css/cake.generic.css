@@ -254,7 +254,7 @@ display:none;
 #cake-powered {
 	float: right;
 }
-
+th.hide_me, td.hide_me {display: none;}
 /** containers **/
 div.form,
 div.index,

@@ -1,4 +1,32 @@
+	<script>
+$(document).ready(function() {
+	var lastIdx = null;
+    var table = $('#stockTable').dataTable({
+		
+		"bProcessing": true,
+		"bFilter": true,
+		"aoColumnDefs": [ { "sClass": "hide_me", "aTargets": [ 0 ] } ]
+		
+	});
+	$('#stockTable tbody')
+        .on( 'mouseover', 'td', function () {
+            var colIdx = table.cell(this).index().column;
+ 
+            if ( colIdx !== lastIdx ) {
+                $( table.cells().nodes() ).removeClass( 'highlight' );
+                $( table.column( colIdx ).nodes() ).addClass( 'highlight' );
+            }
+        } )
+		
+	$('#stockTable tbody tr').click( function () {
+    var aData = table.fnGetData( this );
+    window.location = aData[0]; 
+	} );
+		
+} );
+</script>
 	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
 	<script>
       google.load("visualization", "1", {packages:["corechart"]});
       google.setOnLoadCallback(drawChart);
@@ -41,40 +69,50 @@
                 
 				       <div class="clients index">      
 	<?php if (!empty($client['ClientStock'])): ?>
-<table id="stockTable" cellpadding = "0" cellspacing = "0">
+<table id="stockTable" class="row-border hover order-column" cellpadding = "0" cellspacing = "0">
+<thead>
 			<tr>
-				<th><?php echo __('Stock Name'); ?></th>
-				<th><?php echo __('Stock Symbol'); ?></th>
+			<th class = "hide_me"></th>
+			<th><?php echo __('Symbol'); ?></th>
+				<th><?php echo __('Name'); ?></th>
 				<th><?php echo __('Quantity'); ?></th>
-				<th><?php echo __('Cost'); ?></th>
-				<th><?php echo __('Average Estimated Stock Owned Price'); ?></th>
-				<th><?php echo __('Current Stock Price'); ?></th>
-				<th><?php echo __('Average Estimated Profit Per Stock'); ?></th>
+				<th><?php echo __('Average Price'); ?></th>
+				<th><?php echo __('Current Price'); ?></th>
+				<th><?php echo __('Total Cost'); ?></th>
+				<th><?php echo __('Total Valuation'); ?></th>
 				<th class="actions"></th>
-			</tr>		   
+			</tr>	
+</thead>
+<tbody>			
 			<?php foreach ($client['ClientStock'] as $clientStock): ?>
-				<tr>
+				
 					<?php if ($clientStock['quantity'] > 0): ?>
-						<td><?php echo $this->Html->link($clientStock['Stock']['name'], array('controller' => 'stocks', 'action' => 'view', $clientStock['Stock']['id'])); ?></td>
-						<td><?php echo $this->Html->link($clientStock['Stock']['symbol'], array('controller' => 'stocks', 'action' => 'view', $clientStock['Stock']['id'])); ?></td>
-						<td><?php echo $this->Html->link($clientStock['quantity'], array('controller' => 'stocks', 'action' => 'view', $clientStock['Stock']['id'])); ?></td>
-						<td><?php echo $this->Html->link($clientStock['cost'], array('controller' => 'stocks', 'action' => 'view', $clientStock['Stock']['id'])); ?></td>
+					<tr>
+					<td><?php echo $this->Html->Url(array('controller' => 'stocks', 'action' => 'view',$clientStock['Stock']['id'])); ?></td>
+						<td><?php echo $clientStock['Stock']['symbol']; ?></td>
+						<td><?php echo $clientStock['Stock']['name']; ?></td>
+						<td><?php echo $clientStock['quantity']; ?></td>
+						
 
 						<td><?php $aveStock = $clientStock['cost']/$clientStock['quantity']; echo h(round($aveStock,2)); ?></td>
 
-						<td><?php echo $this->Html->link($clientStock['Stock']['lastTradePriceOnly'], array('controller' => 'stocks', 'action' => 'view', $clientStock['Stock']['id'])); ?></td>
+						<td><?php echo $clientStock['Stock']['lastTradePriceOnly']*(1/$clientStock['Stock']['StockExchange']['ExchangeRate']['rate']); ?></td>
+						<td><?php echo $clientStock['cost']; ?></td>
+						<td><?php echo $clientStock['Stock']['lastTradePriceOnly']*(1/$clientStock['Stock']['StockExchange']['ExchangeRate']['rate'])*$clientStock['quantity']; ?></td>
 
-						<td><?php $profit = $clientStock['Stock']['lastTradePriceOnly'] - $aveStock; echo h(round($profit,2));?></td>
 
 						<td class="actions">
 							<?php echo $this->Html->link(__('View'), array('controller' => 'stocks', 'action' => 'view', $clientStock['Stock']['id'])); ?>
 							<?php echo $this->Html->link(__('Buy'), array('controller' => 'clientStocks', 'action' => 'buyStock', $clientStock['Stock']['id'],$clientStock['client_id'])); ?>
 							<?php echo $this->Html->link(__('Sell'), array('controller' => 'clientStocks', 'action' => 'sellStock', $clientStock['Stock']['id'],$clientStock['client_id'])); ?>
 						</td>
+						</tr>
 					<?php endif; ?>
-				</tr>
-			<?php endforeach; ?>            
+				
+			<?php endforeach; ?>
+</tbody>			
 <?php endif; ?>			
+
                 
 </div>
 				
