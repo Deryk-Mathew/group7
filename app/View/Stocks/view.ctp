@@ -80,7 +80,7 @@ $(document).ready(function() {
 			<?php echo h($stock['Stock']['id']); ?>
 			&nbsp;
 		</dd>
-		<dt><?php echo __('AverageDailyVolume'); ?></dt>
+		<dt><?php echo __('Avg Daily Vol.'); ?></dt>
 		<dd>
 			<?php echo h($stock['Stock']['averageDailyVolume']); ?>
 			&nbsp;
@@ -99,27 +99,27 @@ $(document).ready(function() {
 			}	?>
 			&nbsp;
 		</dd>
-		<dt><?php echo __('DaysLow'); ?></dt>
+		<dt><?php echo __('Days Low'); ?></dt>
 		<dd id = "dayslow">
 			<?php echo h($stock['Stock']['daysLow']); ?>
 			&nbsp;
 		</dd>
-		<dt><?php echo __('DaysHigh'); ?></dt>
+		<dt><?php echo __('Days High'); ?></dt>
 		<dd id = "dayshigh">
 			<?php echo h($stock['Stock']['daysHigh']); ?>
 			&nbsp;
 		</dd>
-		<dt><?php echo __('YearLow'); ?></dt>
+		<dt><?php echo __('Year Low'); ?></dt>
 		<dd id = "yearlow">
 			<?php echo h($stock['Stock']['yearLow']); ?>
 			&nbsp;
 		</dd>
-		<dt><?php echo __('YearHigh'); ?></dt>
+		<dt><?php echo __('Year High'); ?></dt>
 		<dd id = "yearhigh">
 			<?php echo h($stock['Stock']['yearHigh']); ?>
 			&nbsp;
 		</dd>
-		<dt><?php echo __('MarketCapitalization'); ?></dt>
+		<dt><?php echo __('Market Cap.'); ?></dt>
 		<dd>
 			<?php echo h($stock['Stock']['marketCapitalization']); ?>
 			&nbsp;
@@ -133,7 +133,7 @@ $(document).ready(function() {
 			<?php echo h($stock['Stock']['lastTradePriceOnly']); ?>
 			&nbsp;
 		</dd>
-		<dt><?php echo __('DaysRange'); ?></dt>
+		<dt><?php echo __('Days Range'); ?></dt>
 		<dd id = "daysrange">
 			<?php echo h($stock['Stock']['daysRange']); ?>
 			&nbsp;
@@ -171,7 +171,7 @@ $(document).ready(function() {
 	</dl>
 	</div>
 	</div>
-	<div class="col-xs-6 col-md-2 col-lg-2">
+	<div class="col-xs-8 col-md-2 col-lg-2">
 		<div class="col-xl-11 col-md-11">
 	<dt>Currency</dt>
 		<div class="toggle toggle-modern" width ="70%"></div></li>
