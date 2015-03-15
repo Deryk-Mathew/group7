@@ -15,6 +15,19 @@
 		width: auto !important;
 	}
 }
+
+@media(max-width:363px) {
+
+	#wrapper > nav > div.navbar-header > a > img {
+		height: 200%;
+		width: auto !important;
+	}
+}
+.middle {
+	margin-left: auto;
+	margin-right: auto;
+	}
+
 i{ 
 font-style: italic;
 padding-right: 2px;

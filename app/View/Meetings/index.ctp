@@ -14,10 +14,6 @@
             $this->Html->css('calendar', null, array('inline' => false));
 
 ?>
-<?php 
-echo $clients[22];
-
- ?>
 <script>
 
 $.getScript('http://arshaw.com/js/fullcalendar-1.6.4/fullcalendar/fullcalendar.min.js',function(){
@@ -37,7 +33,7 @@ $.getScript('http://arshaw.com/js/fullcalendar-1.6.4/fullcalendar/fullcalendar.m
 	
 	foreach ($meetings as $meeting): ?>
 	{
-		title: '<?php 
+		title: 'Meeting with <?php 
 		
 		$id = $meeting["Meeting"]["client_id"];
 		echo $clients[$id];  ?>',
@@ -61,7 +57,7 @@ $.getScript('http://arshaw.com/js/fullcalendar-1.6.4/fullcalendar/fullcalendar.m
 		} ?>
 		start: new Date(<?php echo $year; ?>, <?php echo $month ?>, <?php echo $date; ?>, <?php echo $hour; ?>, <?php echo $minuteStart; ?>),
 		end: new Date(<?php echo $year; ?>, <?php echo $month ?>, <?php echo $date; ?>, <?php echo $hourEnd; ?>, <?php echo $minutesEnd; ?>),
-		url: 'http://localhost/group7/meetings/edit/<?php echo h($meeting["Meeting"]["id"]); ?>',
+		url: 'http://localhost/group7/meetings/view/<?php echo h($meeting["Meeting"]["id"]); ?>',
 		allDay: false,
 		},
 		
@@ -70,7 +66,7 @@ $.getScript('http://arshaw.com/js/fullcalendar-1.6.4/fullcalendar/fullcalendar.m
     
     eventClick: function(event) {
         if (event.url) {
-            window.open(event.url);
+            window.open(event.url, '_self');
             return false;
         }
     },

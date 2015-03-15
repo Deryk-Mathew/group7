@@ -56,7 +56,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html"><?php echo $this->Html->image('website-logo.png', array('alt' => 'Edit', 'border' => '0', 'width' => '300px'));?></a>
+                <a class="navbar-brand" href="#"><?php echo $this->Html->image('website-logo.png', array('alt' => 'Edit', 'border' => '0', 'width' => '300px'));?></a>
             </div>
             <!-- /.navbar-header -->
 
@@ -93,7 +93,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
           
           
             <!-- /.navbar-top-links -->
-
+<?php  if ((AuthComponent::User('group_id')) != null): ?>
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
@@ -108,6 +108,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
                             </div>
                             <!-- /input-group -->
                         </li>
+                        
                         <li>
 						<?php
 						echo $this->Html->link(
@@ -160,6 +161,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
+                        <?php if(AuthComponent::User('group_id') == 2): ?>
                         <li>
                             <a href="#"><i class="glyphicon glyphicon-calendar"></i> Appointments<span class="sidebarIcon glyphicon glyphicon-menu-hamburger"></span></a>
                             <ul class="nav nav-second-level">
@@ -168,9 +170,12 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
+                        <?php endif; ?>
+                        
                        
                     </ul>
                 </div>
+                <?php endif; ?>
                 <!-- /.sidebar-collapse -->
                 -
 

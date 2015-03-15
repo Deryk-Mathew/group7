@@ -8,7 +8,7 @@
                     <!-- /.col-lg-12 -->
                 </div>
 
-<div class="users form">
+<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12">
 <?php echo $this->Form->create('User'); ?>
 	<fieldset>
 	<?php

@@ -67,8 +67,9 @@ $(document).ready(function() {
                 <!-- /.row -->
                 
                 
-				       <div class="clients index">      
+				             
 	<?php if (!empty($client['ClientStock'])): ?>
+	<div class="col-lg-5 col-md-5 col-xs-12">
 <table id="stockTable" class="row-border hover order-column" cellpadding = "0" cellspacing = "0">
 <thead>
 			<tr>
@@ -110,17 +111,18 @@ $(document).ready(function() {
 					<?php endif; ?>
 				
 			<?php endforeach; ?>
-</tbody>			
+</tbody>
+</div>			
 <?php endif; ?>			
 
                 
-</div>
+
 				
-                
-    <div class="clients view">
-<div id="piechart_3d" style="width: 50%; height: 300px;"></div>
+<div class="col-lg-5 col-md-5 col-xs-12">
+<div id="piechart_3d" style="width: 100%; height: 300px;"></div>
+</div>
 <!-- List client balance -->
-	<div class="clientBalance">
+	<div class="col-lg-5 col-lg-offset-2 col-md-5 col-md-offset-2 col-xs-12">
 	
 		<h3><?php echo __('Related Balances'); ?></h3>
 			<?php if (!empty($client['Balance'])): ?>
@@ -151,9 +153,6 @@ $(document).ready(function() {
 		
 	</div>
          
-
-
-</div>
 
 
 

@@ -7,6 +7,7 @@
                     </div>
                     <!-- /.col-lg-12 -->
                 </div>
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12">
 <?php
 echo $this->Form->create('User', array(
     'url' => array(
@@ -18,3 +19,4 @@ echo $this->Form->input('User.username');
 echo $this->Form->input('User.password');
 echo $this->Form->end('Login');
 ?>
+</div>

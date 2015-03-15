@@ -54,6 +54,20 @@ class MeetingsController extends AppController {
 		}
 		$options = array('conditions' => array('Meeting.' . $this->Meeting->primaryKey => $id));
 		$this->set('meeting', $this->Meeting->find('first', $options));
+		
+		$this->loadModel('Client');
+		$this->Meeting->recursive = 0;
+
+
+			/* Display only clients user has */
+			$var = $this->Auth->user('id');
+		$options2 = array('conditions' => array('Client.user_id'  => $var));
+			$clients = $this->Meeting->Client->find('all', $options2);
+			foreach($clients as $client):
+				$name[$client['Client']['id']] =  $client['Client']['name'];
+			endforeach;
+			$this->set('clients', $name);
+		
 	}
 
 /**
@@ -90,29 +104,7 @@ class MeetingsController extends AppController {
  * @return void
  */
 	public function edit($id = null) {
-		
-		
-		$currentUser = $this->Auth->user('id');
-		if (!$this->Meeting->exists($id)) {
-			throw new NotFoundException(__('Invalid Meeting'));
-		}
-		if ($this->request->is(array('post', 'put'))) {
-			$var = $this->Auth->user('id');
-			
-			$this->request->data['Meeting']['user_id'] = $currentUser;
-			$this->request->data['Meeting']['id'] = $id;
-			if ($this->Meeting->save($this->request->data)) {
-				$this->Session->setFlash(__('The note has been saved.'));
-				return $this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('The note could not be saved. Please, try again.'));
-			}
-		} else {
-			$this->loadModel('User');
-			$clients = $this->User->Client->find('list',array(
-													'conditions' => array('Client.user_id' => $currentUser)));
-			$this->set(compact('clients'));
-		}
+	
 	}
 
 /**
@@ -129,9 +121,9 @@ class MeetingsController extends AppController {
 		}
 		$this->request->allowMethod('post', 'delete');
 		if ($this->Meeting->delete()) {
-			$this->Session->setFlash(__('The meeting has been deleted.'));
+			$this->Session->setFlash(__('The meeting has been cancelled.'));
 		} else {
-			$this->Session->setFlash(__('The meeting could not be deleted. Please, try again.'));
+			$this->Session->setFlash(__('The meeting could not be cancelled. Please, try again.'));
 		}
 		return $this->redirect(array('action' => 'index'));
 	}
