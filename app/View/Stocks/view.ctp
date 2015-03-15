@@ -46,7 +46,9 @@
 			&nbsp;
 		</dd>
 		</dl>
-		<dl class="right-dl">
+		</div>
+		<div class="col-xs-12 col-md-6">
+		<dl>
 		<dt><?php echo __('Price'); ?></dt>
 		<dd>
 			<?php echo h($stock['Stock']['lastTradePriceOnly'])." ".$stock['StockExchange']['ExchangeRate']['currency']." (".number_format((float)(1/$stock['StockExchange']['ExchangeRate']['rate'])*$stock['Stock']['lastTradePriceOnly'],2,'.',''). " GBP)"; ?>
@@ -86,5 +88,6 @@
 		</div>
 		<?php } ?>
 	</dl>
+	</div>
 	</div>
 </div>

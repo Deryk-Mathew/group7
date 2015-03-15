@@ -262,11 +262,7 @@ div.view {
 	float:right;
 	width:100%;
 }
-div.actions {
-	float:left;
-	width:12%;
-	padding:10px 1.5%;
-}
+
 div.actions h3 {
 	padding-top:0;
 }
@@ -404,7 +400,6 @@ form {
 	margin-right: auto;
 	margin-left: auto;
 	padding: 0;
-	width: 40%;
 }
 fieldset {
 	border: none;

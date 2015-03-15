@@ -14,9 +14,13 @@
             echo $this->Html->script('jquery.datetimepicker');
 
 ?>
+<?php echo $meeting['Meeting']['id']; ?>
+
+
 <?php echo $this->Form->create('Meeting'); ?>
 	<fieldset>
 	<?php
+	  
 		echo $this->Form->input('startDate');
 		echo $this->Form->input('duration',array('min' => '30', 'max'=>'120','step'=>'5'));
 	?>
