@@ -195,7 +195,8 @@ public function view($id = null) {
 				}
 				
 				$cost = $quantity*$stockdetails['Stock']['lastTradePriceOnly']*(1/$stockdetails['StockExchange']['ExchangeRate']['rate'])*(-1);
-				$this->request->data['ClientStock']['cost'] = $this->Common->mathsAdd($specificallyThisOne['ClientStock']['cost'], $cost);
+				$aveprice = round($specificallyThisOne['ClientStock']['quantity']/$specificallyThisOne['ClientStock']['quantity'],2);
+				$this->request->data['ClientStock']['cost'] = $this->Common->mathsSub($specificallyThisOne['ClientStock']['cost'], $quantity*($aveprice));
 				
 				$options = array('conditions' => array('Balance.client_id' => $client));
 				$balance = $this->ClientStock->Client->Balance->find('first',$options);

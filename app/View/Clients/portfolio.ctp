@@ -25,34 +25,7 @@ $(document).ready(function() {
 		
 } );
 </script>
-	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
 
-	<script>
-      google.load("visualization", "1", {packages:["corechart"]});
-      google.setOnLoadCallback(drawChart);
-      function drawChart() {
-	        var data = google.visualization.arrayToDataTable([
-	          ['Cash', 'Stocks'],
-	          ['Cash',     <?php echo $client['Balance']['cash_balance']; ?>],
-	          ['Stocks',   <?php 
-			  $stocktotal = 0;
-			  foreach ($client['ClientStock'] as $clientStock): 
-						$stocktotal = $stocktotal + $clientStock['quantity']*$clientStock['Stock']['lastTradePriceOnly'];
-						endforeach;
-						echo $stocktotal;
-			  
-			  ?>],
-	        	]);
-
-	        var options = {
-	          is3D: true,
-	        };
-
-	        var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
-	        chart.draw(data, options);
-      }
-
-    </script>
 
         
             <div class="container-fluid">
@@ -68,7 +41,7 @@ $(document).ready(function() {
                 
                 
 				       <div class="clients index">      
-	<?php if (!empty($client['ClientStock'])): ?>
+	<?php if (!empty($client['ClientStock'])): $stocktotal = 0;?>
 <table id="stockTable" class="row-border hover order-column" cellpadding = "0" cellspacing = "0">
 <thead>
 			<tr>
@@ -94,11 +67,11 @@ $(document).ready(function() {
 						<td><?php echo $clientStock['quantity']; ?></td>
 						
 
-						<td><?php $aveStock = $clientStock['cost']/$clientStock['quantity']; echo h(round($aveStock,2)); ?></td>
+						<td><?php $aveStock = $clientStock['cost']/$clientStock['quantity']; echo h($this->Number->precision($aveStock,2)); ?></td>
 
-						<td><?php echo $clientStock['Stock']['lastTradePriceOnly']*(1/$clientStock['Stock']['StockExchange']['ExchangeRate']['rate']); ?></td>
-						<td><?php echo $clientStock['cost']; ?></td>
-						<td><?php echo $clientStock['Stock']['lastTradePriceOnly']*(1/$clientStock['Stock']['StockExchange']['ExchangeRate']['rate'])*$clientStock['quantity']; ?></td>
+						<td><?php echo $this->Number->precision($clientStock['Stock']['lastTradePriceOnly']*(1/$clientStock['Stock']['StockExchange']['ExchangeRate']['rate']),2); ?></td>
+						<td><?php echo $this->Number->precision($clientStock['cost'],2);$stocktotal = $stocktotal + $clientStock['cost']; ?></td>
+						<td><?php echo $this->Number->precision($clientStock['Stock']['lastTradePriceOnly']*(1/$clientStock['Stock']['StockExchange']['ExchangeRate']['rate'])*$clientStock['quantity'],2); ?></td>
 
 
 						<td class="actions">
@@ -115,7 +88,32 @@ $(document).ready(function() {
 
                 
 </div>
-				
+
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+	<script>
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+	        var data = google.visualization.arrayToDataTable([
+	          ['Cash', 'Stocks'],
+	          ['Cash',     <?php echo $this->Number->precision($client['Balance']['cash_balance']); ?>],
+	          ['Stocks',   <?php
+						echo $this->Number->precision($stocktotal);
+			  
+			  ?>],
+	        	]);
+
+	        var options = {
+	          is3D: true,
+	        };
+
+	        var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
+	        chart.draw(data, options);
+      }
+
+    </script>
+	
                 
     <div class="clients view">
 <div id="piechart_3d" style="width: 50%; height: 300px;"></div>
@@ -127,15 +125,15 @@ $(document).ready(function() {
 				<dl>
 				<dt><?php echo __('Cash Balance'); ?></dt>
 				<dd>
-				<?php echo number_format((float)$client['Balance']['cash_balance'],2,'.',''); ?>
+				<?php echo $this->Number->precision($client['Balance']['cash_balance'],2); ?>
 				&nbsp;</dd>
 				<dt><?php echo __('Stock Balance'); ?></dt>
 				<dd>
-				<?php echo number_format((float)$stocktotal,2,'.',''); ?>
+				<?php echo $this->Number->precision($stocktotal,2); ?>
 				&nbsp;</dd>
 				<dt><?php echo __('Total Balance'); ?></dt>
 				<dd>
-				<?php echo number_format((float)$stocktotal + $client['Balance']['cash_balance'],2,'.',''); ?>
+				<?php echo $this->Number->precision($stocktotal + $client['Balance']['cash_balance'],2); ?>
 				&nbsp;</dd>
 				</dl>
 			<?php endif; ?>
