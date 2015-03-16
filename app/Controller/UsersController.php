@@ -155,8 +155,10 @@ class UsersController extends AppController {
 	    // Allow FA's access to certain functions
 	    $group->id = 2;
 	    $this->Acl->deny($group, 'controllers');
-	    $this->Acl->allow($group, 'controllers/Clients');
 	    $this->Acl->deny($group, 'controllers/Clients/delete');
+	    $this->Acl->allow($group, 'controllers/Clients');
+	    $this->Acl->allow($group, 'controllers/Users/browse');
+	    $this->Acl->allow($group, 'controllers/Users/dashboard');
 	    $this->Acl->allow($group, 'controllers/Notes');
 	    $this->Acl->allow($group, 'controllers/Balance');
 	    $this->Acl->allow($group, 'controllers/Stocks/index');
