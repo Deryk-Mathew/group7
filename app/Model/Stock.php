@@ -217,7 +217,12 @@ public function GetData($con) {
                 "iTotalDisplayRecords" => $iFilteredTotal,
                 "aaData" => array()
         );
-         
+        $exchangequery = "SELECT `stock_exchanges`.`id`,`full_name`,`exchange_rates`.`currency` FROM `stock_exchanges`,`exchange_rates` WHERE `stock_exchanges`.`currency` = `exchange_rates`.`id`";
+		$exchangeResult = mysql_query($exchangequery,$gaSql['link']) or fatal_error( 'MySQL Error: ' . mysql_errno());
+		$exchangedata = array();
+		while($exchangerow = mysql_fetch_array($exchangeResult) ){
+			$exchangedata[$exchangerow['id']] = $exchangerow;
+		}
         while ( $aRow = mysql_fetch_array( $rResult ) )
         {
             $row = array();
@@ -248,6 +253,9 @@ public function GetData($con) {
                     $row[$aColumns[$i]] = $aRow[ $aColumns[$i] ];
                 }
             }
+			
+			$row['lastTradePriceOnly'] .= " ".$exchangedata[$aRow['exchange_id']]['currency'] ;
+			$row['exchange_name'] .= " ".$exchangedata[$aRow['exchange_id']]['full_name'] ;
 			
 			if($con->Session->read('current_client') == null){
 				$row["action"] = 
