@@ -74,6 +74,7 @@ class StocksController extends AppController {
 
 	public function index() {
 		$this->loadModel('StockExchange');
+		$this->paginate = array('limit' => 100);
 		$this->set('exchanges', $this->paginate($this->StockExchange));
 	}
 

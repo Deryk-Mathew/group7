@@ -115,7 +115,7 @@ class ClientsController extends AppController {
 		    
 		    $this->loadModel('Stock');
 		    $this->paginate = array(
-                 'order' => array('Stock.lastTradePriceOnly' => 'DESC'),
+                 'order' => array('Stock.change' => 'DESC'),
                  'limit' => 10
                  );
 			$this->set('topStocks', $this->paginate($this->Stock));

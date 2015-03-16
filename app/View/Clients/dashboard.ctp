@@ -92,7 +92,7 @@ $.getScript('http://arshaw.com/js/fullcalendar-1.6.4/fullcalendar/fullcalendar.m
 </div>
 </div>
 <div class="col-xs-12 col-md-6">
-<h3>Today's Most Valuable Stocks:</h3>
+<h3>Biggest Risers</h3>
 <br/>
 <table id="clientList" width="100%" cellpadding="0" cellspacing="0">
 	<thead>
@@ -106,8 +106,9 @@ $.getScript('http://arshaw.com/js/fullcalendar-1.6.4/fullcalendar/fullcalendar.m
 	
 	<?php foreach ($topStocks as $stock): ?>
 	<tr>
-		<td><?php echo h($stock["Stock"]["name"]) ?></td>
-		<td><?php echo h($stock["Stock"]["lastTradePriceOnly"]) ?></td>
+	
+		<td><?php echo $this->Html->link($stock["Stock"]["name"], array('controller' => 'stocks', 'action' => 'view', $stock['Stock']['id']));?></td>
+		<td><?php echo "<font color = 'green'>".h($stock["Stock"]["change"])."</font>" ?></td>
 		
 	</tr>
 <?php endforeach; ?>
