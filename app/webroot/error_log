@@ -1,0 +1,17 @@
+[16-Mar-2015 18:01:02 Europe/Berlin] PHP Notice:  unserialize() [<a href='function.unserialize'>function.unserialize</a>]: Error at offset 79 of 11214 bytes in /home/kgbmxvry/public_html/lib/Cake/Cache/Engine/FileEngine.php on line 194
+[16-Mar-2015 18:01:02 Europe/Berlin] PHP Parse error:  syntax error, unexpected '[' in /home/kgbmxvry/public_html/app/Controller/ClientsController.php on line 153
+[16-Mar-2015 18:04:19 Europe/Berlin] PHP Parse error:  syntax error, unexpected '[' in /home/kgbmxvry/public_html/app/Controller/ClientsController.php on line 153
+[16-Mar-2015 18:05:48 Europe/Berlin] PHP Parse error:  syntax error, unexpected '[' in /home/kgbmxvry/public_html/app/Controller/ClientsController.php on line 153
+[16-Mar-2015 18:07:26 Europe/Berlin] PHP Parse error:  syntax error, unexpected '[' in /home/kgbmxvry/public_html/app/Controller/ClientsController.php on line 167
+[16-Mar-2015 21:14:30 Europe/Berlin] PHP Parse error:  syntax error, unexpected '}', expecting ',' or ';' in /home/kgbmxvry/public_html/app/View/Stocks/view.ctp on line 31
+[16-Mar-2015 21:19:21 Europe/Berlin] PHP Parse error:  syntax error, unexpected ')', expecting ',' or ';' in /home/kgbmxvry/public_html/app/View/Stocks/view.ctp on line 31
+[16-Mar-2015 21:23:36 Europe/Berlin] PHP Parse error:  syntax error, unexpected '}', expecting ',' or ';' in /home/kgbmxvry/public_html/app/View/Stocks/view.ctp on line 61
+[16-Mar-2015 21:25:33 Europe/Berlin] PHP Parse error:  syntax error, unexpected ')', expecting ',' or ';' in /home/kgbmxvry/public_html/app/View/Stocks/view.ctp on line 62
+[16-Mar-2015 21:27:54 Europe/Berlin] PHP Parse error:  syntax error, unexpected ')', expecting ',' or ';' in /home/kgbmxvry/public_html/app/View/Stocks/view.ctp on line 68
+[16-Mar-2015 21:30:14 Europe/Berlin] PHP Parse error:  syntax error, unexpected ')', expecting ',' or ';' in /home/kgbmxvry/public_html/app/View/Stocks/view.ctp on line 68
+[16-Mar-2015 21:31:10 Europe/Berlin] PHP Parse error:  syntax error, unexpected ')', expecting ',' or ';' in /home/kgbmxvry/public_html/app/View/Stocks/view.ctp on line 68
+[20-Mar-2015 15:20:05 Europe/Berlin] PHP Fatal error:  Call to a member function read() on null in /home/kgbmxvry/public_html/app/Model/Stock.php on line 261
+[20-Mar-2015 17:28:50 Europe/Berlin] PHP Fatal error:  Cannot redeclare ClientStocksController::buyStock() in /home/kgbmxvry/public_html/app/Controller/ClientStocksController.php on line 160
+[20-Mar-2015 17:28:54 Europe/Berlin] PHP Fatal error:  Cannot redeclare ClientStocksController::buyStock() in /home/kgbmxvry/public_html/app/Controller/ClientStocksController.php on line 160
+[20-Mar-2015 17:29:32 Europe/Berlin] PHP Fatal error:  Cannot redeclare ClientStocksController::buyStock() in /home/kgbmxvry/public_html/app/Controller/ClientStocksController.php on line 160
+[20-Mar-2015 17:56:49 Europe/Berlin] PHP Parse error:  syntax error, unexpected ''?>' (T_CONSTANT_ENCAPSED_STRING) in /home/kgbmxvry/public_html/app/View/Clients/profile.ctp on line 6

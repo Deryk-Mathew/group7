@@ -63,13 +63,6 @@ class ClientsController extends AppController {
 		}
 	}
 	
-	public function ajaxData() {
-		$this->modelClass = "Stock";
-		$this->autoRender = false;          
-        $output = $this->Stock->GetData($this);
-         
-        echo json_encode($output);
-	}
 	
 	public function ajaxRecData() {
 		$this->autoRender = false;        
@@ -150,7 +143,8 @@ class ClientsController extends AppController {
 		$this->Session->write('current_client', $id);
 		$this->Session->write('current_client_name', $name);
 		$options = array('conditions' => array('Balance.client_id' => $id));
-		$this->Session->write('balance',$this->Client->Balance->find('first',$options)['Balance']['cash_balance']);
+		$balance = $this->Client->Balance->find('first',$options);
+		$this->Session->write('balance',$balance['Balance']['cash_balance']);
 		if (!$this->Client->exists($id)) {
 			throw new NotFoundException(__('Invalid client'));
 		}
@@ -163,7 +157,8 @@ class ClientsController extends AppController {
 		$this->Session->write('current_client', $id);
 		$this->Session->write('current_client_name', $name);
 		$options = array('conditions' => array('Balance.client_id' => $id));
-		$this->Session->write('balance',$this->Client->Balance->find('first',$options)['Balance']['cash_balance']);
+		$balance = $this->Client->Balance->find('first',$options);
+		$this->Session->write('balance',$balance['Balance']['cash_balance']);
 		if (!$this->Client->exists($id)) {
 			throw new NotFoundException(__('Invalid client'));
 		}

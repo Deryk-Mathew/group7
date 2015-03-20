@@ -1,4 +1,5 @@
-	<script>
+<?php echo $this->Html->css('jquery.dataTables'); ?>
+<script>
 $(document).ready(function() {
 	var lastIdx = null;
     var table = $('#stockTable').dataTable({
@@ -27,33 +28,7 @@ $(document).ready(function() {
 </script>
 	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
 
-	<script>
-      google.load("visualization", "1", {packages:["corechart"]});
-      google.setOnLoadCallback(drawChart);
-      function drawChart() {
-	        var data = google.visualization.arrayToDataTable([
-	          ['Cash', 'Stocks'],
-	          ['Cash',     <?php echo $client['Balance']['cash_balance']; ?>],
-	          ['Stocks',   <?php 
-			  $stocktotal = 0;
-			  foreach ($client['ClientStock'] as $clientStock): 
-						$stocktotal = $stocktotal + $clientStock['quantity']*$clientStock['Stock']['lastTradePriceOnly'];
-						endforeach;
-						echo $stocktotal;
-			  
-			  ?>],
-	        	]);
-
-	        var options = {
-	          is3D: true,
-	        };
-
-	        var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
-	        chart.draw(data, options);
-      }
-
-    </script>
-
+	
         
             
             
@@ -85,7 +60,9 @@ $(document).ready(function() {
 			</tr>	
 </thead>
 <tbody>			
-			<?php foreach ($client['ClientStock'] as $clientStock): ?>
+			<?php 
+			$stocktotal = 0;
+			foreach ($client['ClientStock'] as $clientStock): ?>
 				
 					<?php if ($clientStock['quantity'] > 0): ?>
 					<tr>
@@ -99,7 +76,8 @@ $(document).ready(function() {
 
 						<td><?php echo $clientStock['Stock']['lastTradePriceOnly']*(1/$clientStock['Stock']['StockExchange']['ExchangeRate']['rate']); ?></td>
 						<td><?php echo $clientStock['cost']; ?></td>
-						<td><?php echo $clientStock['Stock']['lastTradePriceOnly']*(1/$clientStock['Stock']['StockExchange']['ExchangeRate']['rate'])*$clientStock['quantity']; ?></td>
+						<td><?php $value = $clientStock['Stock']['lastTradePriceOnly']*(1/$clientStock['Stock']['StockExchange']['ExchangeRate']['rate'])*$clientStock['quantity'];
+						$stocktotal = $stocktotal + $value;echo $value; ?></td>
 
 
 						<td class="actions">
@@ -115,7 +93,25 @@ $(document).ready(function() {
 </div>			
 <?php endif; ?>			
 
-                
+           <script>
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+	        var data = google.visualization.arrayToDataTable([
+	          ['Cash', 'Stocks'],
+	          ['Cash',     <?php echo $client['Balance']['cash_balance']; ?>],
+	          ['Stocks',   <?php echo $stocktotal;?>],]);
+
+	        var options = {
+	          is3D: true,
+	        };
+
+	        var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
+	        chart.draw(data, options);
+      }
+
+    </script>
+     
 
 				
 <div class="col-lg-5 col-md-5 col-xs-12">

@@ -62,8 +62,9 @@ class StocksController extends AppController {
     ];*/
 
         function browse(){
-			$this->Stock->recursive = 2;
-			$this->set('stocks', $this->Paginator->paginate());
+			$this->loadModel('StockExchange');
+			$this->paginate = array('limit' => 100);
+			$this->set('exchanges', $this->paginate($this->StockExchange));
 		}
 
 /**
@@ -79,10 +80,9 @@ class StocksController extends AppController {
 	}
 
 	public function ajaxData() {
-		$this->Stock->recursive = 2;
 		$this->modelClass = "Stock";
-		//$this->autoRender = false;          
-        $output = $this->Stock->GetData();
+		$this->autoRender = false;          
+        $output = $this->Stock->GetData($this);
          
         echo json_encode($output);
 	}

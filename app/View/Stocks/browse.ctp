@@ -1,4 +1,5 @@
-<?php echo $this->Html->script('jquery.dataTables');
+<?php 
+echo $this->Html->css('jquery.dataTables');
 echo $this->Html->css('toggles-full');
 echo $this->Html->script('toggles');?>
 <script type="text/javascript">
@@ -11,7 +12,7 @@ $(document).ready(function() {
 			"bFilter": true,
 			"iDisplayLength": 15,
 			"sDom": '<"H"rl<"toolbar">f>tip',
-            "sAjaxSource": "<?php echo $this->Html->Url(array('controller' => 'clients', 'action' => 'ajaxData')); ?>",
+            "sAjaxSource": "<?php echo $this->Html->Url(array('controller' => 'stocks', 'action' => 'ajaxData')); ?>",
 			"aoColumns": [
 			{mData:"id", "bVisible":false,"bSearchable":false},
 			{mData:"symbol"},
@@ -27,7 +28,7 @@ $(document).ready(function() {
 			$("#stockList tbody td").click(function() {
 			var position = table.fnGetPosition(this); // getting the clicked row position
 			var aData = table.fnGetData(position[0]); // getting the value of the first (invisible) column
-			document.location.href = "stocks/view/"+aData['id'];
+			document.location.href = "view/"+aData['id'];
 			});},
 			
 			
@@ -36,19 +37,7 @@ $(document).ready(function() {
         });
 		$("div.toolbar").html("<div class='col-xs-8 col-md-2 col-lg-2'><div class='col-xl-11 col-md-11'><div class='toggle toggle-modern'></div></div></div>");
 		
-		$('#stockList tbody')
-        .on( 'mouseover', 'td', function () {
-				$(this).css('cursor','pointer');
-            var colIdx = table.cell(this).index().column;
- 
-            if ( colIdx !== lastIdx ) {
-                $( table.cells().nodes() ).removeClass( 'highlight' );
-                $( table.column( colIdx ).nodes() ).addClass( 'highlight' );
-            }
-        } )
-        .on( 'mouseleave', function () {
-            $( table.cells().nodes() ).removeClass( 'highlight' );
-        } );
+		
 		
 		$("[id='Filter by Exchange']").change( function() { 
 				table.fnFilter( $(this).val(),3); 

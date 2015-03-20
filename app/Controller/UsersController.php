@@ -149,22 +149,19 @@ class UsersController extends AppController {
 	    $group = $this->User->Group;
 
 	    // Allow admins to everything
-	    $group->id = 1;
+	    $group->id = ADMIN;
 	    $this->Acl->allow($group, 'controllers');
 
 	    // Allow FA's access to certain functions
-	    $group->id = 2;
+	    $group->id = FA;
 	    $this->Acl->deny($group, 'controllers');
 	    $this->Acl->deny($group, 'controllers/Clients/delete');
 	    $this->Acl->allow($group, 'controllers/Clients');
 	    $this->Acl->allow($group, 'controllers/Users/browse');
 	    $this->Acl->allow($group, 'controllers/Users/dashboard');
 	    $this->Acl->allow($group, 'controllers/Notes');
-	    $this->Acl->allow($group, 'controllers/Balance');
-	    $this->Acl->allow($group, 'controllers/Stocks/index');
-	    $this->Acl->allow($group, 'controllers/Stocks/view');
-	    $this->Acl->allow($group, 'controllers/Stocks/browse');
-	    $this->Acl->allow($group, 'controllers/Stocks/ajaxData');
+	    $this->Acl->allow($group, 'controllers/Balances');
+	    $this->Acl->allow($group, 'controllers/Stocks');
 	    $this->Acl->allow($group, 'controllers/ClientStocks');
 	    $this->Acl->allow($group, 'controllers/TransactionRecords');
 	    $this->Acl->allow($group, 'controllers/StockExchanges');

@@ -29,14 +29,12 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 	<script type="text/javascript" src="http://cdn.datatables.net/1.10.5/js/jquery.dataTables.js"></script> 
-	<link rel="stylesheet" href="//cdn.datatables.net/1.10.5/css/jquery.dataTables.css"/>
 
 	<?php
 		echo $this->Html->meta('icon');
 		
 		echo $this->Html->css('cake.generic');
 		echo $this->Html->css('bootstrap.min');	
-		echo $this->Html->css('font-awesome.min');
 		echo $this->Html->css('wealth-style');
 		echo $this->fetch('meta');
 		echo $this->fetch('css');
@@ -110,7 +108,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
                         
 						<?php if($this->Session->read('current_client') == null){ ?>
 						<li>
-                            <a href="#"><i class="glyphicon glyphicon-gbp"></i> Clients<span class="sidebarIcon glyphicon glyphicon-menu-hamburger"></span></a>
+                            <a href="/clients/browse"><i class="glyphicon glyphicon-gbp"></i> Clients<span class="sidebarIcon glyphicon glyphicon-menu-hamburger"></span></a>
                             <ul class="nav nav-second-level">
                                 <li><?php echo $this->Html->link(__('My Clients'), array('controller' => 'clients', 'action' => 'browse')); ?></li>
 								<li><?php echo $this->Html->link(__('Add New Client'), array('controller' => 'clients', 'action' => 'add')); ?></li>
@@ -147,7 +145,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
                         <li>
                             <a href="#"><i class="glyphicon glyphicon-stats"></i> Markets<span class="sidebarIcon glyphicon glyphicon-menu-hamburger"></span></a>
                             <ul class="nav nav-second-level">
-                                <li><?php echo $this->Html->link(__('Browse Stocks'), array('controller' => 'stocks', 'action' => 'index')); ?> </li>
+                                <li><?php echo $this->Html->link(__('Browse Stocks'), array('controller' => 'stocks', 'action' => 'browse')); ?> </li>
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>

@@ -157,6 +157,10 @@ p {
     color: #B87D00;
 }
 
+td.clickhighlight {
+    background-color: blue;
+}
+
 td.details-control {
     background: url('../img/details_open.png') no-repeat center center;
     cursor: pointer;

@@ -1,4 +1,4 @@
-
+<link rel="stylesheet" href="//cdn.datatables.net/1.10.5/css/jquery.dataTables.css"/>
  <script>
  
  $(document).ready(function() {

@@ -256,7 +256,7 @@ public function GetData($con) {
 			
 			$row['lastTradePriceOnly'] .= " ".$exchangedata[$aRow['exchange_id']]['currency'] ;
 			$row['gbp_price'] .= " GBP" ;
-			$row['exchange_name'] .= " ".$exchangedata[$aRow['exchange_id']]['full_name'] ;
+			$row['exchange_name'] = " ".$exchangedata[$aRow['exchange_id']]['full_name'] ;
 			
 			if($con->Session->read('current_client') == null){
 				$row["action"] = 

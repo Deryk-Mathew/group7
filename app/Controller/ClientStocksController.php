@@ -166,6 +166,27 @@ public function view($id = null) {
 		}
 	}
 	
+	public function confirm($quantity,$stockdetails,$client) {
+		$this->set('stock', $stockdetails);
+		$options = array('conditions' => array('Client.' . $this->ClientStock->Client->primaryKey => $client));
+		$this->set('client', $this->ClientStock->Client->find('first', $options));
+		if($this->request->is(array('post', 'put'))) {
+			$balance = $this->ClientStock->Client->Balance->find('first',$options);
+			$clientbalance = $balance['Balance']['cash_balance']; //read current balance
+			$this->ClientStock->Client->Balance->updateAll(array('cash_balance' => $clientbalance-$cost),array('client_id' => $client));
+
+			if($this->ClientStock->save($this->request->data)){
+					$RecordCon = new TransactionRecordsController;
+					$RecordCon->create($client,STOCK,$cost,$stockdetails['Stock']['id'],$quantity);
+					$this->Session->setFlash("The client stock has been purchased.","success");
+					return $this->redirect(array('controller' => 'clients', 'action' => 'portfolio', $this->Session->read('current_client'),$this->Session->read('current_client_name')));
+			}
+			else {
+				$this->Session->setFlash('The client stock could not be saved. Please, try again.','error');
+				}
+		}
+	}
+	
 
 	public function sellStock($stock,$client) {
 		$this->ClientStock->Stock->recursive = 2;

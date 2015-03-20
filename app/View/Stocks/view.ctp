@@ -1,16 +1,27 @@
 <?php 
 
 echo $this->Html->css('toggles-full');
-echo $this->Html->script('toggles');?>
+echo $this->Html->script('toggles');
+echo $this->Html->script('viewstock');
+?>
 
-	<script>
+
+             <!-- ENTER INDIVIDUAL PAGE CONTENT HERE!!!!! -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header"><?php echo __($stock['Stock']['name']); ?></h1>
+                    </div>
+                    <!-- /.col-lg-12 -->
+                </div>
+                <!-- /.row -->
+              <script>
 $(document).ready(function() {
 
 	$('.toggle, #currency').toggles({
 	  drag: true, // allow dragging the toggle between positions
 	  click: true, // allow clicking on the toggle
 	  text: {
-		on: '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'.concat("<?php echo $stock['StockExchange']['ExchangeRate']['currency']?>"), // text for the ON position
+		on: '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'.concat($('#currency').val()), // text for the ON position
 		off: 'GBP' // and off
 	  },
 	  on: true, // is the toggle ON on init
@@ -25,43 +36,61 @@ $(document).ready(function() {
 	
 	$('.toggle').on('toggle', function (e, active) {
 	  if (active) {
-		$('#dayslow').text("<?php if(is_null($stock['Stock']['daysLow'])){ echo '-';}else{echo $stock['Stock']['daysLow'];}?>");
-		$('#dayshigh').text("<?php if(is_null($stock['Stock']['daysHigh'])){ echo '-';}else{echo $stock['Stock']['daysHigh'];}?>");
-		$('#yearlow').text("<?php if(is_null($stock['Stock']['yearLow'])){ echo '-';}else{echo $this->number->precision($stock['Stock']['yearLow'],3);}?>");
-		$('#yearhigh').text("<?php if(is_null($stock['Stock']['yearHigh'])){ echo '-';}else{echo $stock['Stock']['yearHigh'];}?>");
-		$('#daysrange').text("<?php if(is_null($stock['Stock']['daysRange'])){ echo '-';}else{echo $stock['Stock']['daysRange'];}?>");
-		$('#price').text("<?php echo $stock['Stock']['lastTradePriceOnly']?>");
-		$('#marketcap').text("<?php if(is_null($stock['Stock']['marketCapitalization'])){ echo '-';}else{echo $stock['Stock']['marketCapitalization'];}?>");
+		$('#dayslow').text($('#dayslowlocal').val());
+		$('#dayshigh').text($('#dayshighlocal').val());
+		$('#yearlow').text($('#yearlowlocal').val());
+		$('#yearhigh').text($('#yearhighlocal').val());
+		$('#daysrange').text($('#daysrangelocal').val());
+		$('#price').text($('#pricelocal').val());
+		$('#marketcap').text($('#marketcaplocal').val());
 		} else {
-		$('#dayslow').text("<?php if(is_null($stock['Stock']['daysLow'])){ echo '-';}else{
-echo $this->number->precision($stock['Stock']['daysLow']*(1/$stock['StockExchange']['ExchangeRate']['rate']),2);}?>");
-		$('#dayshigh').text("<?php if(is_null($stock['Stock']['daysHigh'])){ echo '-';}else{echo $this->number->precision($stock['Stock']['daysHigh']*
-(1/$stock['StockExchange']['ExchangeRate']['rate']),2);}?>");
-		$('#yearlow').text("<?php if(is_null($stock['Stock']['yearLow'])){ echo '-';}else{echo $this->number->precision($stock['Stock']['yearLow']*
-(1/$stock['StockExchange']['ExchangeRate']['rate']),2);}?>");
-		$('#yearhigh').text("<?php if(is_null($stock['Stock']['yearHigh'])){ echo '-';}else{echo $this->number->precision($stock['Stock']['yearHigh']*
-(1/$stock['StockExchange']['ExchangeRate']['rate']),2);}?>");
-		$('#daysrange').text("<?php if(is_null($stock['Stock']['daysRange'])){ echo '-';}else{echo $this->number->precision($stock['Stock']['daysLow']*(1/$stock['StockExchange']['ExchangeRate']['rate']),2)
-." - ". $this->number->precision($stock['Stock']['daysHigh']*(1/$stock['StockExchange']['ExchangeRate']['rate']),2);}?>");
-		$('#price').text("<?php echo $this->number->precision($stock['Stock']['lastTradePriceOnly']*(1/$stock['StockExchange']['ExchangeRate']['rate']),2)?>");
-		$('#marketcap').text("<?php if(is_null($stock['Stock']['marketCapitalization'])){ echo '-';}else{
-	if(!is_numeric(substr($stock['Stock']['marketCapitalization']))){echo $this->number->precision(substr($stock['Stock']['marketCapitalization'],0,-1)*
-(1/$stock['StockExchange']['ExchangeRate']['rate']),2).substr($stock['Stock']['marketCapitalization'],-1);} else { echo $this->number->precision($stock['Stock']['marketCapitalization']*
-(1/$stock['StockExchange']['ExchangeRate']['rate']),2); }}?>");
+		$('#dayslow').text($('#dayslowgbp').val());
+		$('#dayshigh').text($('#dayshighgbp').val());
+		$('#yearlow').text($('#yearlowgbp').val());
+		$('#yearhigh').text($('#yearhighgbp').val());
+		$('#daysrange').text($('#daysrangegbp').val());
+		$('#price').text($('#pricegbp').val());
+		$('#marketcap').text($('#marketcapgbp').val());
 		}
 	});
 	
 } );
 </script>
+                <input type='hidden' id="currency" value="<?php echo $stock['StockExchange']['ExchangeRate']['currency']?>" disabled/>
 
-             <!-- ENTER INDIVIDUAL PAGE CONTENT HERE!!!!! -->
-                <div class="row">
-                    <div class="col-lg-12">
-                        <h1 class="page-header"><?php echo __($stock['Stock']['name']); ?></h1>
-                    </div>
-                    <!-- /.col-lg-12 -->
-                </div>
-                <!-- /.row -->
+<input type='hidden' id='dayslowlocal' value="<?php if(is_null($stock['Stock']['daysLow'])){ echo '-';}else{echo $stock['Stock']['daysLow'];}?>" disabled/>
+<input type='hidden' id='dayslowgbp' value="<?php if(is_null($stock['Stock']['daysLow'])){ echo '-';}else{echo $stock['Stock']['daysLow']*(1/$stock['StockExchange']['ExchangeRate']['rate']);}?>" disabled/>
+
+<input type='hidden' id='dayshighlocal' value="<?php if(is_null($stock['Stock']['daysHigh'])){ echo '-';}else{echo $stock['Stock']['daysHigh'];}?>" disabled/>
+<input type='hidden' id='dayshighgbp' value="<?php if(is_null($stock['Stock']['daysHigh'])){ echo '-';}else{echo $stock['Stock']['daysHigh']*
+(1/$stock['StockExchange']['ExchangeRate']['rate']);}?>" disabled/>
+
+<input type='hidden' id='yearlowlocal' value="<?php if(is_null($stock['Stock']['yearLow'])){ echo '-';}else{echo $stock['Stock']['yearLow'];}?>" disabled/>
+<input type='hidden' id='yearlowgbp' value="<?php if(is_null($stock['Stock']['yearLow'])){ echo '-';}else{echo $stock['Stock']['yearLow']*
+(1/$stock['StockExchange']['ExchangeRate']['rate']);}?>" disabled/>
+
+<input type='hidden' id='yearhighlocal' value="<?php if(is_null($stock['Stock']['yearHigh'])){ echo '-';}else{echo $stock['Stock']['yearHigh'];}?>" disabled/>
+<input type='hidden' id='yearhighgbp' value="<?php if(is_null($stock['Stock']['yearHigh'])){ echo '-';}else{echo $stock['Stock']['yearHigh']*
+(1/$stock['StockExchange']['ExchangeRate']['rate']);}?>"disabled/>
+
+<input type='hidden' id='pricelocal' value="<?php echo $stock['Stock']['lastTradePriceOnly'];?>" disabled/>
+<input type='hidden' id='pricegbp' value="<?php echo $stock['Stock']['lastTradePriceOnly']*(1/$stock['StockExchange']['ExchangeRate']['rate']);?>" disabled/>
+
+<input type='hidden' id='daysrangelocal' value="<?php if(is_null($stock['Stock']['daysRange'])){ echo '-';}else{echo $stock['Stock']['daysRange'];}?>" disabled/>
+<input type='hidden' id='daysrangegbp' value="<?php if(is_null($stock['Stock']['daysRange'])){ echo '-';}else{echo $stock['Stock']['daysLow']*(1/$stock['StockExchange']['ExchangeRate']['rate'])
+.' - '. $stock['Stock']['daysHigh']*(1/$stock['StockExchange']['ExchangeRate']['rate']);}?>" disabled/>
+
+<input type='hidden' id='marketcaplocal' value="<?php if(is_null($stock['Stock']['marketCapitalization'])){ echo '-';}else{echo $stock['Stock']['marketCapitalization'];}?>" disabled/>
+<input type='hidden' id='marketcapgbp' value="<?php 
+		if(is_null($stock['Stock']['marketCapitalization'])){
+			echo '-';
+		}
+		else if(!is_numeric($stock['Stock']['marketCapitalization'])){
+			$number = substr($stock['Stock']['marketCapitalization'],0,-1)*(1/$stock['StockExchange']['ExchangeRate']['rate']);
+			echo round($number,2).substr($stock['Stock']['marketCapitalization'],-1);
+		}
+		else {
+			echo round($stock['Stock']['marketCapitalization']*(1/$stock['StockExchange']['ExchangeRate']['rate']),2);}?>" disabled/>
 
 <div class="stocks view">
 
