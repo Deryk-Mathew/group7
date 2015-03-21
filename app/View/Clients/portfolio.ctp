@@ -6,11 +6,14 @@ $(document).ready(function() {
 		
 		"bProcessing": true,
 		"bFilter": true,
+		"oLanguage": { "sSearch": "", "sProcessing": "Please wait..."},
 		"aoColumnDefs": [ { "sClass": "hide_me", "aTargets": [ 0 ] } ]
 		
 	});
 	$('#stockTable tbody')
+				
         .on( 'mouseover', 'td', function () {
+        	$(this).css('cursor','pointer');
             var colIdx = table.cell(this).index().column;
  
             if ( colIdx !== lastIdx ) {
@@ -18,7 +21,7 @@ $(document).ready(function() {
                 $( table.column( colIdx ).nodes() ).addClass( 'highlight' );
             }
         } )
-		
+	$('.dataTables_filter input').attr("placeholder", "Search");
 	$('#stockTable tbody tr').click( function () {
     var aData = table.fnGetData( this );
     window.location = aData[0]; 

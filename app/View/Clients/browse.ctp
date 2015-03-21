@@ -1,6 +1,28 @@
+<?php echo $this->Html->css('jquery.dataTables');?>
 <script>
 $(document).ready(function() {
-    $('#clientList').dataTable();
+    var table = $('#clientList').dataTable({
+    		"bProcessing": true,
+		"bFilter": true,
+		"oLanguage": { "sSearch": "", "sProcessing": "Please wait..."},
+		"aoColumnDefs": [ { "sClass": "hide_me", "aTargets": [ 0 ] } ]
+    });
+    $('#clientList tbody').on( 'mouseover', 'td', function () {
+        	$(this).css('cursor','pointer');
+            var colIdx = table.cell(this).index().column;
+ 
+            if ( colIdx !== lastIdx ) {
+                $( table.cells().nodes() ).removeClass( 'highlight' );
+                $( table.column( colIdx ).nodes() ).addClass( 'highlight' );
+            }
+        } )
+        
+        $('.dataTables_filter input').attr("placeholder", "Search");
+        
+    $('#clientList tbody tr').click( function () {
+    var aData = table.fnGetData( this );
+    window.location = aData[0]; 
+	} );
 } );
 </script>
             
@@ -14,26 +36,28 @@ $(document).ready(function() {
                 </div>
                 <!-- /.row -->
   <div class="clients index">
-	<table id="clientList" width="100%" cellpadding="0" cellspacing="0">
+	<table id="clientList" class="row-border hover order-column" width="100%" cellpadding="0" cellspacing="0">
 	<thead>
 	<tr>
-			<th>NI Num</th>
+			<th class = "hide_me"></th>
 			<th>Name</th>
+			<th>NI Num</th>
 			<th>Date Registered</th>
-			<!--<th class="actions"><?php echo __('Actions'); ?></th> -->
+			<th></th>
 	</tr>
 	</thead>
 	<tbody>
 	<?php foreach ($clients as $client): ?>
 	<tr>
-		<td><?php echo $this->Html->link($client['Client']['NINum'], array('controller' => 'clients', 'action' => 'portfolio', $client['Client']['id'],$client['Client']['name'])); ?>&nbsp;</td>
-		<td><?php echo $this->Html->link($client['Client']['name'], array('controller' => 'clients', 'action' => 'portfolio', $client['Client']['id'],$client['Client']['name'])); ?>&nbsp;</td>
-		<td><?php echo $this->Html->link($client['Client']['registered'], array('controller' => 'clients', 'action' => 'portfolio', $client['Client']['id'],$client['Client']['name'])); ?>&nbsp;</td>
-		<!-- <td class="actions">
-			<?php echo $this->Html->link(__('View'), array('action' => 'portfolio', $client['Client']['id'],$client['Client']['name'])); ?>
-			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $client['Client']['id'])); ?>
-			<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $client['Client']['id']), array(), __('Are you sure you want to delete # %s?', $client['Client']['id'])); ?>
-		</td> -->
+		<td><?php echo $this->Html->Url(array('controller' => 'clients', 'action' => 'portfolio',$client['Client']['id'],$client['Client']['name'])); ?></td>
+		<td><?php echo $client['Client']['name']; ?>&nbsp;</td>
+		<td><?php echo $client['Client']['NINum']; ?>&nbsp;</td>
+		<td><?php echo $client['Client']['registered']; ?>&nbsp;</td>
+		<td class="actions">
+			<?php echo $this->Html->link(__('Portfolio'), array('controller' => 'clients', 'action' => 'portfolio', $client['Client']['id'],$client['Client']['name'])); ?>
+			<?php echo $this->Html->link(__('Profile'), array('controller' => 'clients', 'action' => 'profile', $client['Client']['id'],$client['Client']['name'])); ?>
+		</td>
+
 	</tr>
 <?php endforeach; ?>
 	</tbody>

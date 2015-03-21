@@ -7,12 +7,13 @@ echo $this->Html->script('toggles');?>
 $(document).ready(function() {
         var table = $('#stockList').dataTable({
 
-            "bProcessing": true,
-            "bServerSide": true,
+           		"bProcessing": true,
+           		"bServerSide": true,
 			"bFilter": true,
-			"iDisplayLength": 15,
+			"oLanguage": { "sSearch": "", "sProcessing": "Please wait..."},
+			"iDisplayLength": 10,
 			"sDom": '<"H"rl<"toolbar">f>tip',
-            "sAjaxSource": "<?php echo $this->Html->Url(array('controller' => 'stocks', 'action' => 'ajaxData')); ?>",
+            		"sAjaxSource": "<?php echo $this->Html->Url(array('controller' => 'stocks', 'action' => 'ajaxData')); ?>",
 			"aoColumns": [
 			{mData:"id", "bVisible":false,"bSearchable":false},
 			{mData:"symbol"},
@@ -35,9 +36,9 @@ $(document).ready(function() {
 
 	
         });
-		$("div.toolbar").html("<div class='col-xs-8 col-md-2 col-lg-2'><div class='col-xl-11 col-md-11'><div class='toggle toggle-modern'></div></div></div>");
+		$("div.toolbar").html("<div class='col-xs-8 col-md-1 col-lg-1'><div class='col-xl-11 col-md-11'><div class='toggle toggle-modern'></div></div></div>");
 		
-		
+		$('.dataTables_filter input').attr("placeholder", "Search");
 		
 		$("[id='Filter by Exchange']").change( function() { 
 				table.fnFilter( $(this).val(),3); 
@@ -47,8 +48,8 @@ $(document).ready(function() {
 	  drag: true, // allow dragging the toggle between positions
 	  click: true, // allow clicking on the toggle
 	  text: {
-		on: '&nbsp;&nbsp;&nbsp;&nbsp;Currency: Local', // text for the ON position
-		off: 'Currency: GBP' // and off
+		on: '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Local', // text for the ON position
+		off: 'GBP' // and off
 	  },
 	  on: true, // is the toggle ON on init
 	  animate: 250, // animation time
@@ -56,10 +57,18 @@ $(document).ready(function() {
 	  checkbox: null, // the checkbox to toggle (for use in forms)
 	  clicker: null, // element that can be clicked on to toggle. removes binding from the toggle itself (use nesting)
 	  width: 60, // width used if not set in css
-	  height: 20, // height if not set in css
+	  height: 25, // height if not set in css
 	  type: 'compact' // if this is set to 'select' then the select style toggle will be used
 	});
-	
+	$('#stockList tbody').on( 'mouseover', 'td', function () {
+        	$(this).css('cursor','pointer');
+            var colIdx = table.cell(this).index().column;
+ 
+            if ( colIdx !== lastIdx ) {
+                $( table.cells().nodes() ).removeClass( 'highlight' );
+                $( table.column( colIdx ).nodes() ).addClass( 'highlight' );
+            }
+        } )
 	$('.toggle').on('toggle', function (e, active) {
 	  if (active) {
 			var bVis = table.fnSettings().aoColumns[5].bVisible;

@@ -22,14 +22,14 @@ $(document).ready(function() {
 	  click: true, // allow clicking on the toggle
 	  text: {
 		on: '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'.concat($('#currency').val()), // text for the ON position
-		off: 'GBP' // and off
+		off: '&nbsp;&nbsp;&nbsp;GBP' // and off
 	  },
 	  on: true, // is the toggle ON on init
 	  animate: 250, // animation time
 	  transition: 'swing', // animation transition,
 	  checkbox: null, // the checkbox to toggle (for use in forms)
 	  clicker: null, // element that can be clicked on to toggle. removes binding from the toggle itself (use nesting)
-	  width: 60, // width used if not set in css
+	  width: 30, // width used if not set in css
 	  height: 40, // height if not set in css
 	  type: 'compact' // if this is set to 'select' then the select style toggle will be used
 	});

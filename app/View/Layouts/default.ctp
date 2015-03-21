@@ -107,15 +107,27 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
                         </li>
                         
 						<?php if($this->Session->read('current_client') == null){ ?>
+						<?php if(($this->params['controller'] == 'clients') && ($this->params['action'] != 'dashboard')){ ?>
 						<li>
-                            <a href="/clients/browse"><i class="glyphicon glyphicon-gbp"></i> Clients<span class="sidebarIcon glyphicon glyphicon-menu-hamburger"></span></a>
+                            <a href="#"><i class="glyphicon glyphicon-gbp"></i> Clients<span class="sidebarIcon glyphicon glyphicon-menu-hamburger"></span></a>
                             <ul class="nav nav-second-level">
-                                <li><?php echo $this->Html->link(__('My Clients'), array('controller' => 'clients', 'action' => 'browse')); ?></li>
+                                <li><?php echo $this->Html->link(__('Browse Clients'), array('controller' => 'clients', 'action' => 'browse')); ?></li>
 								<li><?php echo $this->Html->link(__('Add New Client'), array('controller' => 'clients', 'action' => 'add')); ?></li>
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
-						<?php } else{?>
+                        <?php } else { ?>
+                       <li>
+						<?php
+						echo $this->Html->link(
+    			'<i class="glyphicon glyphicon-gbp"></i> Clients',
+			    array('controller' => 'clients', 'action' => 'browse'),array('escape' => false)
+			); ?>
+                            
+                        </li>
+                       
+						<?php 
+						}} else{?>
 						<li>
 							<?php
 						echo $this->Html->link(
@@ -123,6 +135,8 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
     array('controller' => 'clients', 'action' => 'browse'),array('escape' => false)
 ); ?>
                          </li>
+                         
+                         <?php if(($this->params['controller'] == 'clients') && ($this->params['action'] != 'dashboard')){ ?>
 						<li>
                             <a href="#"><i class="glyphicon glyphicon-gbp"></i> <?php echo $this->Session->read('current_client_name');?><span class="sidebarIcon glyphicon glyphicon-menu-hamburger"></span></a>
                             <ul class="nav nav-second-level">
@@ -131,7 +145,21 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
-						<?php } ?>
+                        <?php } else { ?>
+                       <li>
+						<?php 
+						echo $this->Html->link(
+    			'<i class="glyphicon glyphicon-gbp"></i>'.$this->Session->read("current_client_name"),
+			    array('controller' => 'clients', 'action' => 'portfolio',$this->Session->read('current_client'),$this->Session->read('current_client_name')),array('escape' => false)
+			); ?>
+                            
+                        </li>
+                         
+                         
+                         
+                         
+					
+						<?php }} ?>
 						<?php if(AuthComponent::User('group_id') == ADMIN): ?>
                          <li>
                             <a href="#"><i class="glyphicon glyphicon-user"></i> Users<span class="sidebarIcon glyphicon glyphicon-menu-hamburger"></span></a>
@@ -142,23 +170,39 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
                             <!-- /.nav-second-level -->
                         </li>
 						<?php endif; ?>
-                        <li>
-                            <a href="#"><i class="glyphicon glyphicon-stats"></i> Markets<span class="sidebarIcon glyphicon glyphicon-menu-hamburger"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li><?php echo $this->Html->link(__('Browse Stocks'), array('controller' => 'stocks', 'action' => 'browse')); ?> </li>
-                            </ul>
-                            <!-- /.nav-second-level -->
+						<li>
+						<?php
+						echo $this->Html->link(
+    			'<i class="glyphicon glyphicon-stats"></i> Markets',
+			    array('controller' => 'stocks', 'action' => 'browse'),array('escape' => false)
+			); ?>
+                            
                         </li>
                         <?php if(AuthComponent::User('group_id') == 2): ?>
-                        <li>
+                        
+                        <?php if(($this->params['controller'] == 'meetings')){ ?>
+					<li>
                             <a href="#"><i class="glyphicon glyphicon-calendar"></i> Appointments<span class="sidebarIcon glyphicon glyphicon-menu-hamburger"></span></a>
                             <ul class="nav nav-second-level">
+                            <li><?php echo $this->Html->link(__('View Calendar'), array('controller' => 'meetings', 'action' => 'browse')); ?></li>
 								 <li><?php echo $this->Html->link(__('Add New Appointment'), array('controller' => 'meetings', 'action' => 'add')); ?></li>
-                                <li><?php echo $this->Html->link(__('View Calendar'), array('controller' => 'meetings', 'action' => 'browse')); ?></li>
+                                
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
-                        <?php endif; ?>
+                        <?php } else { ?>
+                       <li>
+						<?php
+						echo $this->Html->link(
+    			'<i class="glyphicon glyphicon-calendar"></i> Appointments',
+			    array('controller' => 'meetings', 'action' => 'browse'),array('escape' => false)
+			); ?>
+                            
+                        </li>
+                        
+                        
+                        
+                        <?php }endif; ?>
                         
                        
                     </ul>
