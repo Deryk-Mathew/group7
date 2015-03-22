@@ -1,4 +1,4 @@
-<?php echo $this->Html->css('jquery.dataTables'); ?>
+<?php echo $this->Html->css('jquery.dataTables'); $stocktotal = 0; ?>
 <script>
 $(document).ready(function() {
 	var lastIdx = null;
@@ -7,7 +7,7 @@ $(document).ready(function() {
 		"bProcessing": true,
 		"bFilter": true,
 		"oLanguage": { "sSearch": "", "sProcessing": "Please wait..."},
-		"aoColumnDefs": [ { "sClass": "hide_me", "aTargets": [ 0 ] } ]
+		"aoColumnDefs": [ { "sClass": "hide_me", "aTargets": [ 0 ] },{"bSortable":false, "aTargets":[8]} ],
 		
 	});
 	$('#stockTable tbody')
@@ -45,7 +45,7 @@ $(document).ready(function() {
                 <!-- /.row -->
                 
                 
-				             
+				           
 	<?php if (!empty($client['ClientStock'])): ?>
 	<div class="col-lg-12 col-md-12 col-xs-12">
 <table id="stockTable" class="row-border hover order-column" cellpadding = "0" cellspacing = "0">
@@ -75,12 +75,12 @@ $(document).ready(function() {
 						<td><?php echo $clientStock['quantity']; ?></td>
 						
 
-						<td><?php $aveStock = $clientStock['cost']/$clientStock['quantity']; echo h(round($aveStock,2)); ?></td>
+						<td><?php $aveStock = $clientStock['cost']/$clientStock['quantity']; echo $this->Number->precision($aveStock,2); ?></td>
 
-						<td><?php echo $clientStock['Stock']['lastTradePriceOnly']*(1/$clientStock['Stock']['StockExchange']['ExchangeRate']['rate']); ?></td>
-						<td><?php echo $clientStock['cost']; ?></td>
+						<td><?php echo $this->Number->precision($clientStock['Stock']['lastTradePriceOnly']*(1/$clientStock['Stock']['StockExchange']['ExchangeRate']['rate']),2); ?></td>
+						<td><?php echo $this->Number->precision($clientStock['cost'],2); ?></td>
 						<td><?php $value = $clientStock['Stock']['lastTradePriceOnly']*(1/$clientStock['Stock']['StockExchange']['ExchangeRate']['rate'])*$clientStock['quantity'];
-						$stocktotal = $stocktotal + $value;echo $value; ?></td>
+						$stocktotal = $stocktotal + $value;echo $this->Number->precision($value,2); ?></td>
 
 
 						<td class="actions">
@@ -93,7 +93,8 @@ $(document).ready(function() {
 				
 			<?php endforeach; ?>
 </tbody>
-</div>			
+</div>
+
 <?php endif; ?>			
 
            <script>
@@ -103,7 +104,7 @@ $(document).ready(function() {
 	        var data = google.visualization.arrayToDataTable([
 	          ['Cash', 'Stocks'],
 	          ['Cash',     <?php echo $client['Balance']['cash_balance']; ?>],
-	          ['Stocks',   <?php echo $stocktotal;?>],]);
+	          ['Stocks',   <?php echo $this->Number->precision($stocktotal,2);?>],]);
 
 	        var options = {
 	          is3D: true,
@@ -128,15 +129,15 @@ $(document).ready(function() {
 				<dl>
 				<dt><?php echo __('Cash Balance'); ?></dt>
 				<dd>
-				<?php echo number_format((float)$client['Balance']['cash_balance'],2,'.',''); ?>
+				<?php echo '£'.$this->Number->precision($client['Balance']['cash_balance'],2); ?>
 				&nbsp;</dd>
-				<dt><?php echo __('Stock Balance'); ?></dt>
+				<dt><?php echo __('Total Stock Value'); ?></dt>
 				<dd>
-				<?php echo number_format((float)$stocktotal,2,'.',''); ?>
+				<?php echo '£'.$this->Number->precision($stocktotal,2); ?>
 				&nbsp;</dd>
-				<dt><?php echo __('Total Balance'); ?></dt>
+				<dt><?php echo __('Total Portfolio Value'); ?></dt>
 				<dd>
-				<?php echo number_format((float)$stocktotal + $client['Balance']['cash_balance'],2,'.',''); ?>
+				<?php echo '£'.$this->Number->precision($stocktotal + $client['Balance']['cash_balance'],2); ?>
 				&nbsp;</dd>
 				</dl>
 			<?php endif; ?>

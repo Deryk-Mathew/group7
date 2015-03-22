@@ -6,10 +6,13 @@
     var table = $('#tranRec').dataTable({
 		"bProcessing": true,
 		"bFilter": true,
+		"oLanguage": { "sSearch": "", "sProcessing": "Please wait..."},
 		"dom" : '<"H"lfr>t<"F"ip>',
 		"order": [[4, "desc" ]]
 
 	});
+	
+	$('.dataTables_filter input').attr("placeholder", "Search");
     $('#tranRec tbody')
         .on( 'mouseover', 'td', function () {
             var colIdx = table.cell(this).index().column;
@@ -96,10 +99,11 @@
 			&nbsp;
 		</dd>
 		<dt> <?php echo __('Actions'); ?> </dt>
+		<div class = "actions">
 			<dd><?php echo $this->Html->link(__('Edit Client'), array('action' => 'edit', $client['Client']['id'])); ?> &nbsp;
 				<?php if (AuthComponent::User('group_id') == 1): ?>
 		<?php echo $this->Form->postLink(__('Delete Client'), array('action' => 'delete', $client['Client']['id']), array(), __('Are you sure you want to delete # %s?', $client['Client']['id'])); ?> &nbsp; <?php endif; ?>
-			<?php echo $this->Form->postLink(__('Remove Client'), array('action' => 'remove', $client['Client']['id']), array(), __('Are you sure you want to remove # %s?', $client['Client']['id'])); ?> &nbsp;
+			<?php echo $this->Form->postLink(__('Remove Client'), array('action' => 'remove', $client['Client']['id']), array(), __('Are you sure you want to remove # %s?', $client['Client']['id'])); ?> &nbsp;</div>
 			</dd>
 	</dl>
 	
@@ -116,7 +120,7 @@
 			
 			
 				<th><?php echo __('Subject'); ?></th>
-				<th></th>
+				<th><?php echo __('Body'); ?></th>
 				<th><?php echo __('Created'); ?></th>
 				<th></th>
 			</tr>
@@ -128,8 +132,8 @@
 			<td><?php echo $this->Html->link($note['created'], array('controller' => 'notes', 'action' => 'view', $note['id'])); ?></td>
 			<td class="actions">
 				<?php echo $this->Html->link(__('View'), array('controller' => 'notes', 'action' => 'view', $note['id'])); ?>
-				<?php echo $this->Html->link(__('Edit'), array('controller' => 'notes', 'action' => 'edit', $note['id'])); ?>
-				<?php echo $this->Form->postLink(__('Delete'), array('controller' => 'notes', 'action' => 'delete', $note['id']), array(), __('Are you sure you want to delete # %s?', $note['id'])); ?>
+				<?php echo $this->Html->link(__('Edit'), array('controller' => 'notes', 'action' => 'edit', $note['id'],$this->Session->read('current_client'))); ?>
+				<?php echo $this->Form->postLink(__('Delete'), array('controller' => 'notes', 'action' => 'delete', $note['id'],$this->Session->read('current_client')), array(), __('Are you sure you want to delete this note?')); ?>
 			</td>
 		</tr>
 		<?php endforeach; ?>

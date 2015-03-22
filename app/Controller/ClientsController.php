@@ -175,7 +175,8 @@ class ClientsController extends AppController {
 	public function add() {
 		$this->request->data['Client']['user_id'] = $this->Auth->user('id');
 		$this->request->data['Client']['balance'] = 0.00;
-		$this->request->data['Client']['registered'] = DboSource::expression('NOW()');
+		$db = ConnectionManager::getDataSource('default');
+		$this->request->data['Client']['registered'] = $db->expression('SYSDATE()');
 		if ($this->request->is('post')) {
 			$this->Client->create();
 			if ($this->Client->save($this->request->data)) {
@@ -184,7 +185,7 @@ class ClientsController extends AppController {
 				$this->Session->setFlash(__('The client has been saved.'));
 				return $this->redirect(array('controller' => 'clients','action' => 'browse'));
 			} else {
-				$this->Session->setFlash(__('The client could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('The client could not be saved. Please, try again.','error'));
 			}
 		}
 		$users = $this->Client->User->find('list');

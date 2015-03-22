@@ -52,7 +52,7 @@ class NotesController extends AppController {
 			$this->request->data['Note']['client_id'] = $var;
 			if ($this->Note->save($this->request->data)) {
 				$this->Session->setFlash(__('The note has been saved.'));
-				return $this->redirect(array( 'controller' => 'clients', 'action' => 'profile', $var,$this->Session->read('client_name')));
+				return $this->redirect(array( 'controller' => 'clients', 'action' => 'profile', $var,$this->Session->read('current_client_name')));
 			} else {
 				$this->Session->setFlash(__('The note could not be saved. Please, try again.'));
 			}
@@ -75,7 +75,7 @@ class NotesController extends AppController {
 			$this->request->data['Note']['id'] = $id;
 			if ($this->Note->save($this->request->data)) {
 				$this->Session->setFlash(__('The note has been saved.'));
-				return $this->redirect(array('action' => 'index'));
+				return $this->redirect(array( 'controller' => 'clients', 'action' => 'profile', $client_id,$this->Session->read('current_client_name')));
 			} else {
 				$this->Session->setFlash(__('The note could not be saved. Please, try again.'));
 			}
@@ -103,6 +103,6 @@ class NotesController extends AppController {
 		} else {
 			$this->Session->setFlash(__('The note could not be deleted. Please, try again.'));
 		}
-		return $this->redirect(array('action' => 'index'));
+		return $this->redirect(array( 'controller' => 'clients', 'action' => 'profile', $this->Session->read('current_client'),$this->Session->read('current_client_name')));
 	}
 }

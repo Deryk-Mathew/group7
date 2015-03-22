@@ -1,4 +1,3 @@
-
             <div class="container-fluid">
             
              <!-- ENTER INDIVIDUAL PAGE CONTENT HERE!!!!! -->
@@ -13,7 +12,6 @@
 <div class="notes form">
 <?php echo $this->Form->create('Note'); ?>
 	<fieldset>
-		<legend><?php echo __('Edit Note'); ?></legend>
 	<?php
 		//echo $this->Form->input('id');
 		//echo $this->Form->input('client_id');

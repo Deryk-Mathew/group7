@@ -99,6 +99,15 @@ class StocksController extends AppController {
 		if (!$this->Stock->exists($id)) {
 			throw new NotFoundException(__('Invalid stock'));
 		}
+		if($this->Session->read('current_client') != null){
+			$conditions = array('ClientStock.client_id' => $this->Session->read('current_client'), 'ClientStock.stock_id' => $id);
+			if($this->Stock->ClientStock->hasAny($conditions)){
+				$this->set('cansell',true);
+			}
+			else{
+				$this->set('cansell',false);
+			}
+		}
 		$options = array('conditions' => array('Stock.' . $this->Stock->primaryKey => $id));
 		$this->set('stock', $this->Stock->find('first', $options));
 		

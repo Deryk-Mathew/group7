@@ -24,7 +24,9 @@ public function GetData($con) {
         */
         $aColumns = array('id', 'symbol', 'name', 'exchange_id', 'change','lastTradePriceOnly','gbp_price');
         $firstsearchindex = 1;
+        $exchangeindex = 3;
 		$lastsearchindex = 4;
+		$change = 4;
 		$localprice = 5;
 		$gbpprice = 6;
         /* Indexed column (used for fast and accurate table cardinality) */
@@ -94,8 +96,16 @@ public function GetData($con) {
             {
                 if ( $_GET[ 'bSortable_'.intval($_GET['iSortCol_'.$i]) ] == "true" )
                 {
-					if(intval( $_GET['iSortCol_'.$i]) == $localprice){
+					if(intval( $_GET['iSortCol_'.$i]) == $localprice+1){
 						$sOrder .= "`".$aColumns[ $gbpprice ]."` ".
+                        ($_GET['sSortDir_'.$i]==='asc' ? 'asc' : 'desc') .", ";
+					}
+					else if(intval( $_GET['iSortCol_'.$i]) == $gbpprice+1){
+						$sOrder .= "`".$aColumns[ $gbpprice ]."` ".
+                        ($_GET['sSortDir_'.$i]==='asc' ? 'asc' : 'desc') .", ";
+					}
+					else if(intval( $_GET['iSortCol_'.$i]) == $change+1){
+						$sOrder .= "`".$aColumns[ $change ]."` ".
                         ($_GET['sSortDir_'.$i]==='asc' ? 'asc' : 'desc') .", ";
 					}
 					else{

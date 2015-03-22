@@ -150,7 +150,30 @@ body {
     border-bottom: 1px solid #e7e7e7;
 }
 
+.sidebar ul li.change a {
+    color: #FFFF00;
+}
+
+.sidebar ul li.change a:hover {
+    background-color: #eee;
+    color: #1a70a5;
+}
+
+.sidebar ul li.logout a {
+    color: #FF1F1F;
+}
+
+.sidebar ul li.logout a:hover {
+    background-color: #eee;
+    color: #1a70a5;
+}
+
 .sidebar ul li a.active {
+    background-color: #eee;
+    color: #1a70a5;
+}
+
+.sidebar ul li.yellow a.active {
     background-color: #eee;
     color: #1a70a5;
 }

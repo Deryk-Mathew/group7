@@ -41,6 +41,7 @@ $(document).ready(function() {
 	<tr>
 			<th class = "hide_me"></th>
 			<th>Name</th>
+			<th>Address</th>
 			<th>NI Num</th>
 			<th>Date Registered</th>
 			<th></th>
@@ -51,6 +52,7 @@ $(document).ready(function() {
 	<tr>
 		<td><?php echo $this->Html->Url(array('controller' => 'clients', 'action' => 'portfolio',$client['Client']['id'],$client['Client']['name'])); ?></td>
 		<td><?php echo $client['Client']['name']; ?>&nbsp;</td>
+		<td><?php echo $client['Client']['street'].", ".$client['Client']['town'].", ".$client['Client']['county'].", ".$client['Client']['postcode']; ?>&nbsp;</td>
 		<td><?php echo $client['Client']['NINum']; ?>&nbsp;</td>
 		<td><?php echo $client['Client']['registered']; ?>&nbsp;</td>
 		<td class="actions">

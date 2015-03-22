@@ -19,6 +19,7 @@ $(document).ready(function() {
 			{mData:"symbol"},
 			{mData:"name"},
 			{mData:"exchange_id","bVisible":false},
+			{mData:"exchange_name","bSortable":false},
 			{mData:"change","bSearchable":false},
 			{mData:"lastTradePriceOnly","bSearchable":false},
 			{mData:"gbp_price","bSearchable":false,"bVisible":false},
@@ -71,15 +72,15 @@ $(document).ready(function() {
         } )
 	$('.toggle').on('toggle', function (e, active) {
 	  if (active) {
-			var bVis = table.fnSettings().aoColumns[5].bVisible;
-			table.fnSetColumnVis( 5, bVis ? false : true );
 			var bVis = table.fnSettings().aoColumns[6].bVisible;
 			table.fnSetColumnVis( 6, bVis ? false : true );
+			var bVis = table.fnSettings().aoColumns[7].bVisible;
+			table.fnSetColumnVis( 7, bVis ? false : true );
 		} else {
-			var bVis = table.fnSettings().aoColumns[5].bVisible;
-			table.fnSetColumnVis( 5, bVis ? false : true );
 			var bVis = table.fnSettings().aoColumns[6].bVisible;
 			table.fnSetColumnVis( 6, bVis ? false : true );
+			var bVis = table.fnSettings().aoColumns[7].bVisible;
+			table.fnSetColumnVis( 7, bVis ? false : true );
 		}
 	});
 			
@@ -118,6 +119,7 @@ echo $this->Form->input('Filter by Exchange', array(
 			<th></th>
 			<th>Symbol</th>
 			<th>Company</th>
+			<th></th>
 			<th>Exchange</th>
 			<th>Change</th>
 			<th>Price</th>
@@ -130,6 +132,7 @@ echo $this->Form->input('Filter by Exchange', array(
 			<th></th>
 			<th>Symbol</th>
 			<th>Company</th>
+			<th></th>
 			<th>Exchange</th>
 			<th>Change</th>
 			<th>Price</th>
@@ -139,7 +142,7 @@ echo $this->Form->input('Filter by Exchange', array(
 	</tfoot>
 	<tbody>
 	<tr>
-            <td colspan="8" class="dataTables_empty">Loading data from server...</td>
+            <td colspan="9" class="dataTables_empty">Loading data from server...</td>
         </tr>
 	</tbody>
 	</table>

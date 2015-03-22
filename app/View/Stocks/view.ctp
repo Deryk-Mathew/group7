@@ -181,13 +181,17 @@ $(document).ready(function() {
 			&nbsp;
 		</dd>
 		<?php if($this->Session->read('current_client') != null){ ?>
-		<div = "actions">
-		<dt><?php echo __('Trade'); ?></dt>
-		<dd><?php echo $this->Html->link(__('Buy Stock'), array('controller' => 'client_stocks', 'action' => 'buyStock', $stock['Stock']['id'], $this->Session->read('current_client'))); ?>&nbsp;
 		
-		<?php echo $this->Html->link(__('Sell Stock'), array('controller' => 'client_stocks', 'action' => 'sellStock', $stock['Stock']['id'], $this->Session->read('current_client'))); ?></dd>
+		<dt> <?php echo __('Trade'); ?> </dt>
+		<div class = "actions">
+			<dd><?php echo $this->Html->link(__('Buy Stock'), array('controller' => 'client_stocks', 'action' => 'buyStock', $stock['Stock']['id'], $this->Session->read('current_client'))); ?> &nbsp;
+				<?php if ($cansell): ?>
+		<?php echo $this->Html->link(__('Sell Stock'), array('controller' => 'client_stocks', 'action' => 'sellStock', $stock['Stock']['id'], $this->Session->read('current_client'))); ?> &nbsp; <?php endif; ?>
+			</div>
+			</dd>
 		
-		</div>
+		
+		
 		
 		<?php } ?>
 	</dl>
