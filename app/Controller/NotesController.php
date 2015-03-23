@@ -45,16 +45,15 @@ class NotesController extends AppController {
  *
  * @return void
  */
-	public function add() {
-		$var = $this->Session->read('current_client');
+	public function add($client) {
 		if ($this->request->is('post')) {
 			$this->Note->create();
-			$this->request->data['Note']['client_id'] = $var;
+			$this->request->data['Note']['client_id'] = $client;
 			if ($this->Note->save($this->request->data)) {
-				$this->Session->setFlash(__('The note has been saved.'));
-				return $this->redirect(array( 'controller' => 'clients', 'action' => 'profile', $var,$this->Session->read('current_client_name')));
+				$this->Session->setFlash(__('The note has been saved.'),'success');
+				return $this->redirect(array( 'controller' => 'clients', 'action' => 'profile', $client,$this->Session->read('current_client_name')));
 			} else {
-				$this->Session->setFlash(__('The note could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('The note could not be saved. Please, try again.'),'error');
 			}
 		}
 	}
@@ -74,10 +73,10 @@ class NotesController extends AppController {
 			$this->request->data['Note']['client_id'] = $client_id;
 			$this->request->data['Note']['id'] = $id;
 			if ($this->Note->save($this->request->data)) {
-				$this->Session->setFlash(__('The note has been saved.'));
+				$this->Session->setFlash(__('The note has been saved.'),'success');
 				return $this->redirect(array( 'controller' => 'clients', 'action' => 'profile', $client_id,$this->Session->read('current_client_name')));
 			} else {
-				$this->Session->setFlash(__('The note could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('The note could not be saved. Please, try again.'),'error');
 			}
 		} else {
 			$options = array('conditions' => array('Note.' . $this->Note->primaryKey => $id));
@@ -99,9 +98,9 @@ class NotesController extends AppController {
 		}
 		$this->request->allowMethod('post', 'delete');
 		if ($this->Note->delete()) {
-			$this->Session->setFlash(__('The note has been deleted.'));
+			$this->Session->setFlash(__('The note has been deleted.'),'notice');
 		} else {
-			$this->Session->setFlash(__('The note could not be deleted. Please, try again.'));
+			$this->Session->setFlash(__('The note could not be deleted. Please, try again.'),'error');
 		}
 		return $this->redirect(array( 'controller' => 'clients', 'action' => 'profile', $this->Session->read('current_client'),$this->Session->read('current_client_name')));
 	}

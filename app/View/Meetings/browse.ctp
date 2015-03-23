@@ -1,4 +1,3 @@
-
             
             
              <!-- ENTER INDIVIDUAL PAGE CONTENT HERE!!!!! -->
@@ -25,7 +24,7 @@ $.getScript('http://arshaw.com/js/fullcalendar-1.6.4/fullcalendar/fullcalendar.m
       center: 'title',
       right: 'month,agendaWeek,agendaDay'
     },
-    defaultView: 'agendaWeek',
+    defaultView: 'month',
     editable: false,
     events: [
     <?php 
@@ -43,8 +42,8 @@ $.getScript('http://arshaw.com/js/fullcalendar-1.6.4/fullcalendar/fullcalendar.m
 		$year .= strval(date("y", $timestamp));
 		$month = (intval(date("m", $timestamp))) - 1;
 		$date = (intval(date("d", $timestamp)));
-		$hour = (intval(date("h", $timestamp)));
-		$hourStart = (intval(date("h", $timestamp)));
+		$hour = (intval(date("H", $timestamp)));
+		$hourStart = (intval(date("H", $timestamp)));
 		$minuteStart = (intval(date("i", $timestamp)));
 		$duration = intval(h($meeting['Meeting']['duration']));
 		$hours = ($duration)/60;
@@ -57,7 +56,7 @@ $.getScript('http://arshaw.com/js/fullcalendar-1.6.4/fullcalendar/fullcalendar.m
 		} ?>
 		start: new Date(<?php echo $year; ?>, <?php echo $month ?>, <?php echo $date; ?>, <?php echo $hour; ?>, <?php echo $minuteStart; ?>),
 		end: new Date(<?php echo $year; ?>, <?php echo $month ?>, <?php echo $date; ?>, <?php echo $hourEnd; ?>, <?php echo $minutesEnd; ?>),
-		url: 'http://localhost/group7/meetings/view/<?php echo h($meeting["Meeting"]["id"]); ?>',
+		url: '/meetings/view/<?php echo h($meeting["Meeting"]["id"]); ?>',
 		allDay: false,
 		},
 		

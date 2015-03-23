@@ -64,8 +64,6 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
               <?php  if ((AuthComponent::User('group_id')) != null){
                 
                 echo '<li class="dropdown">';
-                   echo '<font color = "white">You are logged in as ';
-                   echo $this->session->read( 'Auth.User.full_name' ).'</font>';
                    echo '<ul class="dropdown-menu dropdown-user">';
                     echo '<li>';
                     echo $this->Html->link(
@@ -135,7 +133,8 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
                         <li>
 						<?php
 						echo $this->Html->link(
-    '<i class="glyphicon glyphicon-home"></i> Dashboard',
+    '<i class="glyphicon glyphicon-home"></i> '
+                   .$this->session->read( 'Auth.User.full_name' ),
     array('controller' => 'clients', 'action' => 'dashboard'),array('escape' => false)
 ); ?>
                             

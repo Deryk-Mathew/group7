@@ -37,7 +37,7 @@ $(document).ready(function() {
 
 	
         });
-		$("div.toolbar").html("<div class='col-xs-8 col-md-1 col-lg-1'><div class='col-xl-11 col-md-11'><div class='toggle toggle-modern'></div></div></div>");
+		$("div.toolbar").html("<div class='col-xs-8 col-md-2 col-lg-2'><div class='col-xl-11 col-md-11'><div class='toggle toggle-modern'></div></div></div>");
 		
 		$('.dataTables_filter input').attr("placeholder", "Search");
 		
@@ -49,8 +49,8 @@ $(document).ready(function() {
 	  drag: true, // allow dragging the toggle between positions
 	  click: true, // allow clicking on the toggle
 	  text: {
-		on: '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Local', // text for the ON position
-		off: 'GBP' // and off
+		on: '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Currency: Local', // text for the ON position
+		off: 'Currency: GBP' // and off
 	  },
 	  on: true, // is the toggle ON on init
 	  animate: 250, // animation time

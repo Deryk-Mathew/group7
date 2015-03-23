@@ -254,17 +254,19 @@ class ClientsController extends AppController {
  * @return void
  */
 	public function remove($id = null) {
+	
 		$this->Client->id = $id;
 		//$this->request->data['Client']['user_id'] = null;
 		if (!$this->Client->exists($id)) {
 			throw new NotFoundException(__('Invalid client'));
 		}
 		if ($this->request->allowMethod('post')){
+		$this->Session->delete('current_client');
 			if ($this->Client->saveField('user_id', '1')) {
-				$this->Session->setFlash(__('The client has been saved.'));
-				return $this->redirect(array('action' => 'index'));
+				$this->Session->setFlash(__('The client has been removed.'),'notice');
+				return $this->redirect(array('controller' => clients, 'action' => 'browse'));
 			} else {
-				$this->Session->setFlash(__('The client could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('The client could not be removed. Please, try again.'),'error');
 			}
 
 		}

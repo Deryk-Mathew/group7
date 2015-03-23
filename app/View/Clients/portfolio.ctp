@@ -145,7 +145,7 @@ $(document).ready(function() {
 			<ul>
 				<li class="col-lg-3"><?php echo $this->Html->link(__('Deposit'), array('controller' => 'balances', 'action' => 'deposit', $client['Client']['id'])); ?></li>
 				<li class="col-lg-3"><?php echo $this->Html->link(__('Withdraw'), array('controller' => 'balances', 'action' => 'withdraw', $client['Client']['id'])); ?></li>
-				<li class="col-lg-5"><?php echo $this->Html->link(__('Browse Markets'), array('controller' => 'stocks', 'action' => 'index')); ?> </li>
+				<li class="col-lg-5"><?php echo $this->Html->link(__('Browse Markets'), array('controller' => 'stocks', 'action' => 'browse')); ?> </li>
 			</ul>
 
 		</div>

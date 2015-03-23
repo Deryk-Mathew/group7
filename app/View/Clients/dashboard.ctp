@@ -3,7 +3,8 @@
              <!-- ENTER INDIVIDUAL PAGE CONTENT HERE!!!!! -->
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1 class="page-header">Dashboard</h1>
+                        <h1 class="page-header">
+                   <?php echo $this->session->read( 'Auth.User.full_name' );?></h1>
                     </div>
                     <!-- /.col-lg-12 -->
                 </div>
@@ -35,8 +36,8 @@ $.getScript('http://arshaw.com/js/fullcalendar-1.6.4/fullcalendar/fullcalendar.m
 		$year .= strval(date("y", $timestamp));
 		$month = (intval(date("m", $timestamp))) - 1;
 		$date = (intval(date("d", $timestamp)));
-		$hour = (intval(date("h", $timestamp)));
-		$hourStart = (intval(date("h", $timestamp)));
+		$hour = (intval(date("H", $timestamp)));
+		$hourStart = (intval(date("H", $timestamp)));
 		$minuteStart = (intval(date("i", $timestamp)));
 		$duration = intval(h($meeting['Meeting']['duration']));
 		$hours = ($duration)/60;
@@ -49,7 +50,7 @@ $.getScript('http://arshaw.com/js/fullcalendar-1.6.4/fullcalendar/fullcalendar.m
 		} ?>
 		start: new Date(<?php echo $year; ?>, <?php echo $month ?>, <?php echo $date; ?>, <?php echo $hour; ?>, <?php echo $minuteStart; ?>),
 		end: new Date(<?php echo $year; ?>, <?php echo $month ?>, <?php echo $date; ?>, <?php echo $hourEnd; ?>, <?php echo $minutesEnd; ?>),
-		url: 'http://localhost/group7/meetings/edit/<?php echo h($meeting["Meeting"]["id"]); ?>',
+		url: '/clients/portfolio/<?php echo $id?>/<?php echo $clients[$id]; ?>',
 		allDay: false,
 		},
 		
@@ -58,7 +59,7 @@ $.getScript('http://arshaw.com/js/fullcalendar-1.6.4/fullcalendar/fullcalendar.m
     
     eventClick: function(event) {
         if (event.url) {
-            window.open(event.url);
+            window.open(event.url, '_self');
             return false;
         }
     },
@@ -97,7 +98,7 @@ $.getScript('http://arshaw.com/js/fullcalendar-1.6.4/fullcalendar/fullcalendar.m
 	<thead>
 	<tr>
 			<th>Name</th>
-			<th>Price</th>
+			<th>Change</th>
 			
 	</tr>
 	</thead>
@@ -107,7 +108,7 @@ $.getScript('http://arshaw.com/js/fullcalendar-1.6.4/fullcalendar/fullcalendar.m
 	<tr>
 	
 		<td><?php echo $this->Html->link($stock["Stock"]["name"], array('controller' => 'stocks', 'action' => 'view', $stock['Stock']['id']));?></td>
-		<td><?php echo "<font color = 'green'>".h($stock["Stock"]["change"])."</font>" ?></td>
+		<td><?php echo "<font color = 'green'>".h($stock["Stock"]["change"])."%</font>" ?></td>
 		
 	</tr>
 <?php endforeach; ?>

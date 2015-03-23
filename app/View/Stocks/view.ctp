@@ -59,26 +59,26 @@ $(document).ready(function() {
                 <input type='hidden' id="currency" value="<?php echo $stock['StockExchange']['ExchangeRate']['currency']?>" disabled/>
 
 <input type='hidden' id='dayslowlocal' value="<?php if(is_null($stock['Stock']['daysLow'])){ echo '-';}else{echo $stock['Stock']['daysLow'];}?>" disabled/>
-<input type='hidden' id='dayslowgbp' value="<?php if(is_null($stock['Stock']['daysLow'])){ echo '-';}else{echo $stock['Stock']['daysLow']*(1/$stock['StockExchange']['ExchangeRate']['rate']);}?>" disabled/>
+<input type='hidden' id='dayslowgbp' value="<?php if(is_null($stock['Stock']['daysLow'])){ echo '-';}else{echo $this->Number->precision($stock['Stock']['daysLow']*(1/$stock['StockExchange']['ExchangeRate']['rate']),2);}?>" disabled/>
 
 <input type='hidden' id='dayshighlocal' value="<?php if(is_null($stock['Stock']['daysHigh'])){ echo '-';}else{echo $stock['Stock']['daysHigh'];}?>" disabled/>
-<input type='hidden' id='dayshighgbp' value="<?php if(is_null($stock['Stock']['daysHigh'])){ echo '-';}else{echo $stock['Stock']['daysHigh']*
-(1/$stock['StockExchange']['ExchangeRate']['rate']);}?>" disabled/>
+<input type='hidden' id='dayshighgbp' value="<?php if(is_null($stock['Stock']['daysHigh'])){ echo '-';}else{echo $this->Number->precision($stock['Stock']['daysHigh']*
+(1/$stock['StockExchange']['ExchangeRate']['rate']),2);}?>" disabled/>
 
 <input type='hidden' id='yearlowlocal' value="<?php if(is_null($stock['Stock']['yearLow'])){ echo '-';}else{echo $stock['Stock']['yearLow'];}?>" disabled/>
-<input type='hidden' id='yearlowgbp' value="<?php if(is_null($stock['Stock']['yearLow'])){ echo '-';}else{echo $stock['Stock']['yearLow']*
-(1/$stock['StockExchange']['ExchangeRate']['rate']);}?>" disabled/>
+<input type='hidden' id='yearlowgbp' value="<?php if(is_null($stock['Stock']['yearLow'])){ echo '-';}else{echo $this->Number->precision($stock['Stock']['yearLow']*
+(1/$stock['StockExchange']['ExchangeRate']['rate']),2);}?>" disabled/>
 
 <input type='hidden' id='yearhighlocal' value="<?php if(is_null($stock['Stock']['yearHigh'])){ echo '-';}else{echo $stock['Stock']['yearHigh'];}?>" disabled/>
-<input type='hidden' id='yearhighgbp' value="<?php if(is_null($stock['Stock']['yearHigh'])){ echo '-';}else{echo $stock['Stock']['yearHigh']*
-(1/$stock['StockExchange']['ExchangeRate']['rate']);}?>"disabled/>
+<input type='hidden' id='yearhighgbp' value="<?php if(is_null($stock['Stock']['yearHigh'])){ echo '-';}else{echo $this->Number->precision($stock['Stock']['yearHigh']*
+(1/$stock['StockExchange']['ExchangeRate']['rate']),2);}?>"disabled/>
 
 <input type='hidden' id='pricelocal' value="<?php echo $stock['Stock']['lastTradePriceOnly'];?>" disabled/>
-<input type='hidden' id='pricegbp' value="<?php echo $stock['Stock']['lastTradePriceOnly']*(1/$stock['StockExchange']['ExchangeRate']['rate']);?>" disabled/>
+<input type='hidden' id='pricegbp' value="<?php echo $this->Number->precision($stock['Stock']['lastTradePriceOnly']*(1/$stock['StockExchange']['ExchangeRate']['rate']),2);?>" disabled/>
 
 <input type='hidden' id='daysrangelocal' value="<?php if(is_null($stock['Stock']['daysRange'])){ echo '-';}else{echo $stock['Stock']['daysRange'];}?>" disabled/>
-<input type='hidden' id='daysrangegbp' value="<?php if(is_null($stock['Stock']['daysRange'])){ echo '-';}else{echo $stock['Stock']['daysLow']*(1/$stock['StockExchange']['ExchangeRate']['rate'])
-.' - '. $stock['Stock']['daysHigh']*(1/$stock['StockExchange']['ExchangeRate']['rate']);}?>" disabled/>
+<input type='hidden' id='daysrangegbp' value="<?php if(is_null($stock['Stock']['daysRange'])){ echo '-';}else{echo $this->Number->precision($stock['Stock']['daysLow']*(1/$stock['StockExchange']['ExchangeRate']['rate']),2)
+.' - '. $this->Number->precision(($stock['Stock']['daysHigh']*(1/$stock['StockExchange']['ExchangeRate']['rate'])),2);}?>" disabled/>
 
 <input type='hidden' id='marketcaplocal' value="<?php if(is_null($stock['Stock']['marketCapitalization'])){ echo '-';}else{echo $stock['Stock']['marketCapitalization'];}?>" disabled/>
 <input type='hidden' id='marketcapgbp' value="<?php 
@@ -87,10 +87,10 @@ $(document).ready(function() {
 		}
 		else if(!is_numeric($stock['Stock']['marketCapitalization'])){
 			$number = substr($stock['Stock']['marketCapitalization'],0,-1)*(1/$stock['StockExchange']['ExchangeRate']['rate']);
-			echo round($number,2).substr($stock['Stock']['marketCapitalization'],-1);
+			echo $this->Number->precision($number,2).substr($stock['Stock']['marketCapitalization'],-1);
 		}
 		else {
-			echo round($stock['Stock']['marketCapitalization']*(1/$stock['StockExchange']['ExchangeRate']['rate']),2);}?>" disabled/>
+			echo $this->Number->precision($stock['Stock']['marketCapitalization']*(1/$stock['StockExchange']['ExchangeRate']['rate']),2);}?>" disabled/>
 
 <div class="stocks view">
 
