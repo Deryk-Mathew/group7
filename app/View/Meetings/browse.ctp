@@ -112,12 +112,12 @@ $.getScript('http://arshaw.com/js/fullcalendar-1.6.4/fullcalendar/fullcalendar.m
 				textMin = "" + minutes;
 				}
             	
-               /* document.getElementById("MeetingStartDateMonth").value=textMonth;
+               document.getElementById("MeetingStartDateMonth").value=textMonth;
                 document.getElementById("MeetingStartDateDay").value=textDay;
                 document.getElementById("MeetingStartDateYear").value=year;
                 document.getElementById("MeetingStartDateHour").value=textHour;
                 document.getElementById("MeetingStartDateMin").value=textMin;
-                document.getElementById("MeetingStartDateMeridian").value=meridian;*/
+                document.getElementById("MeetingStartDateMeridian").value=meridian;
                 document.getElementById("selectedDate").innerHTML=start;
                 
                 document.getElementById("addMeeting").value= "Submit Meeting";
