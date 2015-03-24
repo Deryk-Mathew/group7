@@ -20,15 +20,37 @@ $.getScript('http://arshaw.com/js/fullcalendar-1.6.4/fullcalendar/fullcalendar.m
 
   $('#calendar').fullCalendar({
     header: {
-      left: 'prev,next today',
+      left: 'prev,next',
       center: 'title',
       right: 'month,agendaWeek,agendaDay'
     },
 	dayClick: function (date) {
-                alert('Clicked on the  day: ' + date);
-                $(this).css('background-color', 'red');
+				var day = parseInt(date.getDate());
+				var month = parseInt(date.getMonth());
+				month = month + 1;
+				var textMonth;
+				if(month<10){
+				textMonth = "0" + month;
+				} else {
+				textMonth = "" + month;
+				}
+				var textDay;
+				if(day<10){
+				textDay = "0" + day;
+				} else {
+				textDay = "" + day;
+				}
+				var year = date.getFullYear();
+                $(this).parent().siblings().children().removeClass('dayHighlight');
+                $(this).siblings().removeClass('dayHighlight');
+            	$(this).addClass('dayHighlight');
+            	
+                document.getElementById("MeetingStartDateMonth").value=textMonth;
+                document.getElementById("MeetingStartDateDay").value=textDay;
+                document.getElementById("MeetingStartDateYear").value=year;
             },
     defaultView: 'month',
+    fixedWeekCount: false,
     editable: false,
     events: [
     <?php 
@@ -80,6 +102,22 @@ $.getScript('http://arshaw.com/js/fullcalendar-1.6.4/fullcalendar/fullcalendar.m
 
 
 </script>
-<div class="container calendarFullWidth">
+<div class="col-lg-9 col-md-9 col-xs-12">
 	<div id="calendar"></div>
+</div>
+
+<div class="col-lg-3 col-md-3 col-xs-12">
+<h3>Add Appointment</h3>
+<?php echo $this->Form->create('Meeting'); ?>
+	<fieldset>
+		<?php	
+
+			echo $this->Form->input('client_id',
+    array('label' => 'Meeting with Client:'));
+			echo $this->Form->input('startDate',
+    array('label' => 'Start Date and Time:'));
+			echo $this->Form->input('duration',array('value'=>'60','min' => '30', 'max'=>'120','step'=>'5','label' => 'Duration (Minutes):'));
+		?>
+	</fieldset>
+<?php echo $this->Form->end(__('Submit')); ?>
 </div>

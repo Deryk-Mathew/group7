@@ -1,6 +1,11 @@
 .calendarFullWidth {
     width: 100% !important;   
 }
+
+.dayHighlight{
+	background-color: #CBE2F0;
+	}
+
 #calendar > table > tbody > tr > td.fc-header-center > span > h2 {
     font-size: 18px;   
 }
