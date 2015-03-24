@@ -22,7 +22,7 @@ $.getScript('http://arshaw.com/js/fullcalendar-1.6.4/fullcalendar/fullcalendar.m
     header: {
       left: 'prev,next',
       center: 'title',
-      right: 'month,agendaWeek,agendaDay'
+      right: 'month,agendaDay'
     },
 	/*dayClick: function (date) {
 				var day = parseInt(date.getDate());
@@ -69,8 +69,14 @@ $.getScript('http://arshaw.com/js/fullcalendar-1.6.4/fullcalendar/fullcalendar.m
     selectable: true,
       //header and other values
       select: function(start, end, allDay) {
-          var day = parseInt(date.getDate());
-				var month = parseInt(date.getMonth());
+      
+      
+      	if(parseInt(start.getHours()) > 7){
+          var day = parseInt(start.getDate());
+				var month = parseInt(start.getMonth());
+				var year = start.getFullYear();
+				var hour = parseInt(start.getHours());
+				//hour = hour + 1;
 				month = month + 1;
 				var textMonth;
 				if(month<10){
@@ -84,14 +90,39 @@ $.getScript('http://arshaw.com/js/fullcalendar-1.6.4/fullcalendar/fullcalendar.m
 				} else {
 				textDay = "" + day;
 				}
-				var year = date.getFullYear();
-                $(this).parent().siblings().children().removeClass('dayHighlight');
-                $(this).siblings().removeClass('dayHighlight');
-            	$(this).addClass('dayHighlight');
+				var textHour;
+				var meridian = "am";
+				if(hour>12){
+					hour = hour - 12;
+					meridian = "pm";
+				}
+				else if(hour == 12){
+					meridian = "pm";
+				}
+				if(hour<10){
+				textHour = "0" + hour;
+				} else {
+				textHour = "" + hour;
+				}
+				var minutes = parseInt(start.getMinutes());
+				var textMin;
+				if(minutes<10){
+				textMin = "0" + minutes;
+				} else {
+				textMin = "" + minutes;
+				}
             	
-                document.getElementById("MeetingStartDateMonth").value=textMonth;
+               /* document.getElementById("MeetingStartDateMonth").value=textMonth;
                 document.getElementById("MeetingStartDateDay").value=textDay;
                 document.getElementById("MeetingStartDateYear").value=year;
+                document.getElementById("MeetingStartDateHour").value=textHour;
+                document.getElementById("MeetingStartDateMin").value=textMin;
+                document.getElementById("MeetingStartDateMeridian").value=meridian;*/
+                document.getElementById("selectedDate").innerHTML=start;
+                
+                document.getElementById("addMeeting").value= "Submit Meeting";
+                document.getElementById("addMeeting").disabled=false;
+                }
        },
     events: [
     <?php 
@@ -147,6 +178,8 @@ $.getScript('http://arshaw.com/js/fullcalendar-1.6.4/fullcalendar/fullcalendar.m
 	<div id="calendar"></div>
 </div>
 
+
+
 <div class="col-lg-3 col-md-3 col-xs-12">
 <h3>Add Appointment</h3>
 <?php echo $this->Form->create('Meeting'); ?>
@@ -154,13 +187,35 @@ $.getScript('http://arshaw.com/js/fullcalendar-1.6.4/fullcalendar/fullcalendar.m
 		<?php	
 
 			echo $this->Form->input('client_id',
-    array('label' => 'Meeting with Client:'));
-			echo $this->Form->input('startDate',
+    array('label' => 'Meeting with Client:')); ?>
+    	<div class="input">
+    	<label>Start Date and Time of Meeting:<label><p id="selectedDate" style="font-style: italic">Please Select Timeslot From Calendar</p>
+    	</div>
+		<?php	echo $this->Form->input('startDate',
     array('label' => 'Start Date and Time:'));
-			echo $this->Form->input('duration',array('value'=>'60','min' => '30', 'max'=>'120','step'=>'5','label' => 'Duration (Minutes):'));
+			//echo $this->Form->input('duration',array('value'=>'60','min' => '30', 'max'=>'120','step'=>'5','label' => 'Duration (Minutes):'));
+			//$options[];
+			$options[30] = "30 Minutes";
+			$options[60] = "60 Minutes";
+			$options[90] = "90 Minutes";
+			echo $this->Form->input('duration',array('type'=>'select','options' => $options,'label' => 'Duration:'));
 		?>
 	</fieldset>
-<?php echo $this->Form->end(__('Submit')); ?>
+<?php //echo $this->Form->end(__('Submit'), array('id'=>'addMeeting')); 
+?>
+<?php echo $this->Form->submit('Select Timeslot to Add Appointment', array('id'=>'addMeeting', 'disabled'=>'true')); ?>
 </div>
 
+<script>
+$(document).ready(function(){
+	$("#addMeeting").on("click", function(){
+    	if(document.getElementById("selectedDate").value = "No timeslot selected"){
+    		alert("way");
+    	}
+    	else {
+    		alert("nay");
+    	}
+});
+}
+</script>
 

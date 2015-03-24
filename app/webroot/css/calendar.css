@@ -9,6 +9,9 @@
 .dayHighlight{
 	background-color: #CBE2F0;
 	}
+#MeetingBrowseForm > fieldset > div.input.datetime.required {
+    display: none !important;   
+}
 
 #calendar > table > tbody > tr > td.fc-header-center > span > h2 {
     font-size: 18px;   
