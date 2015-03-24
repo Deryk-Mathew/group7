@@ -156,6 +156,7 @@ body {
 }
 
 .sidebar ul li.change a {
+
     color: #FFFF00;
 }
 
@@ -165,12 +166,13 @@ body {
 }
 
 .sidebar ul li.logout a {
-    color: #FF1F1F;
+background-color: rgb(196, 0, 0);
+    color: #eee;
 }
 
 .sidebar ul li.logout a:hover {
     background-color: #eee;
-    color: #1a70a5;
+    color: rgb(196, 0, 0);
 }
 
 .sidebar ul li a.active {

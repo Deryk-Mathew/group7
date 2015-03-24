@@ -129,12 +129,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
                         
-                        <li class = "user">
-                        <?php echo $this->session->read( 'Auth.User.full_name' ); ?>
-                     
-                        	<?php echo $this->Html->link(__('Log out'), array('controller' => 'users', 'action' => 'logout')); ?>
-                
-                        </li>
+                        
                         <li>
 						<?php
 						echo $this->Html->link(
@@ -242,6 +237,12 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
                         
                         
                         <?php }endif; ?>
+                        <li class = "logout">
+                        <?php echo $this->Html->link(
+						'<b><i class="glyphicon glyphicon-off"></i> Logout</b>',
+						array('controller' => 'users', 'action' => 'logout'),array('escape' => false)
+					); ?>
+                        </li>
                         
                        
                     </ul>
