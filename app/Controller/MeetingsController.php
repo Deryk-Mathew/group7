@@ -60,6 +60,19 @@ class MeetingsController extends AppController {
 				$name[$client['Client']['id']] =  $client['Client']['name'];
 			endforeach;
 			$this->set('clients', $name);
+			
+			$currentUser = $this->Auth->user('id');
+			if ($this->request->is('post')) {
+			$this->Meeting->create();
+            $this->request->data['Meeting']['user_id'] = $currentUser;
+			if ($this->Meeting->save($this->request->data)) {
+				$this->Session->setFlash(__('The Meeting has been saved.'));
+				return $this->redirect(array( 'controller' => 'meetings', 'action' => 'browse'));
+			} else {
+			var_dump($this->Meeting->data['Meeting']);
+				$this->Session->setFlash(__('The Meeting could not be saved. Please, try again.'));
+			}
+		}
 		
 	}
 	

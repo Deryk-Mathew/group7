@@ -51,6 +51,10 @@ $.getScript('http://arshaw.com/js/fullcalendar-1.6.4/fullcalendar/fullcalendar.m
             },
     defaultView: 'month',
     fixedWeekCount: false,
+    minTime: "08:00:00",
+	maxTime: "19:00:00",
+	allDaySlot: false,
+	height: 700,
     editable: false,
     events: [
     <?php 
