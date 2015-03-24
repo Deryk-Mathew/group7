@@ -24,7 +24,7 @@ $.getScript('http://arshaw.com/js/fullcalendar-1.6.4/fullcalendar/fullcalendar.m
       center: 'title',
       right: 'month,agendaWeek,agendaDay'
     },
-	dayClick: function (date) {
+	/*dayClick: function (date) {
 				var day = parseInt(date.getDate());
 				var month = parseInt(date.getMonth());
 				month = month + 1;
@@ -48,14 +48,51 @@ $.getScript('http://arshaw.com/js/fullcalendar-1.6.4/fullcalendar/fullcalendar.m
                 document.getElementById("MeetingStartDateMonth").value=textMonth;
                 document.getElementById("MeetingStartDateDay").value=textDay;
                 document.getElementById("MeetingStartDateYear").value=year;
-            },
+            },*/
+        dayClick: function(date, allDay, jsEvent, view) {
+
+        if (allDay) {
+            // Clicked on the entire day
+            $('#calendar')
+                .fullCalendar('changeView', 'agendaDay')
+                .fullCalendar('gotoDate',
+                    date.getFullYear(), date.getMonth(), date.getDate());
+        }
+    },
     defaultView: 'month',
     fixedWeekCount: false,
     minTime: "08:00:00",
 	maxTime: "19:00:00",
 	allDaySlot: false,
 	height: 700,
-    editable: false,
+    editable: true,
+    selectable: true,
+      //header and other values
+      select: function(start, end, allDay) {
+          var day = parseInt(date.getDate());
+				var month = parseInt(date.getMonth());
+				month = month + 1;
+				var textMonth;
+				if(month<10){
+				textMonth = "0" + month;
+				} else {
+				textMonth = "" + month;
+				}
+				var textDay;
+				if(day<10){
+				textDay = "0" + day;
+				} else {
+				textDay = "" + day;
+				}
+				var year = date.getFullYear();
+                $(this).parent().siblings().children().removeClass('dayHighlight');
+                $(this).siblings().removeClass('dayHighlight');
+            	$(this).addClass('dayHighlight');
+            	
+                document.getElementById("MeetingStartDateMonth").value=textMonth;
+                document.getElementById("MeetingStartDateDay").value=textDay;
+                document.getElementById("MeetingStartDateYear").value=year;
+       },
     events: [
     <?php 
 	
@@ -125,3 +162,5 @@ $.getScript('http://arshaw.com/js/fullcalendar-1.6.4/fullcalendar/fullcalendar.m
 	</fieldset>
 <?php echo $this->Form->end(__('Submit')); ?>
 </div>
+
+
