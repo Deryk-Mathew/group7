@@ -6,6 +6,15 @@
 	overflow-y: hidden !important;
 	}
 
+.disabledSubmit {
+background: #62af56;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#FD0303), to(#B88787)) !important;
+  background-image: -webkit-linear-gradient(top, #FD0303, #B88787) !important;
+  background-image: -moz-linear-gradient(top, ##FD0303, #B88787) !important;
+  color: #fff;
+
+}
+
 .dayHighlight{
 	background-color: #CBE2F0;
 	}

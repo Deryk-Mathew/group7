@@ -214,21 +214,10 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
                         </li>
                         <?php if(AuthComponent::User('group_id') == 2): ?>
                         
-                        <?php if(($this->params['controller'] == 'meetings')){ ?>
-					<li>
-                            <a href="#"><i class="glyphicon glyphicon-calendar"></i> Appointments<span class="sidebarIcon glyphicon glyphicon-menu-hamburger"></span></a>
-                            <ul class="nav nav-second-level">
-                            <li><?php echo $this->Html->link(__('View Calendar'), array('controller' => 'meetings', 'action' => 'browse')); ?></li>
-								 <li><?php echo $this->Html->link(__('Add New Appointment'), array('controller' => 'meetings', 'action' => 'add')); ?></li>
-                                
-                            </ul>
-                            <!-- /.nav-second-level -->
-                        </li>
-                        <?php } else { ?>
-                       <li>
+                                                <li>
 						<?php
 						echo $this->Html->link(
-    			'<i class="glyphicon glyphicon-calendar"></i> Appointments',
+    			'<i class="glyphicon glyphicon-calendar"></i> Calendar',
 			    array('controller' => 'meetings', 'action' => 'browse'),array('escape' => false)
 			); ?>
                             
@@ -236,7 +225,9 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
                         
                         
                         
-                        <?php }endif; ?>
+                        
+                        
+                        <?php endif; ?>
                         <li class = "logout">
                         <?php echo $this->Html->link(
 						'<b><i class="glyphicon glyphicon-off"></i> Logout</b>',
