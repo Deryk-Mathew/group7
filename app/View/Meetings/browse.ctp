@@ -90,7 +90,7 @@ $.getScript('http://arshaw.com/js/fullcalendar-1.6.4/fullcalendar/fullcalendar.m
 		document.getElementById("selectedDate").innerHTML="Please Select Timeslot in future";
 		document.getElementById("selectedDate").style.color="red";
 		document.getElementById("addMeeting").value= "Select Valid Timeslot to Add Appointment";
-        document.getElementById("addMeeting").disabled=false;
+        document.getElementById("addMeeting").disabled=true;
         $("#addMeeting").addClass("disabledSubmit");
 		return;
 		}
