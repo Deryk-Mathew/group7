@@ -79,6 +79,16 @@ body {
 }
 .navbar-top-links {
     margin-right: 0;
+	border: 1px;
+	border-left-style: solid;
+	border-color: white;
+	background: repeating-linear-gradient(
+  45deg,
+  #1a70a5,
+  #1a70a5 10px,
+  #11679C 10px,
+  #11679C 20px
+);
 }
 
 .navbar-top-links li {
