@@ -143,7 +143,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 						<?php if($this->Session->read('current_client') == null){ ?>
 						<?php if(($this->params['controller'] == 'clients') && ($this->params['action'] != 'dashboard')){ ?>
 						<li>
-                            <a href="#"><i class="glyphicon glyphicon-gbp"></i> Clients<span class="sidebarIcon glyphicon glyphicon-menu-hamburger"></span></a>
+                            <a href="#"><i class="glyphicon glyphicon-user"></i> Clients<span class="sidebarIcon glyphicon glyphicon-menu-hamburger"></span></a>
                             <ul class="nav nav-second-level">
                                 <li><?php echo $this->Html->link(__('Browse Clients'), array('controller' => 'clients', 'action' => 'browse')); ?></li>
 								<li><?php echo $this->Html->link(__('Add New Client'), array('controller' => 'clients', 'action' => 'add')); ?></li>
@@ -183,7 +183,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
                        <li>
 						<?php 
 						echo $this->Html->link(
-    			'<i class="glyphicon glyphicon-gbp"></i>'.$this->Session->read("current_client_name"),
+    			'<i class="glyphicon glyphicon-user"></i>'.$this->Session->read("current_client_name"),
 			    array('controller' => 'clients', 'action' => 'portfolio',$this->Session->read('current_client'),$this->Session->read('current_client_name')),array('escape' => false)
 			); ?>
                             

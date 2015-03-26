@@ -140,7 +140,8 @@ $.getScript('http://arshaw.com/js/fullcalendar-1.6.4/fullcalendar/fullcalendar.m
                 document.getElementById("MeetingStartDateHour").value=textHour;
                 document.getElementById("MeetingStartDateMin").value=textMin;
                 document.getElementById("MeetingStartDateMeridian").value=meridian;
-                document.getElementById("selectedDate").innerHTML=start;
+                var dateBox = "" + start;
+                document.getElementById("selectedDate").innerHTML=dateBox.substring(0,25);
                 document.getElementById("selectedDate").style.color="green";
                 
                 document.getElementById("addMeeting").value= "Submit Meeting";
