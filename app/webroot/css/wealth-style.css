@@ -11,8 +11,7 @@
 		min-height: 50px !important;
 	}
 	#wrapper > nav > div.navbar-header > a > img {
-		height: 300%;
-		width: auto !important;
+		display: none;
 	}
 }
 
