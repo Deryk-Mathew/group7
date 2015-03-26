@@ -202,7 +202,7 @@ $.getScript('http://arshaw.com/js/fullcalendar-1.6.4/fullcalendar/fullcalendar.m
 
 
 </script>
-<div class="col-lg-9 col-md-9 col-xs-12">
+<div class="col-lg-9 col-md-12 col-xs-12">
 	<div id="calendar"></div>
 </div>
 <script>
@@ -220,7 +220,7 @@ function submitCheck(){
 	alert("please select valid time slot for meeting");
 }
 </script>
-<div class="col-lg-3 col-md-3 col-xs-12">
+<div class="col-lg-3 col-md-12 col-xs-12">
 <h3>Add Appointment</h3>
 <?php echo $this->Form->create('Meeting'); ?>
 	<fieldset>

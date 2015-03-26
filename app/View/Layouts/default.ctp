@@ -172,7 +172,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
                          
                          <?php if(($this->params['controller'] == 'clients') && ($this->params['action'] != 'dashboard')){ ?>
 						<li>
-                            <a href="#"><i class="glyphicon glyphicon-gbp"></i> <?php echo $this->Session->read('current_client_name');?><span class="sidebarIcon glyphicon glyphicon-menu-hamburger"></span></a>
+                            <a href="#"><i class="glyphicon glyphicon-user"></i> <?php echo $this->Session->read('current_client_name');?><span class="sidebarIcon glyphicon glyphicon-menu-hamburger"></span></a>
                             <ul class="nav nav-second-level">
                                 <li><?php echo $this->Html->link(__('Portfolio'), array('controller' => 'clients', 'action' => 'portfolio', $this->Session->read('current_client'),$this->Session->read('current_client_name'))); ?></li>
                                 <li><?php echo $this->Html->link(__('Profile'), array('controller' => 'clients', 'action' => 'profile', $this->Session->read('current_client'),$this->Session->read('current_client_name'))); ?></li>
