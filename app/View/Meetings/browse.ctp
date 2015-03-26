@@ -224,10 +224,18 @@ function submitCheck(){
 <h3>Add Appointment</h3>
 <?php echo $this->Form->create('Meeting'); ?>
 	<fieldset>
-		<?php	
+		<?php  if (isset($_SESSION['current_client'])){
+		
 
 			echo $this->Form->input('client_id',
-    array('label' => 'Meeting with Client:')); ?>
+    array('label' => 'Meeting with Client:', 'default'=>$_SESSION['current_client']));
+    }
+    else {
+    echo $this->Form->input('client_id',
+    array('label' => 'Meeting with Client:' ));
+    }
+    
+     ?>
     	<div class="input">
     	<label>Start Date and Time of Meeting:<label><p id="selectedDate" style="color: red; font-style: italic">Please Select Timeslot From Calendar</p>
     	</div>
