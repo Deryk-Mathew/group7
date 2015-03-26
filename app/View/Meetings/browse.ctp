@@ -65,6 +65,7 @@ $.getScript('http://arshaw.com/js/fullcalendar-1.6.4/fullcalendar/fullcalendar.m
 
     if (date.getDate() === today.getDate()) {
         cell.css("background-color", "#CBE2F0");
+         cell.find('div.fc-day-number').html("<b>Today</b> " + date.getDate());
         //cell.css("border", "1px dashed red");
     }
 
