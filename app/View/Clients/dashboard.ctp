@@ -54,7 +54,8 @@ $.getScript('http://arshaw.com/js/fullcalendar-1.6.4/fullcalendar/fullcalendar.m
 		} ?>
 		start: new Date(<?php echo $year; ?>, <?php echo $month ?>, <?php echo $date; ?>, <?php echo $hour; ?>, <?php echo $minuteStart; ?>),
 		end: new Date(<?php echo $year; ?>, <?php echo $month ?>, <?php echo $date; ?>, <?php echo $hourEnd; ?>, <?php echo $minutesEnd; ?>),
-		url: '/clients/portfolio/<?php echo $id?>/<?php echo $clients[$id]; ?>',
+		url: '<?php $a = new SimpleXMLElement($this->Html->link(__('- Portfolio'), array('controller' => 'clients', 'action' => 'portfolio', $meeting["Meeting"]["client_id"],$clients[$id])));
+		echo $a['href'];?>',
 		allDay: false,
 		},
 		

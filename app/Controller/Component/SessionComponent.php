@@ -133,7 +133,9 @@ class SessionComponent extends Component {
 		if(!in_array($type = strtolower($type), array("error", "notice", "success", "warning")))
 			$type = "notice";
 		//Add the passed flash message to the array
-		$messages[$type][] = $message;
+		if($message != ''){
+			$messages[$type][] = $message;
+		}
 		//Store in sessione
 		CakeSession::write('flashMessages', $messages);
 }

@@ -185,7 +185,8 @@ $.getScript('http://arshaw.com/js/fullcalendar-1.6.4/fullcalendar/fullcalendar.m
 		} ?>
 		start: new Date(<?php echo $year; ?>, <?php echo $month ?>, <?php echo $date; ?>, <?php echo $hour; ?>, <?php echo $minuteStart; ?>),
 		end: new Date(<?php echo $year; ?>, <?php echo $month ?>, <?php echo $date; ?>, <?php echo $hourEnd; ?>, <?php echo $minutesEnd; ?>),
-		url: '/meetings/view/<?php echo h($meeting["Meeting"]["id"]); ?>',
+		url: '<?php $a = new SimpleXMLElement($this->Html->link(__('View'), array('controller' => 'meetings', 'action' => 'view', $meeting["Meeting"]["id"])));
+				echo $a['href']?>',
 		allDay: false,
 		},
 		

@@ -132,7 +132,7 @@ public function view($id = null) {
 			$clientbalance = $balance['Balance']['cash_balance']; //read current balance
 			
 			if($cost>$clientbalance){
-					$this->Session->setFlash('Client has insufficient funds.','error');
+					$this->Session->setFlash('Client has insufficient funds. Client balance is £'.$clientbalance.' purchased required £'.round($cost,2),'error');
 					return $this->redirect(array('controller' => 'client_stocks', 'action' => 'buyStock', $stock, $client));
 			}
 			
@@ -211,7 +211,7 @@ public function view($id = null) {
 				
 				
 				if($quantity>$specificallyThisOne['ClientStock']['quantity']){
-						$this->Session->setFlash(__('Client has insufficient stock in this company.'),"error");
+						$this->Session->setFlash(__('Client has insufficient stock in this company. Attempted to sell '.$quantity.' when client only owns '.$specificallyThisOne['ClientStock']['quantity'].'.'),"error");
 						return $this->redirect(array('controller' => 'client_stocks', 'action' => 'sellStock', $stock, $client));
 				}
 				

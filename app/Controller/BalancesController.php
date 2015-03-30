@@ -70,7 +70,7 @@ class BalancesController extends AppController {
 			$amount = $this->request->data['Balance']['cash_balance']; // read amount to be withdrawn
 			
 			if($tmp<$amount){
-				$this->Session->setFlash(__('Client has insufficient funds.'),"error");
+				$this->Session->setFlash(__('Client has insufficient funds. Attempted to withdraw £'.$amount.' when client balance is only £'.$tmp.'.'),"error");
 				return $this->redirect(array('controller' => 'balances', 'action' => 'withdraw', $id));
 			}
 

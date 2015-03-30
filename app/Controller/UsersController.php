@@ -139,8 +139,105 @@ class UsersController extends AppController {
     /* Method to logout*/
 	public function logout() { 
 		$this->Session->destroy(); // Destroys current session
-	    $this->Session->setFlash('Good-Bye');
+	    $this->Session->setFlash('Good-Bye','notice');
 		$this->redirect($this->Auth->logout());
+	}
+	
+		/* Method to change password */
+	public function change_password() {
+
+		if ($this->request->is('post')) {
+
+			$this->id = $this->User->id = AuthComponent::user('id');
+
+			$options = array('conditions' => array('User.' . $this->User->primaryKey => $this->User->id));
+
+			$user = $this->User->find('first', $options);
+
+			$password = $user['User']['password'];
+
+			$password_new = $this->data['User']['password'];
+			$password_new_2 = $this->data['User']['password2'];
+
+			if(AuthComponent::password($this->data['User']['password_old']) == $password)
+			{
+
+
+											if($password_new==$password_new_2){
+
+			if($this->User->saveField('password',$this->data['User']['password']))
+			{
+			$this->Session->setFlash('Password Change Success!');
+			$this->redirect(array('controller' => 'clients', 'action' => 'dashboard',));
+			}
+}else 	$this->Session->setFlash('passwords dont match');
+			}
+			else
+			$this->Session->setFlash('incorrect old password');
+		}
+
+
+
+	}
+	
+	public function forgot_password() {
+
+
+		if ($this->request->is('post'))
+		{
+
+			if(!empty($this->data))
+			{
+				$options = array('conditions' => array('User.username' => $this->data['User']['username']));
+				$user = $this->User->find('first', $options);
+				$this->set('user', $user);
+
+				if ($user === false)
+				{
+						   $this->Session->setFlash('User could not be found.','error');
+
+				}
+				else
+				{
+				$rand_pass = $this->generateRandomString();
+				App::uses('CakeEmail', 'Network/Email');
+				$this->User->id = $user['User']['id'];
+					if($this->User->saveField('password', $rand_pass))
+					{
+
+					$Email = new CakeEmail('gmail');
+					$Email->from('group7.forgot@gmail.com');
+					$Email->to($user['User']['email']);
+
+					$Email->subject('Your New Password!');
+					$Email->send('Your new temporary password is: '.$rand_pass.'
+
+Please change your password next time you log in.
+
+Best of luck! Group7 Team ');
+
+					$this->Session->setFlash('Password reset email sent!','success');
+					//echo 'email sent';
+					return $this->redirect(array('action' => 'login'));
+					}
+
+				}
+
+
+
+			}
+		}
+	}
+	
+	/* Method to random password*/
+	public function generateRandomString($length = 8) {
+		$characters = '0123456789klmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOP0123456789';
+		$charactersLength = strlen($characters);
+		$randomString = '';
+		for ($i = 0; $i < $length; $i++) {
+			$randomString .= $characters[rand(0, $charactersLength - 1)];
+		}
+		return $randomString;
 	}
 
 

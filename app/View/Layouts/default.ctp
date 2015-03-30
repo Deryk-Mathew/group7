@@ -62,7 +62,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
                 
                 <!-- /.dropdown -->
               <?php  if ((AuthComponent::User('group_id')) != null){
-                
+                if($this->Session->read('current_client') != null){
                 echo '<li class="dropdown">';
                    echo '<ul class="dropdown-menu dropdown-user">';
                     echo '<li>';
@@ -95,19 +95,80 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 						array('controller' => 'notes', 'action' => 'add',$this->Session->read('current_client')),array('escape' => false)
 					);
                     echo '</li>';
+					echo '<li>';
+                    echo $this->Html->link(
+						'<i class="glyphicon glyphicon-calendar"></i> Add Appointment',
+						array('controller' => 'meetings', 'action' => 'browse',$this->Session->read('current_client')),array('escape' => false)
+					);
+                    echo '</li>';
                     echo '<li>';
                     echo $this->Html->link(
 						'<i class="glyphicon glyphicon-arrow-left"></i> Change Client',
 						array('controller' => 'clients', 'action' => 'browse'),array('escape' => false)
 					);
                     echo '</li>';
+					echo '<li>';
+						echo $this->Html->link(
+							'<i class="glyphicon glyphicon-cog"></i> Settings',
+							array('controller' => 'users', 'action' => 'logout'),array('escape' => false)
+						);
+						echo '</li>';
+						echo '<li>';
+						echo $this->Html->link(
+							'<i class="glyphicon glyphicon-off"></i> Logout',
+							array('controller' => 'users', 'action' => 'logout'),array('escape' => false)
+						);
+						echo '</li>';
                     echo '</li>';
                     echo '</ul>';
-					if($this->Session->read('current_client') != null){
+					
 					echo '<a href="#" color = "white"class="dropdown-toggle" data-toggle="dropdown">';
-					echo '<font size = "5"><b><i class="glyphicon glyphicon-user"></i> ' . $this->Session->read('current_client_name').'</br>';
+					echo '<font size = "4"><b><i class="glyphicon glyphicon-user"> </i>'.$this->session->read( 'Auth.User.full_name' );
+					echo '<br/>Client: ' . $this->Session->read('current_client_name').'</br>';
 					echo 'Balance: £' . $this->Session->read('balance');
-					echo '</b> <b class="caret"></b></font></a>';
+					echo '</b><br/><div class = "menuicon"><i margin-left = "30px" class="glyphicon glyphicon-triangle-bottom"></i></div></a>';
+					}
+					else{
+							echo '<li class="dropdown">';
+					   echo '<ul class="dropdown-menu dropdown-user">';
+					   echo '<li>';
+						echo $this->Html->link(
+							'<i class="glyphicon glyphicon-user"></i> Select Client',
+							array('controller' => 'clients', 'action' => 'browse'),array('escape' => false)
+						);
+						echo '</li>';
+					   echo '<li>';
+						echo $this->Html->link(
+							'<i class="glyphicon glyphicon-share"></i> Add Client',
+							array('controller' => 'clients', 'action' => 'add'),array('escape' => false)
+						);
+						echo '</li>';
+						echo '<li>';
+						echo $this->Html->link(
+							'<i class="glyphicon glyphicon-calendar"></i> Add Appointment',
+							array('controller' => 'meetings', 'action' => 'browse'),array('escape' => false)
+						);
+						echo '</li>';
+						echo '<li>';
+						echo $this->Html->link(
+							'<i class="glyphicon glyphicon-cog"></i> Settings',
+							array('controller' => 'users', 'action' => 'logout'),array('escape' => false)
+						);
+						echo '</li>';
+						echo '<li>';
+						echo $this->Html->link(
+							'<i class="glyphicon glyphicon-off"></i> Logout',
+							array('controller' => 'users', 'action' => 'logout'),array('escape' => false)
+						);
+						echo '</li>';
+						echo '</li>';
+						echo '</li>';
+						echo '</ul>';
+						
+						echo '<a href="#" color = "white"class="dropdown-toggle" data-toggle="dropdown">';
+						echo '<font size = "4"><b><i class="glyphicon glyphicon-user"> </i>'.$this->session->read( 'Auth.User.full_name' );
+						echo '<br/></br><i class="glyphicon glyphicon-info-sign"></i> No active client';
+						echo '</b><br/><div class = "menuicon"><i margin-left = "30px" class="glyphicon glyphicon-triangle-bottom"></i></div></a>';
 					}
                 echo '</font></li>';
             echo '</ul>';
@@ -133,8 +194,8 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
                         <li>
 						<?php
 						echo $this->Html->link(
-    '<i class="glyphicon glyphicon-home"></i> '
-                   .$this->session->read( 'Auth.User.full_name' ),
+    '<i class="glyphicon glyphicon-home"></i> Dashboard'
+                   ,
     array('controller' => 'clients', 'action' => 'dashboard'),array('escape' => false)
 ); ?>
                             
@@ -145,8 +206,8 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 						<li>
                             <a href="#"><i class="glyphicon glyphicon-user"></i> Clients<span class="sidebarIcon glyphicon glyphicon-menu-hamburger"></span></a>
                             <ul class="nav nav-second-level">
-                                <li><?php echo $this->Html->link(__('Browse Clients'), array('controller' => 'clients', 'action' => 'browse')); ?></li>
-								<li><?php echo $this->Html->link(__('Add New Client'), array('controller' => 'clients', 'action' => 'add')); ?></li>
+                                <li><?php echo $this->Html->link(__('- Browse Clients'), array('controller' => 'clients', 'action' => 'browse')); ?></li>
+								<li><?php echo $this->Html->link(__('- Add New Client'), array('controller' => 'clients', 'action' => 'add')); ?></li>
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
@@ -174,8 +235,8 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 						<li>
                             <a href="#"><i class="glyphicon glyphicon-user"></i> <?php echo $this->Session->read('current_client_name');?><span class="sidebarIcon glyphicon glyphicon-menu-hamburger"></span></a>
                             <ul class="nav nav-second-level">
-                                <li><?php echo $this->Html->link(__('Portfolio'), array('controller' => 'clients', 'action' => 'portfolio', $this->Session->read('current_client'),$this->Session->read('current_client_name'))); ?></li>
-                                <li><?php echo $this->Html->link(__('Profile'), array('controller' => 'clients', 'action' => 'profile', $this->Session->read('current_client'),$this->Session->read('current_client_name'))); ?></li>
+                                <li><?php echo $this->Html->link(__('- Portfolio'), array('controller' => 'clients', 'action' => 'portfolio', $this->Session->read('current_client'),$this->Session->read('current_client_name'))); ?></li>
+                                <li><?php echo $this->Html->link(__('- Profile'), array('controller' => 'clients', 'action' => 'profile', $this->Session->read('current_client'),$this->Session->read('current_client_name'))); ?></li>
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
@@ -183,7 +244,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
                        <li>
 						<?php 
 						echo $this->Html->link(
-    			'<i class="glyphicon glyphicon-user"></i>'.$this->Session->read("current_client_name"),
+    			'<i class="glyphicon glyphicon-user"></i> '.$this->Session->read("current_client_name"),
 			    array('controller' => 'clients', 'action' => 'portfolio',$this->Session->read('current_client'),$this->Session->read('current_client_name')),array('escape' => false)
 			); ?>
                             

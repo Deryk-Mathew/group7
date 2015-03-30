@@ -103,6 +103,7 @@ class StocksController extends AppController {
 			$conditions = array('ClientStock.client_id' => $this->Session->read('current_client'), 'ClientStock.stock_id' => $id);
 			if($this->Stock->ClientStock->hasAny($conditions)){
 				$this->set('cansell',true);
+				$this->set('ownedstock',$this->Stock->ClientStock->find('first', array('conditions' => $conditions)));
 			}
 			else{
 				$this->set('cansell',false);

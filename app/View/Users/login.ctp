@@ -17,6 +17,11 @@ echo $this->Form->create('User', array(
 ));
 echo $this->Form->input('User.username');
 echo $this->Form->input('User.password');
+?>
+<div class="actions_top">
+	<?php echo $this->Html->link(__('Forgot password?', true), array('action' => 'forgot_password')); ?>
+</div>
+<?php	
 echo $this->Form->end('Login');
 ?>
 </div>
