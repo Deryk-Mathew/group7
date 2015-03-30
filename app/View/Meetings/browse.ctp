@@ -63,10 +63,10 @@ $.getScript('http://arshaw.com/js/fullcalendar-1.6.4/fullcalendar/fullcalendar.m
 
     var today = new Date();
 
-    if (date.getDate() === today.getDate()) {
-        cell.css("background-color", "#CBE2F0");
+    if (date.getDate() == today.getDate() && date.getMonth() == today.getMonth()) {
+       // cell.css("background-color", "#CBE2F0");
          cell.find('div.fc-day-number').html("<b>Today</b> " + date.getDate());
-        //cell.css("border", "1px dashed red");
+       // cell.css("border", "1px dashed green");
     }
 
 },
@@ -162,8 +162,7 @@ $.getScript('http://arshaw.com/js/fullcalendar-1.6.4/fullcalendar/fullcalendar.m
 	foreach ($meetings as $meeting): ?>
 	{
 		title: 'Meeting with <?php 
-		
-		$id = $meeting["Meeting"]["client_id"];
+		$id = intval($meeting["Meeting"]["client_id"]);
 		echo $clients[$id];  ?>',
 		<?php $dateReturn = h($meeting['Meeting']['startDate']);  
 		$timestamp = strtotime($dateReturn);

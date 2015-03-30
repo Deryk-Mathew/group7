@@ -70,7 +70,7 @@ class MeetingsController extends AppController {
 				return $this->redirect(array( 'controller' => 'meetings', 'action' => 'browse'));
 			} else {
 			var_dump($this->Meeting->data['Meeting']);
-				$this->Session->setFlash(__('The Meeting could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('The Meeting could not be saved. Please, try again.'),'error');
 			}
 		}
 		

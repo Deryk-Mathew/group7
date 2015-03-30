@@ -98,7 +98,7 @@ class NotesController extends AppController {
 		}
 		$this->request->allowMethod('post', 'delete');
 		if ($this->Note->delete()) {
-			$this->Session->setFlash(__('The note has been deleted.'),'notice');
+			$this->Session->setFlash(__('The note has been deleted.'),'success');
 		} else {
 			$this->Session->setFlash(__('The note could not be deleted. Please, try again.'),'error');
 		}

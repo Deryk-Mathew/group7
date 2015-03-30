@@ -12,8 +12,12 @@ background: #62af56;
   background-image: -webkit-linear-gradient(top, #FD0303, #B88787) !important;
   background-image: -moz-linear-gradient(top, ##FD0303, #B88787) !important;
   color: #fff;
+display: none !important;
+
+
 
 }
+
 
 .dayHighlight{
 	background-color: #CBE2F0;

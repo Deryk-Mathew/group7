@@ -211,10 +211,11 @@ class ClientsController extends AppController {
 			$this->request->data['Client']['user_id'] = $var;
 			
 			if ($this->Client->saveAll($this->request->data)) {
-				$this->Session->setFlash(__('The client has been saved.'));
+				$this->Session->setFlash(__('The client has been saved.'),'success');
+				$this->Session->write('current_client_name', $this->request->data['Client']['name']);
 				return $this->redirect(array('action' => 'profile',$id,$this->request->data['Client']['name']));
 			} else {
-				$this->Session->setFlash(__('The client could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('The client could not be saved. Please, try again.'),'error');
 			}
 		} else {
 			$options = array('conditions' => array('Client.' . $this->Client->primaryKey => $id));

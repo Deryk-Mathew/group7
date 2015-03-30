@@ -103,7 +103,7 @@
 			<dd><?php echo $this->Html->link(__('Edit Client'), array('action' => 'edit', $client['Client']['id'])); ?> &nbsp;
 				<?php if (AuthComponent::User('group_id') == 1): ?>
 		<?php echo $this->Form->postLink(__('Delete Client'), array('action' => 'delete', $client['Client']['id']), array(), __('Are you sure you want to delete # %s?', $client['Client']['id'])); ?> &nbsp; <?php endif; ?>
-			<?php echo $this->Form->postLink(__('Remove Client'), array('action' => 'remove', $client['Client']['id']), array(), __('Are you sure you want to remove %s?', $client['Client']['name'])); ?> &nbsp;</div>
+			<?php echo $this->Form->postLink(__('Unassign Client'), array('action' => 'remove', $client['Client']['id']), array(), __('Are you sure you want to remove %s?', $client['Client']['name'])); ?> &nbsp;</div>
 			</dd>
 	</dl>
 	
