@@ -50,13 +50,19 @@ $(document).ready(function() {
 	<tbody>
 	<?php foreach ($clients as $client): ?>
 	<tr>
-		<td><?php echo $this->Html->Url(array('controller' => 'clients', 'action' => 'portfolio',$client['Client']['id'],$client['Client']['name'])); ?></td>
+		<td><?php if(AuthComponent::User('group_id') == FA){
+		echo $this->Html->Url(array('controller' => 'clients', 'action' => 'portfolio',$client['Client']['id'],$client['Client']['name']));
+		}
+		else{
+		echo $this->Html->Url(array('controller' => 'clients', 'action' => 'profile',$client['Client']['id'],$client['Client']['name']));
+		} ?></td>
 		<td><?php echo $client['Client']['name']; ?>&nbsp;</td>
 		<td><?php echo $client['Client']['street'].", ".$client['Client']['town'].", ".$client['Client']['county'].", ".$client['Client']['postcode']; ?>&nbsp;</td>
 		<td><?php echo $client['Client']['NINum']; ?>&nbsp;</td>
 		<td><?php echo $client['Client']['registered']; ?>&nbsp;</td>
 		<td class="actions">
-			<?php echo $this->Html->link(__('Portfolio'), array('controller' => 'clients', 'action' => 'portfolio', $client['Client']['id'],$client['Client']['name'])); ?>
+			<?php if(AuthComponent::User('group_id') == FA){
+				echo $this->Html->link(__('Portfolio'), array('controller' => 'clients', 'action' => 'portfolio', $client['Client']['id'],$client['Client']['name']));}?>
 			<?php echo $this->Html->link(__('Profile'), array('controller' => 'clients', 'action' => 'profile', $client['Client']['id'],$client['Client']['name'])); ?>
 		</td>
 

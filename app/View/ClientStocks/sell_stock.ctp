@@ -17,6 +17,19 @@ $('#ClientStockSellStockForm, #ClientStockQuantity, #xrate, #price').submit(func
     return c; //you can just return c because it will be true or false
 });
 
+$('#max').on('click',function() {
+	var price = parseFloat($('#price').val());
+	var rate = parseFloat($('#xrate').val());
+    	var qty = parseInt($('#ClientStockQuantity').val());
+    	$('#total').text("£".concat(($('#currency').val() * (price*(1/rate))).toFixed(2)));
+$( '#ClientStockQuantity,#currency' ).val(function( index, value ) {
+	
+	
+	return $('#currency').val() + this.className;
+});
+
+})
+
 });
 </script>
 
@@ -31,6 +44,7 @@ $('#ClientStockSellStockForm, #ClientStockQuantity, #xrate, #price').submit(func
                 </div>
                 <!-- /.row -->
                 
+<input type='hidden' id="currency" value="<?php echo $quantity?>" disabled/>
 
 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12">
 <?php echo $this->Form->create('ClientStock'); ?>
@@ -51,6 +65,7 @@ $('#ClientStockSellStockForm, #ClientStockQuantity, #xrate, #price').submit(func
 	<?php
 		echo $this->Form->input('quantity',array('default'=>0),array('maxlength'=>'10','type' => 'number'));
 	?>
+	<div id = "max" class = "col-lg-2 actions"><a href ='#'>Max</a></div>
 	</fieldset>
 <?php echo $this->Form->end(__('Sell')); ?>
 </div>

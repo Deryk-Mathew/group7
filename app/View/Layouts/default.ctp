@@ -62,7 +62,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
                 
                 <!-- /.dropdown -->
               <?php  if ((AuthComponent::User('group_id')) != null){
-                if($this->Session->read('current_client') != null){
+                if($this->Session->read('current_client') != null && (AuthComponent::User('group_id') == FA) ){
                 echo '<li class="dropdown">';
                    echo '<ul class="dropdown-menu dropdown-user">';
                     echo '<li>';
@@ -128,7 +128,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 					echo 'Balance: £' . $this->Session->read('balance');
 					echo '</b><br/><div class = "menuicon"><i margin-left = "30px" class="glyphicon glyphicon-triangle-bottom"></i></div></a>';
 					}
-					else{
+					else if (AuthComponent::User('group_id') == FA){
 							echo '<li class="dropdown">';
 					   echo '<ul class="dropdown-menu dropdown-user">';
 					   echo '<li>';
@@ -200,7 +200,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 ); ?>
                             
                         </li>
-                        
+                        <?php if(AuthComponent::User('group_id') == FA){ ?>
 						<?php if($this->Session->read('current_client') == null){ ?>
 						<?php if(($this->params['controller'] == 'clients') && ($this->params['action'] != 'dashboard')){ ?>
 						<li>
@@ -255,16 +255,9 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
                          
 					
 						<?php }} ?>
-						<?php if(AuthComponent::User('group_id') == ADMIN): ?>
-                         <li>
-                            <a href="#"><i class="glyphicon glyphicon-user"></i> Users<span class="sidebarIcon glyphicon glyphicon-menu-hamburger"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li><?php echo $this->Html->link(__('Add New User'), array('controller' => 'users', 'action' => 'add')); ?> </li>
-                                <li><?php echo $this->Html->link(__('Browse Users'), array('controller' => 'users', 'action' => 'browse')); ?> </li>
-                            </ul>
-                            <!-- /.nav-second-level -->
-                        </li>
-						<?php endif; ?>
+						
+                        
+						
 						<li>
 						<?php
 						echo $this->Html->link(
@@ -288,7 +281,22 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
                         
                         
                         
-                        <?php endif; ?>
+                        <?php endif;} else { ?>
+                         <li>
+                            <a href="#"><i class="glyphicon glyphicon-user"></i> Users<span class="sidebarIcon glyphicon glyphicon-menu-hamburger"></span></a>
+                            <ul class="nav nav-second-level">
+                            	<li><?php echo $this->Html->link(__('Browse Users'), array('controller' => 'users', 'action' => 'browse')); ?> </li>
+                                <li><?php echo $this->Html->link(__('Add New User'), array('controller' => 'users', 'action' => 'add')); ?> </li>
+                            </ul>
+                        </li>
+                         <li>
+                            <a href="#"><i class="glyphicon glyphicon-gbp"></i> Clients<span class="sidebarIcon glyphicon glyphicon-menu-hamburger"></span></a>
+                            <ul class="nav nav-second-level">
+                            	<li><?php echo $this->Html->link(__('Browse Clients'), array('controller' => 'clients', 'action' => 'browse')); ?> </li>
+                                <li><?php echo $this->Html->link(__('Add New Client'), array('controller' => 'browse', 'action' => 'add')); ?> </li>
+                            </ul>
+                        </li>
+                        <?php } ?>
                         <li class = "logout">
                         <?php echo $this->Html->link(
 						'<b><i class="glyphicon glyphicon-off"></i> Logout</b>',
