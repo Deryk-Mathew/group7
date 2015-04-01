@@ -27,6 +27,13 @@
 			&nbsp;
 		</dd>
 	</dl>
-<?php echo $this->Form->postLink(__('Cancel Meeting'), array('action' => 'delete', $meeting['Meeting']['id']), array(), __('Are you sure you want to cancel this meeting?')); ?>
-		
+	
+	<?php 
+	$meetingTime = strtotime($meeting["Meeting"]["startDate"]);
+	
+	if (time() < $meetingTime) {
 
+echo $this->Form->postLink(__('Cancel Meeting'), array('action' => 'delete', $meeting['Meeting']['id']), array(), __('Are you sure you want to cancel this meeting?')); 
+		}
+
+?>
