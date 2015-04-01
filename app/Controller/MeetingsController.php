@@ -103,6 +103,10 @@ class MeetingsController extends AppController {
 				$name[$client['Client']['id']] =  $client['Client']['name'];
 			endforeach;
 			$this->set('clients', $name);
+			
+			$this->loadModel('Note');
+			$note = $this->Note->find('all');
+			$this->set('notes', $note);
 		
 	}
 
