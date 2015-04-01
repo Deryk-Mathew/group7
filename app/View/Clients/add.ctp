@@ -1,4 +1,3 @@
-
             
             
              <!-- ENTER INDIVIDUAL PAGE CONTENT HERE!!!!! -->
@@ -14,7 +13,7 @@
 <?php echo $this->Form->create('Client'); ?>
 	<fieldset>
 	<?php
-		//echo $this->Form->input('user_id');
+		echo $this->Form->input('user_id');
 		echo $this->Form->input('NINum');
 		echo $this->Form->input('name');
 		echo $this->Form->input('street');

@@ -29,15 +29,22 @@ class BalancesController extends AppController {
 	}
 	
 	/* Method to deposit cash into an account */
-	public function deposit($id = null){
-
-
+	public function deposit($id = null,$presetamount = null,$stock = null,$qty = null){
+		if($presetamount != null){
+			$this->set('default',round($presetamount,2)+0.01);
+		}
+		else{
+			$this->set('default',0.00);
+		}
 		if ($this->request->is(array('post', 'put'))) {
 			$options = array('conditions' => array('Balance.client_id' => $id));
 			$balance = $this->Balance->find('first',$options);
 			$tmp = $balance['Balance']['cash_balance']; //read current balance
 			$amount = $this->request->data['Balance']['cash_balance']; // read amount to be added to balance
-
+			if($amount<0.01){
+				$this->Session->setFlash(__('Invalid amount entered.'),"error");
+				return $this->redirect(array('controller' => 'balances', 'action' => 'deposit', $id));
+			}
 			$this->request->data['Balance']['id'] = $balance['Balance']['id'];
 			$this->request->data['Balance']['client_id'] = $id;
 			$this->request->data['Balance']['cash_balance'] = $this->Common->mathsAdd($tmp, $amount);
@@ -47,7 +54,13 @@ class BalancesController extends AppController {
 				$RecordCon = new TransactionRecordsController;
 				$RecordCon->create($id,CASH,$amount);
 				$this->Session->setFlash(__('Deposit successful.'),"success");
-				return $this->redirect(array('controller' => 'clients', 'action' => 'portfolio', $id,$this->Session->read('current_client_name')));
+				$this->Session->write('balance',$this->request->data['Balance']['cash_balance']);
+				if($stock != null && $qty != null){
+					return $this->redirect(array('controller' => 'client_stocks', 'action' => 'buyStock', $stock, $this->Session->read('current_client'),$qty));
+				}
+				else{
+					return $this->redirect(array('controller' => 'clients', 'action' => 'portfolio', $id,$this->Session->read('current_client_name')));
+				}
 			} else {
 				$this->Session->setFlash(__('The balance could not be saved. Please, try again.'),"error");
 			}
@@ -68,7 +81,10 @@ class BalancesController extends AppController {
 			$balance = $this->Balance->find('first',$options);
 			$tmp = $balance['Balance']['cash_balance']; //read current balance
 			$amount = $this->request->data['Balance']['cash_balance']; // read amount to be withdrawn
-			
+			if($amount<0.01){
+				$this->Session->setFlash(__('Invalid amount entered.'),"error");
+				return $this->redirect(array('controller' => 'balances', 'action' => 'withdraw', $id));
+			}
 			if($tmp<$amount){
 				$this->Session->setFlash(__('Client has insufficient funds. Attempted to withdraw £'.$amount.' when client balance is only £'.$tmp.'.'),"error");
 				return $this->redirect(array('controller' => 'balances', 'action' => 'withdraw', $id));

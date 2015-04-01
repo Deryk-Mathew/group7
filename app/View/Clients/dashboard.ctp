@@ -25,6 +25,7 @@ $.getScript('http://arshaw.com/js/fullcalendar-1.6.4/fullcalendar/fullcalendar.m
     minTime: "08:00:00",
 	maxTime: "19:00:00",
 	allDaySlot: false,
+	slotEventOverlap: false,
 	height: 700,
     selectable: true,
     events: [
@@ -144,9 +145,9 @@ $.getScript('http://arshaw.com/js/fullcalendar-1.6.4/fullcalendar/fullcalendar.m
 	
 	<?php foreach ($clients as $client): ?>
 	<tr>
-		<td><?php echo $this->Html->link($client['Client']['NINum'], array('controller' => 'clients', 'action' => 'portfolio', $client['Client']['id'],$client['Client']['name'])); ?>&nbsp;</td>
-		<td><?php echo $this->Html->link($client['Client']['name'], array('controller' => 'clients', 'action' => 'portfolio', $client['Client']['id'],$client['Client']['name'])); ?>&nbsp;</td>
-		<td><?php echo $this->Html->link($client['Client']['registered'], array('controller' => 'clients', 'action' => 'portfolio', $client['Client']['id'],$client['Client']['name'])); ?>&nbsp;</td>
+		<td><?php echo $this->Html->link($client['Client']['NINum'], array('controller' => 'clients', 'action' => 'profile', $client['Client']['id'],$client['Client']['name'])); ?>&nbsp;</td>
+		<td><?php echo $this->Html->link($client['Client']['name'], array('controller' => 'clients', 'action' => 'profile', $client['Client']['id'],$client['Client']['name'])); ?>&nbsp;</td>
+		<td><?php echo $this->Html->link($client['Client']['registered'], array('controller' => 'clients', 'action' => 'profile', $client['Client']['id'],$client['Client']['name'])); ?>&nbsp;</td>
 		<!-- <td class="actions">
 			<?php echo $this->Html->link(__('View'), array('action' => 'portfolio', $client['Client']['id'],$client['Client']['name'])); ?>
 			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $client['Client']['id'])); ?>

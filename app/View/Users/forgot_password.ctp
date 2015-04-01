@@ -1,14 +1,11 @@
-<div class="container-fluid">
 
-             <!-- ENTER INDIVIDUAL PAGE CONTENT HERE!!!!! -->
-                <div class="row">
-                    <div class="col-lg-12">
-                        <h1 class="page-header">Forgot Password</h1>
-                    </div>
-                    <!-- /.col-lg-12 -->
-                </div>
 
-<div class="users form">
+
+<div class="form-signin">
+
+<?php echo $this->Html->image('website-logo.png', array('alt' => 'Stock til we DROP', 'border' => '0'));?>
+
+<h4>Password Recovery</h4>
 <?php echo $this->Form->create('User'); ?>
 	<fieldset>
 	<?php

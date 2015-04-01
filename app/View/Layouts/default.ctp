@@ -293,7 +293,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
                             <a href="#"><i class="glyphicon glyphicon-gbp"></i> Clients<span class="sidebarIcon glyphicon glyphicon-menu-hamburger"></span></a>
                             <ul class="nav nav-second-level">
                             	<li><?php echo $this->Html->link(__('Browse Clients'), array('controller' => 'clients', 'action' => 'browse')); ?> </li>
-                                <li><?php echo $this->Html->link(__('Add New Client'), array('controller' => 'browse', 'action' => 'add')); ?> </li>
+                                <li><?php echo $this->Html->link(__('Add New Client'), array('controller' => 'clients', 'action' => 'add')); ?> </li>
                             </ul>
                         </li>
                         <?php } ?>

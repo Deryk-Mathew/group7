@@ -29,7 +29,7 @@ $(document).ready(function() {
 		
 } );
 </script>
-	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
 
 	
         
@@ -96,7 +96,7 @@ $(document).ready(function() {
 </div>
 
 <?php endif; ?>			
-
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
            <script>
       google.load("visualization", "1", {packages:["corechart"]});
       google.setOnLoadCallback(drawChart);

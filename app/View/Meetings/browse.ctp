@@ -18,6 +18,10 @@
 $.getScript('http://arshaw.com/js/fullcalendar-1.6.4/fullcalendar/fullcalendar.min.js',function(){
 
 
+
+
+
+
   $('#calendar').fullCalendar({
     header: {
       left: 'prev,next',
@@ -64,7 +68,7 @@ $.getScript('http://arshaw.com/js/fullcalendar-1.6.4/fullcalendar/fullcalendar.m
     var today = new Date();
 
     if (date.getDate() == today.getDate() && date.getMonth() == today.getMonth()) {
-       // cell.css("background-color", "#CBE2F0");
+        cell.css("background-color", "rgb(255, 255, 179)");
          cell.find('div.fc-day-number').html("<b>Today</b> " + date.getDate());
        // cell.css("border", "1px dashed green");
     }
@@ -77,6 +81,7 @@ $.getScript('http://arshaw.com/js/fullcalendar-1.6.4/fullcalendar/fullcalendar.m
 	allDaySlot: false,
 	height: 700,
     editable: true,
+    slotEventOverlap: false,
     selectable: true,
       //header and other values
       select: function(start, end, allDay) {
@@ -93,6 +98,19 @@ $.getScript('http://arshaw.com/js/fullcalendar-1.6.4/fullcalendar/fullcalendar.m
 		document.getElementById("addMeeting").value= "Select Valid Timeslot to Add Appointment";
         document.getElementById("addMeeting").disabled=true;
         $("#addMeeting").addClass("disabledSubmit");
+      
+       
+        $('#selectedDate').animate({
+    fontSize : '130%'
+  }, 400, function() {
+    // First animate complete
+    $('#selectedDate').animate({
+      fontSize : '110%'
+
+    });
+  });
+       
+
 		return;
 		}
           var day = parseInt(start.getDate());
@@ -148,6 +166,15 @@ $.getScript('http://arshaw.com/js/fullcalendar-1.6.4/fullcalendar/fullcalendar.m
                 document.getElementById("addMeeting").value= "Submit Meeting";
                 document.getElementById("addMeeting").disabled=false;
                 $("#addMeeting").removeClass("disabledSubmit");
+                $('#selectedDate').animate({
+    fontSize : '130%'
+  }, 400, function() {
+    // First animate complete
+    $('#selectedDate').animate({
+      fontSize : '110%'
+
+    });
+  });
                 }
                 /*else {
                 	document.getElementById("addMeeting").value= "Select Valid Timeslot to Add Appointment";
@@ -255,8 +282,3 @@ function submitCheck(){
 ?>
 <?php echo $this->Form->submit('Select Valid Timeslot to Add Appointment', array('id'=>'addMeeting', 'disabled'=>'true', 'class'=>'disabledSubmit')); ?>
 </div>
-
-
-
-
-

@@ -27,6 +27,10 @@
 	Router::connect('/',array('controller' => 'clients', 'action' => 'dashboard','?' => array('processed' => 1)),array(
         'persist' => array('/clients/dashboard')
     ));
+    
+    Router::connect('/users/dashboard',array('controller' => 'clients', 'action' => 'dashboard','?' => array('processed' => 1)),array(
+        'persist' => array('/clients/dashboard')
+    ));
 /**
  * ...and connect the rest of 'Pages' controller's URLs.
  */

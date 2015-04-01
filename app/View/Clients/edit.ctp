@@ -1,4 +1,3 @@
-
             
             
              <!-- ENTER INDIVIDUAL PAGE CONTENT HERE!!!!! -->
@@ -13,6 +12,9 @@
 <?php echo $this->Form->create('Client'); ?>
 	<fieldset>
 	<?php
+		if (AuthComponent::User('group_id') == ADMIN){
+			echo $this->Form->input('user_id',array('label' => 'Financial Advisor' ));
+		}
 		echo $this->Form->input('NINum');
 		echo $this->Form->input('name');
 		echo $this->Form->input('street');

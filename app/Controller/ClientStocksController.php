@@ -109,7 +109,7 @@ public function view($id = null) {
 		return $this->redirect(array('action' => 'index'));
 	}
 
-	public function buyStock($stock,$client) {
+	public function buyStock($stock,$client,$presetamount = null) {
 		$this->ClientStock->Stock->recursive = 2;
 		$options = array('conditions' => array('Stock.' . $this->ClientStock->Stock->primaryKey => $stock));
 		$stockdetails = $this->ClientStock->Stock->find('first', $options);
@@ -121,6 +121,12 @@ public function view($id = null) {
 		
 		$conditions = array('ClientStock.client_id' => $client, 'ClientStock.stock_id' => $stock);
 		
+		if($presetamount != null){
+			$this->set('defaultqty',$presetamount);
+		}
+		else{
+			$this->set('defaultqty',1);
+		}
 		
 		if($this->request->is(array('post', 'put'))) {
 			
@@ -130,7 +136,10 @@ public function view($id = null) {
 			$options = array('conditions' => array('Balance.client_id' => $client));
 			$balance = $this->ClientStock->Client->Balance->find('first',$options);
 			$clientbalance = $balance['Balance']['cash_balance']; //read current balance
-			
+			if($quantity<1){
+					$this->Session->setFlash('Invalid quantity entered.','error');
+					return $this->redirect(array('controller' => 'client_stocks', 'action' => 'buyStock', $stock, $client));
+			}
 			if($cost>$clientbalance){
 					$this->Session->setFlash('Client has insufficient funds. Client balance is £'.$clientbalance.' purchased required £'.round($cost,2),'error');
 					return $this->redirect(array('controller' => 'client_stocks', 'action' => 'buyStock', $stock, $client));
@@ -209,6 +218,10 @@ public function view($id = null) {
 				$this->request->data['ClientStock']['client_id'] = $specificallyThisOne['ClientStock']['client_id'];
 				$this->request->data['ClientStock']['stock_id'] = $specificallyThisOne['ClientStock']['stock_id'];
 				
+				if($quantity<1){
+					$this->Session->setFlash('Invalid quantity entered.','error');
+					return $this->redirect(array('controller' => 'client_stocks', 'action' => 'sellStock', $stock, $client));
+				}
 				
 				if($quantity>$specificallyThisOne['ClientStock']['quantity']){
 						$this->Session->setFlash(__('Client has insufficient stock in this company. Attempted to sell '.$quantity.' when client only owns '.$specificallyThisOne['ClientStock']['quantity'].'.'),"error");

@@ -1,6 +1,6 @@
 <style> /* set the CSS */
 
-body { font: 12px Arial;}
+#chart { font: 12px Arial;}
 
 path { 
     stroke: steelblue;

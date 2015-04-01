@@ -56,12 +56,21 @@
 	<div class="col-xs-12 col-md-6">
 	<dl>
 		<!-- Only display if admin -->
-		<?php if (AuthComponent::User('group_id') == 1): ?>
-		<dt><?php echo __('User'); ?></dt>
+		<?php if (AuthComponent::User('group_id') == ADMIN): ?>
+		<dt><?php echo __('Financial Advisor'); ?></dt>
+		<div class = "actions">
 		<dd>
-			<?php echo $this->Html->link($client['User']['full_name'], array('controller' => 'users', 'action' => 'view', $client['User']['id'])); ?>
+			<?php 
+			if($client['User']['id'] != ADMIN){
+			echo $this->Html->link($client['User']['full_name'], array('controller' => 'users', 'action' => 'view', $client['User']['id']));
+			echo '&nbsp;'.$this->Html->link(__('Change FA'), array('controller' => 'clients','action' => 'edit', $client['Client']['id']));
+			}
+			else{
+			echo 'UNASSIGNED';
+			echo '&nbsp;'.$this->Html->link(__('Assign FA'), array('controller' => 'clients','action' => 'edit', $client['Client']['id']));
+			} ?>
 			&nbsp;
-		</dd>
+		</dd></div>
 		<?php endif; ?>
 		<dt><?php echo __('NINum'); ?></dt>
 		<dd>
@@ -103,7 +112,9 @@
 			<dd><?php echo $this->Html->link(__('Edit Client'), array('action' => 'edit', $client['Client']['id'])); ?> &nbsp;
 				<?php if (AuthComponent::User('group_id') == 1): ?>
 		<?php echo $this->Form->postLink(__('Delete Client'), array('action' => 'delete', $client['Client']['id']), array(), __('Are you sure you want to delete # %s?', $client['Client']['id'])); ?> &nbsp; <?php endif; ?>
-			<?php echo $this->Form->postLink(__('Unassign Client'), array('action' => 'remove', $client['Client']['id']), array(), __('Are you sure you want to remove %s?', $client['Client']['name'])); ?> &nbsp;</div>
+			<?php 
+			if($client['User']['id'] != ADMIN){
+			echo $this->Form->postLink(__('Unassign Client'), array('action' => 'remove', $client['Client']['id']), array(), __('Are you sure you want to remove %s?', $client['Client']['name']));} ?> &nbsp;</div>
 			</dd>
 	</dl>
 	

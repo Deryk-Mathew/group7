@@ -139,31 +139,44 @@ class ClientsController extends AppController {
  * @return void
  */
 	public function profile($id = null,$name = null) {
+		if (!$this->Client->exists($id)) {
+			throw new NotFoundException(__('Invalid client'));
+		}
 		$this->Client->recursive = 2;
+		$options = array('conditions' => array('Client.' . $this->Client->primaryKey => $id));
+		$client = $this->Client->find('first', $options);
+		if(($client['Client']['user_id'] != $this->Auth->user('id')) && ($this->Auth->user('group_id')==FA)){
+				return $this->redirect(array('controller' => 'clients','action' => 'browse'));
+		}
+		$this->set('client', $client);
 		$this->Session->write('current_client', $id);
 		$this->Session->write('current_client_name', $name);
 		$options = array('conditions' => array('Balance.client_id' => $id));
 		$balance = $this->Client->Balance->find('first',$options);
 		$this->Session->write('balance',$balance['Balance']['cash_balance']);
+		
+		
+	}
+	
+	public function portfolio($id = null,$name = null) {
+		$this->Client->recursive = 4;
 		if (!$this->Client->exists($id)) {
 			throw new NotFoundException(__('Invalid client'));
 		}
 		$options = array('conditions' => array('Client.' . $this->Client->primaryKey => $id));
-		$this->set('client', $this->Client->find('first', $options));
-	}
-	
-	public function portfolio($id = null,$name = null) {
+		$client = $this->Client->find('first', $options);
+		$this->set('client', $client);
+		if(($client['Client']['user_id'] != $this->Auth->user('id')) && ($this->Auth->user('group_id')==FA)){
+				return $this->redirect(array('controller' => 'clients','action' => 'browse'));
+		}
 		$this->Client->recursive = 4;
 		$this->Session->write('current_client', $id);
 		$this->Session->write('current_client_name', $name);
 		$options = array('conditions' => array('Balance.client_id' => $id));
 		$balance = $this->Client->Balance->find('first',$options);
 		$this->Session->write('balance',$balance['Balance']['cash_balance']);
-		if (!$this->Client->exists($id)) {
-			throw new NotFoundException(__('Invalid client'));
-		}
-		$options = array('conditions' => array('Client.' . $this->Client->primaryKey => $id));
-		$this->set('client', $this->Client->find('first', $options));
+		
+		
 	}
 
 
@@ -200,16 +213,23 @@ class ClientsController extends AppController {
  * @return void
  */
 	public function edit($id = null) {
-
+		$this->Client->recursive = 0;
 		$var = $this->Auth->user('id');
 
 		if (!$this->Client->exists($id)) {
 			throw new NotFoundException(__('Invalid client'));
 		}
+		$options = array('conditions' => array('User.group_id'  => FA));
+		$users = $this->Client->User->find('all', $options);
+			foreach($users as $user):
+				$name[$user['User']['id']] =  $user['User']['full_name'];
+			endforeach;
+		$this->set('users', $name);
 		if ($this->request->is(array('post', 'put'))) {
 			$this->request->data['Client']['id'] = $id;
-			$this->request->data['Client']['user_id'] = $var;
-			
+			if (AuthComponent::User('group_id') == FA){
+				$this->request->data['Client']['user_id'] = $var;
+			}
 			if ($this->Client->saveAll($this->request->data)) {
 				$this->Session->setFlash(__('The client has been saved.'),'success');
 				$this->Session->write('current_client_name', $this->request->data['Client']['name']);

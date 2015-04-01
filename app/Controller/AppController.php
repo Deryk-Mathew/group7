@@ -44,12 +44,13 @@ class AppController extends Controller {
 
     public $helpers = array('Html', 'Form', 'Session');
 
-       /* public function beforeFilter() {
+        public function beforeFilter() {
         //Configure AuthComponent
-        $this->Auth->loginAction = array(
+        $this->Auth->allow(array(
           'controller' => 'users',
-          'action' => 'login'
-        );
+          'action' => 'forgot_password'
+        ));
+        /*
         $this->Auth->logoutRedirect = array(
           'controller' => 'users',
           'action' => 'login'
@@ -57,7 +58,7 @@ class AppController extends Controller {
         $this->Auth->loginRedirect = array(
           'controller' => 'clients',
           'action' => 'index'
-        );
-    } */
+        );*/
+    } 
 
 }

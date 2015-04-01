@@ -65,10 +65,10 @@ class UsersController extends AppController {
 		if ($this->request->is('post')) {
 			$this->User->create();
 			if ($this->User->save($this->request->data)) {
-				$this->Session->setFlash(__('The user has been saved.'));
-				return $this->redirect(array('action' => 'index'));
+				$this->Session->setFlash(__('The user has been saved.'),'success');
+				return $this->redirect(array('controller' => 'users','action' => 'browse'));
 			} else {
-				$this->Session->setFlash(__('The user could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('The user could not be saved. Please, try again.'),'error');
 			}
 		}
 		$groups = $this->User->Group->find('list');
@@ -86,12 +86,14 @@ class UsersController extends AppController {
 		if (!$this->User->exists($id)) {
 			throw new NotFoundException(__('Invalid user'));
 		}
+		
+		
 		if ($this->request->is(array('post', 'put'))) {
 			if ($this->User->save($this->request->data)) {
-				$this->Session->setFlash(__('The user has been saved.'));
-				return $this->redirect(array('action' => 'view'));
+				$this->Session->setFlash(__('The user has been saved.'),'success');
+				return $this->redirect(array('controller' => 'users','action' => 'view',$id));
 			} else {
-				$this->Session->setFlash(__('The user could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('The user could not be saved. Please, try again.'),'error');
 			}
 		} else {
 			$options = array('conditions' => array('User.' . $this->User->primaryKey => $id));
@@ -124,6 +126,11 @@ class UsersController extends AppController {
 
 	/* Method to login */
 	public function login() {
+	if($this->Session->read('Auth.User') != null){
+		return $this->redirect(array('action' => 'dashboard'));
+	}else {
+	$this->layout = 'login';
+	
     if ($this->request->is('post')) {
     	if ($this->Session->read('Auth.User')) {
 	        $this->Session->setFlash('You are logged in!');
@@ -133,6 +140,7 @@ class UsersController extends AppController {
             return $this->redirect(array('controller' => 'clients', 'action' => 'dashboard',));
         }
         	$this->Session->setFlash(__('Your username or password was incorrect.'));
+    	}
     	}
     }
 
@@ -163,7 +171,7 @@ class UsersController extends AppController {
 			{
 
 
-											if($password_new==$password_new_2){
+				if($password_new==$password_new_2){
 
 			if($this->User->saveField('password',$this->data['User']['password']))
 			{
@@ -181,7 +189,7 @@ class UsersController extends AppController {
 	}
 	
 	public function forgot_password() {
-
+		$this->layout = 'login';
 
 		if ($this->request->is('post'))
 		{
@@ -256,8 +264,8 @@ Best of luck! Group7 Team ');
 	    $this->Acl->deny($group, 'controllers');
 	    $this->Acl->allow($group, 'controllers/Clients');
 	    $this->Acl->deny($group, 'controllers/Clients/delete');
-	    $this->Acl->allow($group, 'controllers/Users/browse');
-	    $this->Acl->allow($group, 'controllers/Users/dashboard');
+	    // $this->Acl->allow($group, 'controllers/Users/browse');
+	    // $this->Acl->allow($group, 'controllers/Users/dashboard');
 	    $this->Acl->allow($group, 'controllers/Notes');
 	    $this->Acl->allow($group, 'controllers/Balances');
 	    $this->Acl->allow($group, 'controllers/Stocks');
