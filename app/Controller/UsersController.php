@@ -124,6 +124,9 @@ class UsersController extends AppController {
 
 	/* Method to login */
 	public function login() {
+	
+	$this->layout = 'login';
+	
     if ($this->request->is('post')) {
     	if ($this->Session->read('Auth.User')) {
 	        $this->Session->setFlash('You are logged in!');
