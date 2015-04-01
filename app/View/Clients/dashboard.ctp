@@ -25,6 +25,7 @@ $.getScript('http://arshaw.com/js/fullcalendar-1.6.4/fullcalendar/fullcalendar.m
     minTime: "08:00:00",
 	maxTime: "19:00:00",
 	allDaySlot: false,
+	slotEventOverlap: false,
 	height: 700,
     selectable: true,
     events: [

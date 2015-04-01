@@ -41,7 +41,8 @@ echo $this->Form->postLink(__('Cancel Meeting'), array('action' => 'delete', $me
 	else: { ?>
 	
 	<div class="col-xs-12 col-md-2 col-lg-12">
-		<h3>Notes Taken at Meeting</h3>
+		<h4>Notes Taken at Meeting</h4>
+		<hr/>
 		
 	<table id = "noteTable" cellpadding = "0" cellspacing = "0">
 	<tr>

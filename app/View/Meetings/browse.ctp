@@ -77,6 +77,7 @@ $.getScript('http://arshaw.com/js/fullcalendar-1.6.4/fullcalendar/fullcalendar.m
 	allDaySlot: false,
 	height: 700,
     editable: true,
+    slotEventOverlap: false,
     selectable: true,
       //header and other values
       select: function(start, end, allDay) {
