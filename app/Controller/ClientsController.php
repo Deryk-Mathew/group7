@@ -98,6 +98,7 @@ class ClientsController extends AppController {
 		    $var = $this->Auth->user('id');
 		$options2 = array('conditions' => array('Client.user_id'  => $var));
 			$clients = $this->Meeting->Client->find('all', $options2);
+			$name = array();
 			foreach($clients as $client):
 				$name[$client['Client']['id']] =  $client['Client']['name'];
 			endforeach;
@@ -159,17 +160,25 @@ class ClientsController extends AppController {
 	}
 	
 	public function portfolio($id = null,$name = null) {
-		$this->Client->recursive = 4;
+		$this->Client->recursive = 2;
 		if (!$this->Client->exists($id)) {
 			throw new NotFoundException(__('Invalid client'));
 		}
+		
 		$options = array('conditions' => array('Client.' . $this->Client->primaryKey => $id));
 		$client = $this->Client->find('first', $options);
 		$this->set('client', $client);
+		
+		$this->Client->ClientStock->Stock->StockExchange->recursive = 1;
+		$exchanges = $this->Client->ClientStock->Stock->StockExchange->find('all');
+		
+		foreach($exchanges as $exchange){
+			$exkeys[$exchange['StockExchange']['id']] = $exchange['ExchangeRate']['rate'];
+		}
+		$this->set('exchanges', $exkeys);
 		if(($client['Client']['user_id'] != $this->Auth->user('id')) && ($this->Auth->user('group_id')==FA)){
 				return $this->redirect(array('controller' => 'clients','action' => 'browse'));
 		}
-		$this->Client->recursive = 4;
 		$this->Session->write('current_client', $id);
 		$this->Session->write('current_client_name', $name);
 		$options = array('conditions' => array('Balance.client_id' => $id));
@@ -190,6 +199,12 @@ class ClientsController extends AppController {
 		$this->request->data['Client']['balance'] = 0.00;
 		$db = ConnectionManager::getDataSource('default');
 		$this->request->data['Client']['registered'] = $db->expression('SYSDATE()');
+		$options = array('conditions' => array('User.group_id'  => FA));
+		$users = $this->Client->User->find('all', $options);
+			foreach($users as $user):
+				$name[$user['User']['id']] =  $user['User']['full_name'];
+			endforeach;
+		$this->set('userslist', $name);
 		if ($this->request->is('post')) {
 			$this->Client->create();
 			if ($this->Client->save($this->request->data)) {
@@ -224,7 +239,7 @@ class ClientsController extends AppController {
 			foreach($users as $user):
 				$name[$user['User']['id']] =  $user['User']['full_name'];
 			endforeach;
-		$this->set('users', $name);
+		$this->set('userslist', $name);
 		if ($this->request->is(array('post', 'put'))) {
 			$this->request->data['Client']['id'] = $id;
 			if (AuthComponent::User('group_id') == FA){

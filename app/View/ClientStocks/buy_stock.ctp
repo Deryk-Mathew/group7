@@ -79,8 +79,10 @@ $defaultcost = round($defaultqty*($stock['Stock']['lastTradePriceOnly']*(1/$stoc
 		<div class="stocks view">
 		
 		<dt><?php echo __('Name'); ?></dt><dd><?php echo h($stock['Stock']['name'])?></dd>
-		<dt><?php echo __('Price'); ?></dt><dd><?php echo h($stock['Stock']['lastTradePriceOnly'])." ".$stock['StockExchange']['ExchangeRate']['currency'].' ('.
-		$this->Number->precision($stock['Stock']['lastTradePriceOnly']*(1/$stock['StockExchange']['ExchangeRate']['rate']),2).' GBP)'?></dd>
+		<dt><?php echo __('Price'); ?></dt><dd><?php 
+		$gbpprice = $this->Number->precision($stock['Stock']['lastTradePriceOnly']*(1/$stock['StockExchange']['ExchangeRate']['rate']),2);
+		echo h($stock['Stock']['lastTradePriceOnly'])." ".$stock['StockExchange']['ExchangeRate']['currency'].' ('.
+		$gbpprice.' GBP)'?></dd>
 		<dt><?php echo __($stock['StockExchange']['ExchangeRate']['currency'].' to GBP Exchange Rate'); ?></dt><dd><?php echo 1/$stock['StockExchange']['ExchangeRate']['rate']?></dd>
 		<br/>
 		<dt><?php echo __('Buy Stock for Client'); ?></dt><dd><?php echo h($this->Session->read('current_client_name'))?></dd>
@@ -89,16 +91,24 @@ $defaultcost = round($defaultqty*($stock['Stock']['lastTradePriceOnly']*(1/$stoc
 		<input type='hidden' name='price' id='price' value='<?php echo $stock['Stock']['lastTradePriceOnly']?>' disabled/>
 		<input type='hidden' name='xrate' id='xrate' value='<?php echo $stock['StockExchange']['ExchangeRate']['rate']?>' disabled/>
 		<input type='hidden' name='balance' id='balance' value='<?php echo $this->Session->read('balance')?>' disabled/>
+		<?php if($gbpprice<$this->Session->read('balance')){?>
 		<dt><?php echo __('Projected New Balance'); ?></dt><dd><p id="projbalance"><?php echo '£'.round($this->Session->read('balance')-$defaultcost,2)?></p></dd>
+		<?php } else {?>
+		<dt><?php echo __('Projected New Balance'); ?></dt><div class = "actions"><dd><p id="projbalance"><?php echo $this->Html->link(__('Deposit Funds'), array('controller' => 'balances', 'action' => 'deposit', $client['Client']['id'])); ?></p></li></dd></div>
+		<?php }?>
 		<dt><?php echo __('Total'); ?></dt><dd><p id="total">£<?php echo $defaultcost;?></p></dd>
 		</br>
 		</div>
+		<div class="input-append">
 	<?php
 		echo $this->Form->input('quantity',array('maxlength'=>'10','type' => 'number','value' => $defaultqty));
 	?>
+	<?php if($gbpprice<$this->Session->read('balance')){?>
 	<div id = "max" class = "col-lg-2 actions"><a>Max</a></div>
+	</div>
 	</fieldset>
 <span id = "submit"><?php echo $this->Form->end(__('Buy')); ?></span>
+<?php }?>
 </div>
 
 </div>

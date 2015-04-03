@@ -11,6 +11,7 @@ class Stock extends AppModel {
 
 //public $actsAs = array('Linkable','Containable');
 
+/* GetData function is a modified version of a worknig example from datatables.net*/
 public function GetData($con) {
 		$view = new View($con);
 		$html = $view->loadHelper('Html');

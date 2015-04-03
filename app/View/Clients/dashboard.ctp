@@ -127,7 +127,7 @@ $.getScript('http://arshaw.com/js/fullcalendar-1.6.4/fullcalendar/fullcalendar.m
 </div>
 <?php endif; ?>
 
- <?php  if ((AuthComponent::User('group_id')) == '1'): ?>
+ <?php  if ((AuthComponent::User('group_id')) == ADMIN): ?>
 	
 	<h3>Unassigned Clients:</h3>
 	<br/>

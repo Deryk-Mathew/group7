@@ -44,7 +44,7 @@ $(document).ready(function() {
                 </div>
                 <!-- /.row -->
                 
-                
+             
 				           
 	<?php if (!empty($client['ClientStock'])): ?>
 	<div class="col-lg-12 col-md-12 col-xs-12">
@@ -55,15 +55,17 @@ $(document).ready(function() {
 			<th><?php echo __('Symbol'); ?></th>
 				<th><?php echo __('Name'); ?></th>
 				<th><?php echo __('Quantity'); ?></th>
-				<th><?php echo __('Average Price'); ?></th>
-				<th><?php echo __('Current Price'); ?></th>
-				<th><?php echo __('Total Cost'); ?></th>
-				<th><?php echo __('Total Valuation'); ?></th>
+				<th><?php echo __('Avg. Price(GBP)'); ?></th>
+				<th><?php echo __('Current Price(GBP)'); ?></th>
+				<th><?php echo __('Total Cost(GBP)'); ?></th>
+				<th><?php echo __('Total Valuation(GBP)'); ?></th>
 				<th class="actions"></th>
 			</tr>	
 </thead>
 <tbody>			
-			<?php 
+
+
+			<?php ;
 			$stocktotal = 0;
 			foreach ($client['ClientStock'] as $clientStock): ?>
 				
@@ -77,9 +79,9 @@ $(document).ready(function() {
 
 						<td><?php $aveStock = $clientStock['cost']/$clientStock['quantity']; echo $this->Number->precision($aveStock,2); ?></td>
 
-						<td><?php echo $this->Number->precision($clientStock['Stock']['lastTradePriceOnly']*(1/$clientStock['Stock']['StockExchange']['ExchangeRate']['rate']),2); ?></td>
+						<td><?php echo $this->Number->precision($clientStock['Stock']['lastTradePriceOnly']*(1/$exchanges[$clientStock['Stock']['exchange_id']]),2); ?></td>
 						<td><?php echo $this->Number->precision($clientStock['cost'],2); ?></td>
-						<td><?php $value = $clientStock['Stock']['lastTradePriceOnly']*(1/$clientStock['Stock']['StockExchange']['ExchangeRate']['rate'])*$clientStock['quantity'];
+						<td><?php $value = $clientStock['Stock']['lastTradePriceOnly']*(1/$exchanges[$clientStock['Stock']['exchange_id']])*$clientStock['quantity'];
 						$stocktotal = $stocktotal + $value;echo $this->Number->precision($value,2); ?></td>
 
 

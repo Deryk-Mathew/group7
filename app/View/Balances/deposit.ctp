@@ -4,7 +4,7 @@ $('#BalanceCashBalance, #balance').on('input',function() {
     	var amount = parseFloat($('#BalanceCashBalance').val());
 	var balance = parseFloat($('#balance').val());
 	var newbalance = parseFloat(balance+amount).toFixed(2);
-	if(!$.isNumeric($('#BalanceCashBalance').val()) || (amount>(999999999999999999-balance))){
+	if(!$.isNumeric($('#BalanceCashBalance').val()) || (amount>(999999999999999999-balance)) || (amount<0.01)){
 		$('#total').text("Invalid quantity entered.").css("color", "red").css("font-weight","Bold");
 		$('#submit').css('visibility','hidden');
 	}
@@ -42,5 +42,5 @@ $('#BalanceCashBalance, #balance').on('input',function() {
 		echo $this->Form->input('cash_balance', array('label' => 'Deposit Amount', 'value' => $default));
 	?>
 	</fieldset>
-<span id = "submit><?php echo $this->Form->end(__('Deposit')); ?></span>
+<span id = "submit"><?php echo $this->Form->end(__('Deposit')); ?></span>
 </div>

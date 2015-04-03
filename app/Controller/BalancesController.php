@@ -56,7 +56,12 @@ class BalancesController extends AppController {
 				$this->Session->setFlash(__('Deposit successful.'),"success");
 				$this->Session->write('balance',$this->request->data['Balance']['cash_balance']);
 				if($stock != null && $qty != null){
-					return $this->redirect(array('controller' => 'client_stocks', 'action' => 'buyStock', $stock, $this->Session->read('current_client'),$qty));
+					if($amount>=$presetamount){
+						return $this->redirect(array('controller' => 'client_stocks', 'action' => 'buyStock', $stock, $this->Session->read('current_client'),$qty));
+					}
+					else{
+						return $this->redirect(array('controller' => 'client_stocks', 'action' => 'buyStock', $stock, $this->Session->read('current_client')));
+					}
 				}
 				else{
 					return $this->redirect(array('controller' => 'clients', 'action' => 'portfolio', $id,$this->Session->read('current_client_name')));

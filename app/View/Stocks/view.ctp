@@ -222,6 +222,8 @@ $(document).ready(function() {
 		<?php } ?>
 		
 		<div id="chart"></div>
+		<br/>
+		<p style="padding-left: 10%;">Historical Performance of <b><?php echo h($stock['Stock']['name']); ?></b> in the last 6 months [Currency: <?php echo $stock['StockExchange']['ExchangeRate']['currency']?>] </p>
 
 
 <!-- load the d3.js library -->    
@@ -262,8 +264,14 @@ var svg = d3.select("#chart")
            + "," + margin.top + ")");
 
 var stock = "<?php echo h($stock['Stock']['symbol']); ?>";
-var start = "2014-08-10";
-var end = "2015-03-10";
+<?php 
+$date = new DateTime();
+?>
+var end = "<?php echo date_format($date, 'Y-m-d'); ?>";
+<?php
+date_sub($date, date_interval_create_from_date_string('6 months')); ?>
+var start = "<?php echo date_format($date, 'Y-m-d'); ?>";
+
 
 var inputURL = "http://query.yahooapis.com/v1/public/yql"+
     "?q=select%20*%20from%20yahoo.finance.historicaldata%20"+
@@ -310,7 +318,7 @@ var inputURL = "http://query.yahooapis.com/v1/public/yql"+
         .attr("dy", ".35em")
         .attr("text-anchor", "start")
         .style("fill", "steelblue")
-        .text("high");
+        .text("price");
 
     svg.append("text")          // Add the title shadow
         .attr("x", (510 / 2))
@@ -318,7 +326,7 @@ var inputURL = "http://query.yahooapis.com/v1/public/yql"+
         .attr("text-anchor", "middle")
         .attr("class", "shadow")
         .style("font-size", "16px")
-        .text("<?php echo h($stock['Stock']['name']); ?>");
+        .text("<?php echo h($stock['Stock']['symbol']);  ?>");
         
     svg.append("text")          // Add the title
         .attr("class", "stock")
@@ -326,13 +334,18 @@ var inputURL = "http://query.yahooapis.com/v1/public/yql"+
         .attr("y", margin.top / 2)
         .attr("text-anchor", "middle")
         .style("font-size", "16px")
-        .text("<?php echo h($stock['Stock']['name']); ?>");
+        .text("<?php echo h($stock['Stock']['symbol']);  ?>");
 });
 
 // ** Update data section (Called from the onclick)
 function updateData() {
 
 var stock = "<?php echo h($stock['Stock']['symbol']); ?>";
+
+
+
+
+
 var start = document.getElementById('start').value;
 var end = document.getElementById('end').value;
 

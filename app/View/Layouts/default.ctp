@@ -107,12 +107,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 						array('controller' => 'clients', 'action' => 'browse'),array('escape' => false)
 					);
                     echo '</li>';
-					echo '<li>';
-						echo $this->Html->link(
-							'<i class="glyphicon glyphicon-cog"></i> Settings',
-							array('controller' => 'users', 'action' => 'logout'),array('escape' => false)
-						);
-						echo '</li>';
+				
 						echo '<li>';
 						echo $this->Html->link(
 							'<i class="glyphicon glyphicon-off"></i> Logout',
@@ -147,12 +142,6 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 						echo $this->Html->link(
 							'<i class="glyphicon glyphicon-calendar"></i> Add Appointment',
 							array('controller' => 'meetings', 'action' => 'browse'),array('escape' => false)
-						);
-						echo '</li>';
-						echo '<li>';
-						echo $this->Html->link(
-							'<i class="glyphicon glyphicon-cog"></i> Settings',
-							array('controller' => 'users', 'action' => 'logout'),array('escape' => false)
 						);
 						echo '</li>';
 						echo '<li>';

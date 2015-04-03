@@ -188,8 +188,10 @@ $.getScript('http://arshaw.com/js/fullcalendar-1.6.4/fullcalendar/fullcalendar.m
 	
 	foreach ($meetings as $meeting): ?>
 	{
-		title: 'Meeting with <?php 
+		<?php 
 		$id = intval($meeting["Meeting"]["client_id"]);
+		if(array_key_exists($id,$clients)){?>
+		title: 'Meeting with <?php 
 		echo $clients[$id];  ?>',
 		<?php $dateReturn = h($meeting['Meeting']['startDate']);  
 		$timestamp = strtotime($dateReturn);
@@ -214,7 +216,7 @@ $.getScript('http://arshaw.com/js/fullcalendar-1.6.4/fullcalendar/fullcalendar.m
 		url: '<?php $a = new SimpleXMLElement($this->Html->link(__('View'), array('controller' => 'meetings', 'action' => 'view', $meeting["Meeting"]["id"])));
 				echo $a['href']?>',
 		allDay: false,
-		},
+		<?php }?>},
 		
 	<?php endforeach; ?>
     ],

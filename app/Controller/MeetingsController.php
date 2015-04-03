@@ -56,6 +56,7 @@ class MeetingsController extends AppController {
 		    $this->set('meetings', $this->paginate($this->Meeting));
 			$options = array('conditions' => array('Client.user_id'  => $var));
 			$clients = $this->Meeting->Client->find('all', $options);
+			$name = array();
 			foreach($clients as $client):
 				$name[$client['Client']['id']] =  $client['Client']['name'];
 			endforeach;

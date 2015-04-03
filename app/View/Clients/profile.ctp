@@ -12,6 +12,16 @@
 
 	});
 	
+	var ntable = $('#noteTable').dataTable({
+		"bProcessing": true,
+		"bFilter": true,
+		"oLanguage": { "sSearch": "", "sProcessing": "Please wait..."},
+		"iDisplayLength": 5,
+		"bLengthChange": false
+		
+
+	});
+	
 	$('.dataTables_filter input').attr("placeholder", "Search");
     $('#tranRec tbody')
         .on( 'mouseover', 'td', function () {
@@ -121,13 +131,14 @@
 	
 	 </div>
 	 
-
+<?php if (AuthComponent::User('group_id') == FA){ ?>
 <!-- List all client notes -->
 	<div class="col-xs-12 col-md-6">
-		<h3><?php echo __('Related Notes'); ?></h3>
+		<h3><?php echo __('Notes'); ?></h3>
 		<?php if (!empty($client['Note'])): ?>
 	<table id = "noteTable" cellpadding = "0" cellspacing = "0">
-	<tr>
+	<thead>
+	<tr role ="row">
 			
 			
 				<th><?php echo __('Subject'); ?></th>
@@ -135,6 +146,8 @@
 				<th><?php echo __('Created'); ?></th>
 				<th></th>
 			</tr>
+			</thead>
+			<tbody>
 			<?php foreach ($client['Note'] as $note): ?>
 				<tr>
 			<td><?php echo $this->Html->link($note['title'], array('controller' => 'notes', 'action' => 'view', $note['id'])); ?></td>
@@ -148,6 +161,7 @@
 			</td>
 		</tr>
 		<?php endforeach; ?>
+		</tbody>
 		</table>
 			<?php endif; ?>
 			
@@ -220,6 +234,8 @@
 
 
 </div>
+
+<?php } ?>
 
 
 

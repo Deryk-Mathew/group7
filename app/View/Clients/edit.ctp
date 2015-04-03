@@ -13,7 +13,7 @@
 	<fieldset>
 	<?php
 		if (AuthComponent::User('group_id') == ADMIN){
-			echo $this->Form->input('user_id',array('label' => 'Financial Advisor' ));
+			echo $this->Form->input('user_id',array('label' => 'Financial Advisor','options' => $userslist ));
 		}
 		echo $this->Form->input('NINum');
 		echo $this->Form->input('name');
@@ -23,6 +23,6 @@
 		echo $this->Form->input('postcode');
 	?>
 	</fieldset>
-<?php echo $this->Form->end(__('Submit')); ?>
+<?php echo $this->Form->end(__('Save Changes')); ?>
 
 
